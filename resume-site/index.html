@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yi Zhang | Academic Profile</title>
+  <style>
+    #zh {
+      font-family: "Microsoft YaHei", "微软雅黑", sans-serif;
+      letter-spacing: 0.08em;  /* 字间距，可根据需要调大或调小 */
+      line-height: 1.7;        /* 行高，增加阅读舒适度 */
+    }
+    .school-logo {
+      width: 32px;           /* 固定宽度 */
+      height: 32px;          /* 固定高度 */
+      object-fit: contain;   /* 保持比例，留白自动填充 */
+      vertical-align: middle;
+      margin-right: 4px;
+      margin-left: 4px;
+      margin-top: -3px;
+    }
+    .game-logo {
+      display: inline-block;
+      width: 1em;
+      height: 1em;
+      object-fit: contain;
+      vertical-align: middle;   /* 改为 middle */
+      margin-right: 1.6em;
+      margin-left: 1.4em;
+      margin-top: 0.35em;
+
+      transform: scale(2.6);
+      transform-origin: center center; /* 确保中心放大 */
+    }
+    .research-interests {
+      white-space: nowrap;     /* 默认 PC 端不换行 */
+      word-break: normal;      /* 保持单词完整 */
+      text-align: left;        /* 默认左对齐 */
+    }
+    body {
+      font-family: Georgia, serif;
+      margin: 0;
+      padding: 0;
+      background: #fff;
+      color: #222;
+      line-height: 1.6;
+    }
+    .sub-info {
+      font-size: 0.96em;
+      color: #555;
+      margin-top: 2px;
+      font-style: italic;
+    }
+    header {
+      background: #f5f5f5;
+      border-bottom: 1px solid #ddd;
+      padding: 40px 20px;
+    }
+
+    /* 容器与 main 保持相同 max-width，便于左对齐 */
+    .header-container {
+      display: flex;
+      align-items: flex-start;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+      gap: 20px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    /* 头像区域：头像 + toggle 按钮（垂直排列） */
+    .avatar-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      min-width: 130px; /* 保持头像宽度 */
+    }
+
+    .profile-pic {
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #ccc;
+      display: block;
+    }
+
+    /* 小圆形按钮 */
+    .toggle-btn {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 2px solid #ccc;
+      background: white;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.15em;
+      line-height: 1;
+      transition: transform 0.18s ease, background 0.18s ease;
+    }
+    .toggle-btn:hover { background: #f0f0f0; transform: scale(1.03); }
+    .toggle-btn[aria-expanded="true"] { background: #eee; }
+
+    .header-text {
+      max-width: 600px;
+    }
+
+    .header-text h1 {
+      margin: 0;
+      font-size: 2.2em;
+      font-weight: 600;
+    }
+
+    .header-text h1 span.no-bold-paren {
+      font-weight: normal; /* 括号不加粗（如你之前要求） */
+    }
+
+    .header-text p {
+      margin: 6px 0;
+      font-size: 1.05em;
+      color: #555;
+    }
+
+    /* 左右布局（地点/学校 左侧，图标组 右侧） */
+    .contact {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      width: 100%; /* 使 contact 占满 header-text 宽度，方便右侧靠右 */
+      margin-top: 6px;
+    }
+
+    .contact-left {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      color: #555; /* 与 header-text p 一致 */
+      font-size: 1em;
+    }
+    .contact-left i { color: #555; margin-right: 6px; }
+
+    .contact-right {
+      display: flex;
+      margin-left: auto; /* 推到最右 */
+      gap: 16px;
+      align-items: center;
+    }
+    .contact-right a {
+      text-decoration: none;
+      color: #4C0099; /* 右侧链接图标为南大紫 */
+      font-size: 1.15em;
+    }
+    .contact-right a:hover { color: #2c3e50; }
+
+    /* 个性区（默认收起）*/
+    .personal-section {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 10px 20px; /* 左右与 main 对齐 */
+      box-sizing: border-box;
+      overflow: hidden;
+      max-height: 0;
+      opacity: 0;
+      transition: max-height 0.36s ease, opacity 0.28s ease, padding 0.28s ease;
+      border-top: none;
+    }
+    .personal-section p {
+      margin: 8px 10px 10px 10px; /* 上边距 4px，下边距 8px，与列表间隔匹配 */
+      font-weight: bold;
+    }
+    .personal-section.open {
+      padding: 16px 20px;
+      max-height: 6200px; /* 够放内容，若内容更多可调大 */
+      opacity: 1;
+      border: 1px dashed #ccc;
+      border-radius: 6px;
+      background: #fafafa;
+      margin-top: 16px;
+    }
+
+    main {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    section {
+      margin-bottom: 40px;
+    }
+    #publications a,
+    #publications-zh a {
+      color: #4C0099;
+      text-decoration: none;
+    }
+
+    #publications a:hover,
+    #publications-zh a:hover {
+      text-decoration: underline;
+    }
+    h2 {
+      font-size: 1.5em;
+      margin-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 4px;
+      font-weight: 500;
+      color: #111;
+    }
+
+    h3 {
+      font-size: 1.2em;
+      margin-top: 20px;
+      margin-bottom: 8px;
+      font-weight: 500;
+      color: #333;
+    }
+
+    ul { padding-left: 20px; margin: 0; }
+    li { margin-bottom: 8px; }
+
+    footer {
+      text-align: center;
+      font-size: 0.9em;
+      color: #777;
+      padding: 20px;
+      border-top: 1px solid #ddd;
+      margin-top: 40px;
+    }
+
+    .note { font-size: 0.8em; color: #666; }
+
+  /* 响应式微调（窄屏，手机端） */
+  @media (max-width: 700px) {
+    .research-interests {
+    white-space: normal;   /* 允许换行 */
+    word-break: break-word;
+    text-align: center;    /* 居中显示 */
+    }
+    .header-container {
+      flex-direction: column;
+      align-items: center;
+      text-align: center; /* 标题文字居中 */
+      gap: 16px;
+    }
+
+    .avatar-wrapper {
+      min-width: auto;
+    }
+
+    .profile-pic {
+      width: 100px;
+      height: 100px;
+    }
+
+    .header-text {
+      max-width: 100%;
+    }
+
+    .header-text h1 {
+      font-size: 1.6em;
+    }
+
+    .header-text p {
+      font-size: 0.95em;
+    }
+
+    /* contact 改为上下堆叠 */
+    .contact {
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .contact-left {
+      justify-content: center;
+      gap: 10px;
+      font-size: 0.9em;
+    }
+
+    .contact-right {
+      margin-left: 0;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    /* 折叠区的列表在手机端左右边距减小 */
+    .personal-section {
+      padding: 12px;
+    }
+    .fun-list li {
+      font-size: 0.9em;
+    }
+    .lang-btn {
+      position: fixed;   /* 固定，不随滚动条滚动 */
+      top: 15px;         /* 离页面上方 15px */
+      right: 15px;       /* 离页面右边 15px */
+      z-index: 9999;     /* 永远在最上层 */
+      padding: 6px 12px;
+      min-width: 40px;   /* 保证“中文”和“English”宽度一致 */
+      text-align: center;
+      border-radius: 5px;
+      background-color: #f5f5f5;
+      border: 1px solid #ccc;
+      cursor: pointer;
+      font-size: 14px;
+    }
+  }
+
+    .fun-list li {
+      list-style: none;
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 6px;
+    }
+    .fun-list i, .fun-list span.icon {
+      display: inline-block;
+      min-width: 28px; /* 保证对齐 */
+      text-align: center;
+    }
+
+    /* ---------- 新增样式：语言切换按钮与显示控制（对现有风格影响极小） ---------- */
+    .lang-btn {
+      position: fixed;
+      top: 12px;
+      right: 12px;
+      z-index: 1200;
+      padding: 4px 8px;
+      border-radius: 6px;
+      border: none;
+      background: #4C0099;
+      color: #fff;
+      font-weight: 500;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    }
+    .lang-btn:hover { background: #360073; }
+
+    /* 语言区块的显示/隐藏控制 */
+    .lang-section { display: none; }
+    .lang-section.active { display: block; }
+  </style>
+</head>
+<body>
+  <!-- 右上角语言切换按钮 -->
+  <button id="lang-toggle" class="lang-btn" aria-pressed="false">中文</button>
+
+  <!-- ========================= ENGLISH VERSION (原始内容) ========================= -->
+  <div id="en" class="lang-section active">
+    <header>
+      <div class="header-container">
+        <div class="avatar-wrapper">
+          <img src="./logo.png" alt="Profile photo" class="profile-pic">
+          <!-- toggle 按钮（aria-expanded 管理状态） -->
+          <button id="toggle-btn" class="toggle-btn" aria-expanded="false" aria-controls="personal-section" title="Show personal items">+</button>
+        </div>
+
+        <div class="header-text">
+          <h1>Yi Zhang <span class="no-bold-paren">(张懿)</span></h1>
+          <p>CS/AI PhD Candidate</p>
+          <p class="research-interests">Computer Vision · Semi- & Weakly-Supervised Learning · Medical Image Analysis</p>
+
+          <div class="contact" aria-label="contact and affiliation">
+            <div class="contact-left">
+              <span title="Location"><i class="fa-solid fa-location-dot"></i> Suzhou, China </span>
+              <span title="University"><i class="fa-solid fa-graduation-cap"></i> Nanjing University</span>
+            </div>
+
+            <div class="contact-right">
+              <a href="mailto:602025710045@smail.nju.edu.cn" title="Email">
+                <i class="fa-solid fa-envelope"></i>
+              </a>
+              <a href="https://github.com/yourgithub" target="_blank" title="GitHub">
+                <i class="fa-brands fa-github"></i>
+              </a>
+              <!-- 若未来需要再加平台，直接追加 <a> 即可 -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- 折叠区（英文，默认收起）-->
+    <div id="personal-section" class="personal-section" aria-hidden="true">
+      <p><strong>Hide desuwa</strong></p>
+      <ul class="fun-list">
+        <li><span class="icon">🌍</span> A wandering AI newbie on earth</li>
+        <li><span class="icon">🚫</span> Published&nbsp;<b>ZERO</b>&nbsp;papers at CVPR, ICCV, ECCV, ICML, NeurIPS, or ICLR.</li>
+        <li><span class="icon">🔤</span> Chinese (of course 😀) · English (reasonable 🤔) · French (almost forgotten 😅)</li>
+        <li><span class="icon">🎶</span> Music, movies, fashion, food, photography, and nature</li>
+        <li><span class="icon">🍴</span> Eats anything except <span class="icon">🍌</span> — loves all cuisines</li>
+        <li><span class="icon">📋</span> Ex-Head Moderator of Huawei Honor Tieba (now Honor Mobile Tieba), 2015–2017 </li>
+        <li><span class="icon">🔫</span> Ex-FPS talent: </li>
+        <li> &emsp;&emsp; — <img src="nz.jpg" alt="NZ Logo" class="game-logo"> <strong>Top 16</strong>&nbsp;nationally (in high school)</li>
+        <li> &emsp;&emsp; — <img src="CSGO.jpg" alt="CSGO Logo" class="game-logo"> <strong>S rank</strong>&nbsp;after 1800 hours (in undergraduate)</li>
+        <li> &emsp;&emsp; — <img src="valorant.png" alt="VAL Logo" class="game-logo"> <strong>Mythic I</strong>&nbsp;after 300 hours (in graduate)</li>
+        <li><span class="icon">🍼</span> Now "electronically ED": chill with dramas </li>
+        <li><span class="icon">🎓</span> Driving the AVATR 11 across every inch of western Sichuan, Yunnan, and the Grand Northwest of China.</li>
+        <li><span class="icon">💬</span> <b>"Boyhood is gone, adulthood never comes."</b></li>
+      </ul>
+    </div>
+<!--        <li><span class="icon">🔫</span> Ex-FPS talent — <img src="nz.jpg" alt="NZ Logo" class="game-logo"> (Top16 nationally), <img src="CSGO.jpg" alt="CSGO Logo" class="game-logo"> (S rank in 1800 hours), <img src="valorant.png" alt="VAL Logo" class="game-logo"> (Mythic I in 300 hours)</li>-->
+
+    <main>
+      <section id="education">
+        <h2><strong>Education</strong></h2>
+        <ul>
+          <li>
+	    <img src="nju_logo.jpg" alt="NJU Logo" class="school-logo">
+	    <strong>Ph.D. Candidate</strong>, <strong>Computer Science and Technology</strong>, February 2025 – Present<br>
+            Nanjing University, Suzhou, China<br>
+	    <div class="sub-info">
+              Lab: Reliable Machine Intelligence Laboratory (<strong>REMI-Lab</strong>)<br>
+              Advisor: Assoc. Prof. <a href="https://shuochenya.github.io/index.html" target="_blank">Shuo Chen</a> (GUSU-YOUNG Professor, NSFC Distinguished Young Scholar (Overseas))
+        </div>
+          </li>
+          <li>
+	    <img src="scu_logo.png" alt="SCU_Logo" class="school-logo">
+            <strong>M.Eng.</strong>, <strong>Artificial Intelligence</strong>, June 2021 – June 2024<br>
+            Sichuan University, Chengdu, China<br>
+	    <div class="sub-info">
+              Lab: Machine Intelligence Laboratory (<strong>MI-Lab</strong>)<br>
+              Advisor: Assoc. Prof. <a href="https://scholar.google.com/citations?user=YzGmRoAAAAAJ&hl=en&oi=ao" target="_blank">Haixian Zhang</a>
+        </div>
+          </li>
+          <li>
+	    <img src="shnu_logo.png" alt="SHNU_Logo" class="school-logo">-<img src="uca_logo.png" alt="UCA_Logo" class="school-logo"> 
+            <strong>B.Sc.</strong>, <strong>Computer Science and Technology</strong>, September 2015 – July 2019<br>
+            Shanghai Normal University - Université Clermont Auvergne (France) Joint Program, Shanghai, China <br>
+        <div class="sub-info">
+              The Xu Guangqi Honors Class<br>
+        </div>
+          </li>
+        </ul>
+      </section>
+
+      <section id="experience">
+        <h2><strong>Experience</strong></h2>
+        <ul>
+          <li>
+            <strong>Research Assistant</strong>, August 2024 – August 2025<br>
+            MI-Lab, Sichuan University, Chengdu, China
+          </li>
+          <li>
+            <strong>Intern Researcher</strong>, January 2024 – July 2024<br>
+            Institute of High Performance Computing (IHPC), A*STAR, Singapore<br>
+            <em>Leader: Senior Scientist <a href="https://liangli-zhen.github.io/" target="_blank">Liangli Zhen</a> and Scientist <a href="https://scholar.google.com/citations?user=nk4iMegAAAAJ&hl=en" target="_blank">Zizhou Wang </a></em>
+          </li>
+          <li>
+            <strong>Academic Affairs Officer</strong>, January 2020 – October 2020<br>
+            Chongqing Three Gorges Medical College, Chongqing, China
+          </li>
+          <li>
+            <strong>Data Engineer</strong>, February 2019 – August 2019<br>
+            BONC Ltd., Shanghai, China
+          </li>
+        </ul>
+      </section>
+
+      <section id="research-interests">
+        <h2><strong>Research Interests</strong></h2>
+        <ul>
+          <li><b>Computer Vision</b>: Object Detection</li>
+          <li><b>Semi- & Weakly-Supervised Learning</b>: Semi-/Weakly-Supervised Object Detection</li>
+          <li><b>Medical Image Analysis</b>: 3D/Longitudinal CT Computing, Computational Pathology</li>
+        </ul>
+      </section>
+
+      <section id="publications">
+        <h2><strong>Selected Publications</strong></h2>
+
+        <h3><b>Journal Papers </b><span class="note">(* denotes equal contribution)</span></h3>
+        <ol reversed>
+          <li>
+            <strong><a href="https://example.com/journal1.pdf" target="_blank">From Single to Universal: Tiny Lesion Detection in Medical Imaging</a></strong>.<br>
+            <strong><u>Y Zhang</u></strong>, Y Mao, X Lu, X Zou, H Huang, X Li, J Li, H Zhang.<br>
+            <em>Artificial Intelligence Review (<strong>AIR</strong>), 2024.</em>
+          </li>
+          <li>
+            <strong><a href="https://example.com/journal2.pdf" target="_blank">An Intelligent System of Predicting Lymph Node Metastasis in Colorectal Cancer Using 3D CT Scans</a></strong>.<br>
+            M Xie*, <strong><u>Y Zhang</u></strong>*, X Li, J Li, X Zou, Y Mao, H Zhang.<br>
+            <em>International Journal of Intelligent Systems (<strong>IJIS</strong>), 2024.</em>
+          </li>
+          <li>
+            <strong><a href="https://example.com/journal2.pdf" target="_blank">FAOT-Net: A 1.5-stage Framework for 3D Pelvic Lymph Node Detection with Online Candidate Tuning</a></strong>.<br>
+            <strong><u>Y Zhang</u></strong>, J Li, X Li, M Xie, MT Islam, H Zhang.<br>
+            <em>IEEE Transactions on Medical Imaging (<strong>TMI</strong>), 2023.</em>
+          </li>
+        </ol>
+
+        <h3><b>Conference Papers</b></h3>
+        <ol reversed>
+          <li>
+            <strong><a href="https://example.com/conf1.pdf" target="_blank">Asymmetric Matching in Abdominal Lymph Nodes of Follow-Up CT Scans</a></strong>.<br>
+            Y Mao, <strong><u>Y Zhang</u></strong>, X Zou, Y Zheng, H Zhang.<br>
+            <em>International Conference on Medical Image Computing and Computer Assisted Intervention (<strong>MICCAI</strong>), 2025.</em>
+          </li>
+          <li>
+            <strong><a href="https://example.com/conf1.pdf" target="_blank">MMUDA: A Mutual Multi-Task Learning Network with Unsupervised Domain Adaptation for Glaucoma Screening</a></strong>.<br>
+            T Yin, <strong><u>Y Zhang</u></strong>, D Wu, W Shang, H Zhang.<br>
+            <em>IEEE International Conference on Bioinformatics and Biomedicine (<strong>BIBM</strong>), 2024.</em>
+          </li>
+          <li>
+            <strong><a href="https://example.com/conf1.pdf" target="_blank">Predicting Lymph Node Metastasis of Colorectal Cancer in CT Scans Using Attention-Based Multiple Instance Learning</a></strong>.<br>
+            M Xie, <strong><u>Y Zhang</u></strong>, X Li, Y Mao, X Zou, H Zhang.<br>
+            <em>IEEE International Conference on Bioinformatics and Biomedicine (<strong>BIBM</strong>), 2023.</em>
+          </li>
+        </ol>
+
+        <h3><b>Preprint Papers </b><span class="note">(* denotes equal contribution)</span></h3>
+        <ol reversed>
+          <li>
+            <strong><a href="https://example.com/conf1.pdf" target="_blank">Look a Group at Once: Multi-Slide Modeling for Survival Prediction</a></strong>.<br>
+            X Li*, <strong><u>Y Zhang</u></strong>*, Y Xie, J Yang, X Wang, H Chen, H Zhang.<br>
+            <em>arXiv preprint, 2024.</em>
+          </li>
+        </ol>
+      </section>
+
+      <section id="professional-activities">
+        <h2><strong>Professional Activities</strong></h2>
+        <ul>
+          <li>
+            <strong>Journal Reviewer</strong><br>
+            IEEE Transactions on Medical Imaging (<strong>TMI</strong>)<br>
+          </li>
+        </ul>
+      </section>
+
+    </main>
+
+    <footer>
+      © 2025 Yi Zhang. All rights reserved.
+    </footer>
+  </div>
+
+  <!-- ========================= CHINESE VERSION ========================= -->
+  <div id="zh" class="lang-section">
+    <header>
+      <div class="header-container">
+        <div class="avatar-wrapper">
+          <img src="./logo.png" alt="头像" class="profile-pic">
+          <!-- 中文折叠按钮 -->
+          <button id="toggle-btn-zh" class="toggle-btn" aria-expanded="false" aria-controls="personal-section-zh" title="显示个人信息">+</button>
+        </div>
+
+        <div class="header-text">
+          <h1>张 懿 <span class="no-bold-paren">(Yi Zhang)</span></h1>
+          <p>计算机科学与技术/人工智能 博士生</p>
+          <p class="research-interests">计算机视觉  ·  半监督/弱监督学习  ·  医学影像分析</p>
+
+          <div class="contact" aria-label="联系与单位">
+            <div class="contact-left">
+              <span title="Location"><i class="fa-solid fa-location-dot"></i> 苏州，中国 </span>
+              <span title="University"><i class="fa-solid fa-graduation-cap"></i> 南京大学</span>
+            </div>
+
+            <div class="contact-right">
+              <a href="mailto:602025710045@smail.nju.edu.cn" title="邮箱">
+                <i class="fa-solid fa-envelope"></i>
+              </a>
+              <a href="https://github.com/yourgithub" target="_blank" title="GitHub">
+                <i class="fa-brands fa-github"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- 折叠区（中文）-->
+    <div id="personal-section-zh" class="personal-section" aria-hidden="true">
+      <p><strong>藏起来了说是</strong></p>
+      <ul class="fun-list">
+        <li><span class="icon">🌍</span> 到处跑的 AI 菜狗</li>
+        <li><span class="icon">🚫</span> 在国际顶级会议 CVPR、ICCV、ECCV、ICML、NeurIPS、ICLR 上发表论文&nbsp;<b>零</b>&nbsp;篇</li>
+        <li><span class="icon">🔤</span> 中文（那不然呢 😀）· 英语（确实 🤔）· 法语（快忘完了都 😅）</li>
+        <li><span class="icon">🎶</span> 音乐、电影、时尚、美食、摄影、大自然 </li>
+        <li><span class="icon">🍴</span> 什么都吃，除了 <span class="icon">🍌</span> —— 爱吃所有菜系（韩国菜除外）</li>
+        <li><span class="icon">📋</span> 前 华为荣耀 贴吧（今荣耀手机吧）大吧主（2015–2017） </li>
+                <li><span class="icon">🔫</span> 前 FPS“天才少年”: </li>
+        <li> &emsp;&emsp; — <img src="nz.jpg" alt="NZ Logo" class="game-logo"> 全国&nbsp;<strong>16 强</strong>&nbsp;（高中时期）</li>
+        <li> &emsp;&emsp; — <img src="CSGO.jpg" alt="CSGO Logo" class="game-logo"> 1800 小时&nbsp;<strong>S</strong>&nbsp;段（本科时期）</li>
+        <li> &emsp;&emsp; — <img src="valorant.png" alt="VAL Logo" class="game-logo"> 300 小时&nbsp;<strong>神话I</strong>（硕士时期）</li>
+        <li><span class="icon">🍼</span> 现在已经“电子ED”：享受追剧摸鱼</li>
+        <li><span class="icon">🎓</span> 开着 阿维塔11 走遍川西、云南与大西北的每一寸土地</li>
+        <li><span class="icon">💬</span> <b>“少年时代虽已逝，成人世界永不至。”</b></li>
+      </ul>
+    </div>
+
+    <main>
+      <section id="education-zh">
+        <h2><strong>教育背景</strong></h2>
+        <ul>
+<!--          <li>-->
+<!--	    <img src="umd_logo.png" alt="UMD Logo" class="school-logo">-->
+<!--	    <strong>访问博士生</strong>，2027 年 9 月 – 至今<br>-->
+<!--            马里兰大学（帕克分校）, 马里兰, 美国<br>-->
+<!--	    <div class="sub-info">-->
+<!--              XXXXXX实验室 (<strong>XXXX-Lab</strong>)<br>-->
+<!--              导师: <a href="https://shuochenya.github.io/index.html" target="_blank">XXXXXX</a> 副教授-->
+<!--            </div>-->
+<!--          </li>-->
+          <li>
+            <img src="nju_logo.jpg" alt="NJU Logo" class="school-logo">
+            <strong>工学博士（在读）</strong>，<strong>计算机科学与技术</strong>，2025 年 2 月 – 至今<br>
+            南京大学，苏州，中国<br>
+            <div class="sub-info">
+              可靠机器智能实验室 (<strong>REMI-Lab</strong>)<br>
+              导师：<a href="https://shuochenya.github.io/index.html" target="_blank">陈硕</a> 副教授（姑苏青年教授，海外优秀青年人才）
+            </div>
+          </li>
+          <li>
+            <img src="scu_logo.png" alt="SCU Logo" class="school-logo">
+            <strong>工学硕士</strong>，<strong>人工智能</strong>，2021 年 6 月 – 2024 年 6 月<br>
+            四川大学，成都，中国<br>
+            <div class="sub-info">
+              机器智能实验室（<strong>MI-Lab</strong>）<br>
+              导师：<a href="https://scholar.google.com/citations?user=YzGmRoAAAAAJ&hl=en&oi=ao" target="_blank">张海仙</a> 副教授
+            </div>
+          </li>
+          <li>
+            <img src="shnu_logo.png" alt="SHNU_Logo" class="school-logo">-<img src="uca_logo.png" alt="UCA_Logo" class="school-logo"> 
+            <strong>理学学士</strong>，<strong>计算机科学与技术</strong>，2015 年 9 月 – 2019 年 7 月<br>
+            上海师范大学 - 克莱蒙奥弗涅大学（法国）合作项目，上海，中国
+            <div class="sub-info">
+              徐光启班<br>
+            </div>
+          </li>
+        </ul>
+      </section>
+
+      <section id="experience-zh">
+        <h2><strong>工作经历</strong></h2>
+        <ul>
+          <li>
+            <strong>科研助理</strong>，2024 年 8 月 – 2025 年 8 月<br>
+            机器智能实验室（MI-Lab），四川大学，成都，中国
+          </li>
+          <li>
+            <strong>实习研究员</strong>，2024 年 1 月 – 2024 年 7 月<br>
+            高性能计算研究所（IHPC），科学技术研究局（A*STAR），新加坡<br>
+            <em>组长: 资深科学家 <a href="https://liangli-zhen.github.io/" target="_blank">Liangli Zhen</a> 和 科学家 <a href="https://scholar.google.com/citations?user=nk4iMegAAAAJ&hl=en" target="_blank">王梓舟 </a></em>
+          </li>
+          <li>
+            <strong>教学干事</strong>，2020 年 1 月 – 2020 年 10 月<br>
+            重庆三峡医药高等专科学校，重庆，中国
+          </li>
+          <li>
+            <strong>数据工程师</strong>，2019 年 2 月 – 2019 年 8 月<br>
+            东方国信科技股份有限公司，上海，中国
+          </li>
+        </ul>
+      </section>
+
+      <section id="research-interests-zh">
+        <h2><strong>研究兴趣</strong></h2>
+        <ul>
+          <li><b>计算机视觉</b>：目标检测</li>
+          <li><b>半监督/弱监督学习</b>：半监督/弱监督目标检测</li>
+          <li><b>医学影像分析</b>：3D/纵向 CT 计算、计算病理学</li>
+        </ul>
+      </section>
+
+      <section id="publications-zh">
+        <h2><strong>部分论文</strong></h2>
+
+        <h3><strong>期刊论文</strong> <span class="note">（* 表示同等贡献）</span></h3>
+        <ol reversed>
+          <li>
+            <strong><a href="https://example.com/journal1.pdf" target="_blank">From Single to Universal: Tiny Lesion Detection in Medical Imaging</a></strong>.<br>
+            <strong><u>张懿</u></strong>，毛轶绩，卢璇钰，邹星宇，黄昊，李欣洋，李佳悦，张海仙.<br>
+            <em>Artificial Intelligence Review (<strong>AIR</strong>), 2024.</em>
+          </li>
+          <li>
+            <strong><a href="https://example.com/journal2.pdf" target="_blank">An Intelligent System of Predicting Lymph Node Metastasis in Colorectal Cancer Using 3D CT Scans</a></strong>.<br>
+            谢敏*，<strong><u>张懿</u></strong>*，李欣洋，李佳悦，邹星宇，毛轶绩，张海仙.<br>
+            <em>International Journal of Intelligent Systems (<strong>IJIS</strong>), 2024.</em>
+          </li>
+          <li>
+            <strong><a href="https://example.com/journal2.pdf" target="_blank">FAOT-Net: A 1.5-stage Framework for 3D Pelvic Lymph Node Detection with Online Candidate Tuning</a></strong>.<br>
+            <strong><u>张懿</u></strong>，李佳悦，李欣洋，谢敏，MT Islam，张海仙.<br>
+            <em>IEEE Transactions on Medical Imaging (<strong>TMI</strong>), 2023.</em>
+          </li>
+        </ol>
+
+        <h3><strong>会议论文</strong></h3>
+        <ol reversed>
+          <li>
+            <strong><a href="https://example.com/conf1.pdf" target="_blank">Asymmetric Matching in Abdominal Lymph Nodes of Follow-Up CT Scans</a></strong>.<br>
+            毛轶绩，<strong><u>张懿</u></strong>，邹星宇，郑玉玲，张海仙.<br>
+            <em>International Conference on Medical Image Computing and Computer Assisted Intervention (<strong>MICCAI</strong>), 2025.</em>
+          </li>
+          <li>
+            <strong><a href="https://example.com/conf1.pdf" target="_blank">MMUDA: A Mutual Multi-Task Learning Network with Unsupervised Domain Adaptation for Glaucoma Screening</a></strong>.<br>
+            尹腾，<strong><u>张懿</u></strong>，吴达文，尚文一，张海仙.<br>
+            <em>IEEE International Conference on Bioinformatics and Biomedicine (<strong>BIBM</strong>), 2024.</em>
+          </li>
+          <li>
+            <strong><a href="https://example.com/conf1.pdf" target="_blank">Predicting Lymph Node Metastasis of Colorectal Cancer in CT Scans Using Attention-Based Multiple Instance Learning</a></strong>.<br>
+            谢敏，<strong><u>张懿</u></strong>，李欣洋，毛轶绩，邹星宇，张海仙.<br>
+            <em>IEEE International Conference on Bioinformatics and Biomedicine (<strong>BIBM</strong>), 2023.</em>
+          </li>
+        </ol>
+
+        <h3><strong>预印论文</strong> <span class="note">（* 表示同等贡献）</span></h3>
+        <ol reversed>
+          <li>
+            <strong><a href="https://example.com/conf1.pdf" target="_blank">Look a Group at Once: Multi-Slide Modeling for Survival Prediction</a></strong>.<br>
+            李欣洋*，<strong><u>张懿</u></strong>*，谢易，杨剑飞，王茜，陈浩，张海仙.<br>
+            <em>arXiv preprint, 2024.</em>
+          </li>
+        </ol>
+      </section>
+
+      <section id="professional-activities-zh">
+        <h2><strong>学术服务</strong></h2>
+        <ul>
+          <li>
+            <strong>期刊审稿人</strong><br>
+            IEEE Transactions on Medical Imaging (<strong>TMI</strong>)
+          </li>
+        </ul>
+      </section>
+    </main>
+
+    <footer>
+      © 2025 张懿. 保留所有权利.
+    </footer>
+  </div>
+
+  <!-- ========================= 脚本：折叠 + 语言切换（统一管理） ========================= -->
+  <script>
+    // 为每个语言区块（en / zh）绑定折叠按钮功能（头像下的 +）
+    (function () {
+      // 找到所有 lang-section（包含 en, zh）
+      document.querySelectorAll('.lang-section').forEach(langSection => {
+        const btn = langSection.querySelector('.toggle-btn');
+        const panel = langSection.querySelector('.personal-section');
+
+        if (!btn || !panel) return;
+
+        function setOpen(open) {
+          if (open) {
+            panel.classList.add('open');
+            panel.setAttribute('aria-hidden', 'false');
+            btn.setAttribute('aria-expanded', 'true');
+            btn.textContent = '−';
+          } else {
+            panel.classList.remove('open');
+            panel.setAttribute('aria-hidden', 'true');
+            btn.setAttribute('aria-expanded', 'false');
+            btn.textContent = '+';
+          }
+        }
+
+        // 初始收起
+        setOpen(false);
+
+        btn.addEventListener('click', function () {
+          const isOpen = btn.getAttribute('aria-expanded') === 'true';
+          setOpen(!isOpen);
+        });
+
+        btn.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            btn.click();
+          }
+        });
+      });
+    })();
+
+    // 语言切换按钮（右上）
+    (function () {
+      const toggleBtn = document.getElementById('lang-toggle');
+      const enBlock = document.getElementById('en');
+      const zhBlock = document.getElementById('zh');
+
+      // 安全检查
+      if (!toggleBtn || !enBlock || !zhBlock) return;
+
+      function showEnglish() {
+        enBlock.classList.add('active');
+        zhBlock.classList.remove('active');
+        toggleBtn.textContent = '中文';
+        toggleBtn.setAttribute('aria-pressed', 'false');
+        // scroll to top after switch for clarity
+        window.scrollTo(0, 0);
+      }
+
+      function showChinese() {
+        zhBlock.classList.add('active');
+        enBlock.classList.remove('active');
+        toggleBtn.textContent = 'ENG';
+        toggleBtn.setAttribute('aria-pressed', 'true');
+        window.scrollTo(0, 0);
+      }
+
+      // 默认：英文已显示（en 有 active 类）
+      toggleBtn.addEventListener('click', function () {
+        if (enBlock.classList.contains('active')) {
+          showChinese();
+        } else {
+          showEnglish();
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
