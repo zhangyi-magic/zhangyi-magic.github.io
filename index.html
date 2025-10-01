@@ -386,7 +386,17 @@
       min-width: 28px; /* 保证对齐 */
       text-align: center;
     }
-
+  /* 让论文列表与其他内容左对齐 */
+  #publications ol,
+  #publications-zh ol {
+    padding-left: 12px; /* 与其他内容对齐 */
+  }
+  
+  /* 调整数字标记的位置 */
+  #publications ol li,
+  #publications-zh ol li {
+    padding-left: 8px;
+  }
     /* ---------- 新增样式：语言切换按钮与显示控制（对现有风格影响极小） ---------- */
     .lang-btn {
       position: fixed;
