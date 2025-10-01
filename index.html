@@ -195,7 +195,10 @@
       padding-left: 2.5em !important; /* 使用 padding 来实现缩进 */
       text-indent: 0; /* 重置文本缩进 */
     }
-
+    /* 默认显示逗号 */
+    .comma {
+      display: inline;
+    }
     .fps-item::before {
       content: "-";
       position: absolute;
@@ -336,6 +339,9 @@
     .mobile-break {
       display: block;
     }
+    .comma {
+      display: none;
+    }
     .fps-item::before {
       left: 0.8em; /* 手机端调整破折号位置 */
     }
@@ -456,7 +462,7 @@
         <ul>
           <li>
 	    <img src="nju_logo.png" alt="NJU Logo" class="school-logo">
-	    <strong>Ph.D. Candidate</strong>, <strong>Computer Science and Technology</strong>, February 2025 – Present<br>
+	    <strong>Ph.D. Candidate</strong>, <strong>Computer Science and Technology</strong><span class="comma">, </span> <br class="mobile-break">February 2025 – Present<br>
             Nanjing University, Suzhou, China<br>
 	    <div class="sub-info">
               Lab: Reliable Machine Intelligence Laboratory (<strong>REMI-Lab</strong>)<br>
@@ -465,7 +471,7 @@
           </li>
           <li>
 	    <img src="scu_logo.png" alt="SCU_Logo" class="school-logo">
-            <strong>M.Eng.</strong>, <strong>Artificial Intelligence</strong>, June 2021 – June 2024<br>
+            <strong>M.Eng.</strong>, <strong>Artificial Intelligence</strong><span class="comma">, </span><br class="mobile-break">June 2021 – June 2024<br>
             Sichuan University, Chengdu, China<br>
 	    <div class="sub-info">
               Lab: Machine Intelligence Laboratory (<strong>MI-Lab</strong>)<br>
@@ -474,7 +480,7 @@
           </li>
           <li>
 	    <img src="shnu_logo.png" alt="SHNU_Logo" class="school-logo">-<img src="uca_logo.png" alt="UCA_Logo" class="school-logo"> 
-            <strong>B.Sc.</strong>, <strong>Computer Science and Technology</strong>, September 2015 – July 2019<br>
+            <strong>B.Sc.</strong>, <strong>Computer Science and Technology</strong><span class="comma">, </span><br class="mobile-break">September 2015 – July 2019<br>
             Shanghai Normal University - Université Clermont Auvergne (France) Joint Program, Shanghai, China <br>
         <div class="sub-info">
               The Xu Guangqi Honors Class<br>
@@ -487,16 +493,16 @@
         <h2><strong>Experience</strong></h2>
         <ul>
           <li>
-            <strong>Research Assistant</strong>, August 2024 – August 2025<br>
+            <strong>Research Assistant</strong><span class="comma">, </span><br class="mobile-break">August 2024 – August 2025<br>
             MI-Lab, Sichuan University, Chengdu, China
           </li>
           <li>
-            <strong>Intern Researcher</strong>, January 2024 – July 2024<br>
+            <strong>Intern Researcher</strong><span class="comma">, </span><br class="mobile-break">January 2024 – July 2024<br>
             Institute of High Performance Computing (IHPC), A*STAR, Singapore<br>
             <em>Leader: Senior Scientist <a href="https://liangli-zhen.github.io/" target="_blank">Liangli Zhen</a> and Scientist <a href="https://scholar.google.com/citations?user=nk4iMegAAAAJ&hl=en" target="_blank">Zizhou Wang </a></em>
           </li>
           <li>
-            <strong>Academic Affairs Officer</strong>, January 2020 – October 2020<br>
+            <strong>Academic Affairs Officer</strong><span class="comma">, </span><br class="mobile-break">January 2020 – October 2020<br>
             Chongqing Three Gorges Medical College, Chongqing, China
           </li>
           <li>
@@ -643,7 +649,7 @@
         <ul>
           <li>
             <img src="nju_logo.png" alt="NJU Logo" class="school-logo">
-            <strong>工学博士（在读）</strong>，<strong>计算机科学与技术</strong>，<br class="mobile-break">
+            <strong>工学博士（在读）</strong>，<strong>计算机科学与技术</strong><span class="comma">，</span><br class="mobile-break">
             2025 年 2 月 – 至今<br>
             南京大学，苏州，中国<br>
             <div class="sub-info">
@@ -653,7 +659,7 @@
           </li>
           <li>
             <img src="scu_logo.png" alt="SCU Logo" class="school-logo">
-            <strong>工学硕士</strong>，<strong>人工智能</strong>，<br class="mobile-break">
+            <strong>工学硕士</strong>，<strong>人工智能</strong><span class="comma">，</span><br class="mobile-break">
             2021 年 6 月 – 2024 年 6 月<br>
             四川大学，成都，中国<br>
             <div class="sub-info">
@@ -663,7 +669,7 @@
           </li>
           <li>
             <img src="shnu_logo.png" alt="SHNU_Logo" class="school-logo">-<img src="uca_logo.png" alt="UCA_Logo" class="school-logo"> 
-            <strong>理学学士</strong>，<strong>计算机科学与技术</strong>，<br class="mobile-break">
+            <strong>理学学士</strong>，<strong>计算机科学与技术</strong><span class="comma">，</span><br class="mobile-break">
             2015 年 9 月 – 2019 年 7 月<br>
             上海师范大学 - 克莱蒙奥弗涅大学（法国）合作项目，上海，中国
             <div class="sub-info">
@@ -677,20 +683,20 @@
         <h2><strong>工作经历</strong></h2>
         <ul>
           <li>
-            <strong>科研助理</strong>，<br class="mobile-break">2024 年 8 月 – 2025 年 8 月<br>
+            <strong>科研助理</strong><span class="comma">，</span><br class="mobile-break">2024 年 8 月 – 2025 年 8 月<br>
             机器智能实验室（MI-Lab），四川大学，成都，中国
           </li>
           <li>
-            <strong>实习研究员</strong>，<br class="mobile-break">2024 年 1 月 – 2024 年 7 月<br>
+            <strong>实习研究员</strong><span class="comma">，</span><br class="mobile-break">2024 年 1 月 – 2024 年 7 月<br>
             高性能计算研究所（IHPC），科学技术研究局（A*STAR），新加坡<br>
             <em>组长: 资深科学家 <a href="https://liangli-zhen.github.io/" target="_blank">Liangli Zhen</a> 和 科学家 <a href="https://scholar.google.com/citations?user=nk4iMegAAAAJ&hl=en" target="_blank">王梓舟 </a></em>
           </li>
           <li>
-            <strong>教学干事</strong>，<br class="mobile-break">2020 年 1 月 – 2020 年 10 月<br>
+            <strong>教学干事</strong><span class="comma">，</span><br class="mobile-break">2020 年 1 月 – 2020 年 10 月<br>
             重庆三峡医药高等专科学校，重庆，中国
           </li>
           <li>
-            <strong>数据工程师</strong>，<br class="mobile-break">2019 年 2 月 – 2019 年 8 月<br>
+            <strong>数据工程师</strong><span class="comma">，</span><br class="mobile-break">2019 年 2 月 – 2019 年 8 月<br>
             东方国信科技股份有限公司，上海，中国
           </li>
         </ul>
