@@ -184,7 +184,22 @@
       background: #fafafa;
       margin-top: 16px;
     }
+    /* 修复 FPS 条目在手机端的缩进问题 */
+    .fps-item {
+      position: relative;
+      padding-left: 2.5em !important; /* 使用 padding 来实现缩进 */
+      text-indent: 0; /* 重置文本缩进 */
+    }
 
+    .fps-item::before {
+      content: "-";
+      position: absolute;
+      left: 1.5em; /* 调整破折号位置 */
+      color: #333;
+    }
+    .fun-list strong {
+      margin: 0 0.3em; /* 左右各 0.3em 的边距 */
+    }
     main {
       max-width: 900px;
       margin: 40px auto;
@@ -294,6 +309,30 @@
     .personal-section {
       padding: 12px;
     }
+    .fps-item {
+    padding-left: 2.2em !important; /* 手机端稍小一些的缩进 */
+    }
+
+    .fps-item::before {
+      left: 1.2em; /* 手机端破折号位置调整 */
+    }
+    /* 修复手机端列表缩进过大的问题 */
+    .fun-list {
+      padding-left: 16px; /* 减少手机端的左内边距 */
+    }
+
+    .fun-list li {
+      margin-left: 0; /* 确保没有额外的左外边距 */
+    }
+
+    /* 特别处理 FPS 条目的缩进 */
+    .fps-item {
+      padding-left: 1.5em !important; /* 手机端减少缩进 */
+    }
+
+    .fps-item::before {
+      left: 0.8em; /* 手机端调整破折号位置 */
+    }
 
     .lang-btn {
       position: fixed;   /* 固定，不随滚动条滚动 */
@@ -390,21 +429,20 @@
       <p><strong>Hide desuwa</strong></p>
       <ul class="fun-list">
         <li><span class="icon">🌍</span> A wandering AI newbie on earth</li>
-        <li><span class="icon">🚫</span> Published<span style="white-space: pre"> </span><b>ZERO</b><span style="white-space: pre"> </span>papers at CVPR, ICCV, ECCV, ICML, NeurIPS, or ICLR.</li>
+        <li><span class="icon">🚫</span> Published<strong>ZERO</strong>papers at CVPR, ICCV, ECCV, ICML, NeurIPS, or ICLR.</li>
         <li><span class="icon">🔤</span> Chinese (of course 😀) · English (reasonable 🤔) · French (almost forgotten 😅)</li>
         <li><span class="icon">🎶</span> Music, movies, fashion, food, photography, and nature</li>
         <li><span class="icon">🍴</span> Eats anything except 🍌 — loves all cuisines</li>
         <li><span class="icon">📋</span> Ex-Head Moderator of Huawei Honor Tieba (now Honor Mobile Tieba), 2015–2017 </li>
         <li><span class="icon">🔫</span> Ex-FPS talent: </li>
-        <li>&ensp;&ensp;&ensp;- <img src="nz.jpg" alt="NZ Logo" class="game-logo"> <strong>Top 16</strong><span style="white-space: pre"> </span>nationally (in high school)</li>
-        <li>&ensp;&ensp;&ensp;- <img src="CSGO.jpg" alt="CSGO Logo" class="game-logo"> <strong>S rank</strong><span style="white-space: pre"> </span>after 1800 hours (in undergraduate)</li>
-        <li>&ensp;&ensp;&ensp;- <img src="valorant.png" alt="VAL Logo" class="game-logo"> <strong>Mythic I</strong><span style="white-space: pre"> </span>after 300 hours (in graduate)</li>
+        <li class="fps-item"><img src="nz.jpg" alt="NZ Logo" class="game-logo"> <strong>Top 16</strong> nationally (in high school)</li>
+        <li class="fps-item"><img src="CSGO.jpg" alt="CSGO Logo" class="game-logo"> <strong>Rank S</strong> after 1800 hours (in undergraduate)</li>
+        <li class="fps-item"><img src="valorant.png" alt="VAL Logo" class="game-logo"> <strong>Mythic I</strong> after 300 hours (in graduate)</li>
         <li><span class="icon">🍼</span> Now "electronically ED": chill with dramas </li>
         <li><span class="icon">🎓</span> Driving the AVATR 11 across every inch of western Sichuan, Yunnan, and the Grand Northwest of China.</li>
         <li><span class="icon">💬</span> <b>"Boyhood is gone, adulthood never comes."</b></li>
       </ul>
     </div>
-<!--        <li><span class="icon">🔫</span> Ex-FPS talent — <img src="nz.jpg" alt="NZ Logo" class="game-logo"> (Top16 nationally), <img src="CSGO.jpg" alt="CSGO Logo" class="game-logo"> (S rank in 1800 hours), <img src="valorant.png" alt="VAL Logo" class="game-logo"> (Mythic I in 300 hours)</li>-->
 
     <main>
       <section id="education">
@@ -578,15 +616,15 @@
       <p><strong>藏起来了说是</strong></p>
       <ul class="fun-list">
         <li><span class="icon">🌍</span> 到处跑的 AI 菜狗</li>
-        <li><span class="icon">🚫</span> 在国际顶级会议 CVPR、ICCV、ECCV、ICML、NeurIPS、ICLR 上发表论文<b>零</b>篇</li>
+        <li><span class="icon">🚫</span> 在国际顶级会议 CVPR、ICCV、ECCV、ICML、NeurIPS、ICLR 上发表论文<strong>零</strong>篇</li>
         <li><span class="icon">🔤</span> 中文（那不然呢 😀）· 英语（确实 🤔）· 法语（快忘完了都 😅）</li>
         <li><span class="icon">🎶</span> 音乐、电影、时尚、美食、摄影、大自然 </li>
         <li><span class="icon">🍴</span> 什么都吃，除了 <span class="icon">🍌</span> —— 爱吃所有菜系（韩国菜除外）</li>
         <li><span class="icon">📋</span> 前 华为荣耀 贴吧（今荣耀手机吧）大吧主（2015–2017） </li>
         <li><span class="icon">🔫</span> 前 FPS“天才少年”: </li>
-        <li><span style="white-space: pre">    -</span> <img src="nz.jpg" alt="NZ Logo" class="game-logo"> 全国<span style="white-space: pre"> </span><strong>16 强</strong>（高中时期）</li>
-        <li><span style="white-space: pre">    -</span> <img src="CSGO.jpg" alt="CSGO Logo" class="game-logo"> 1800 小时<span style="white-space: pre"> </span><strong>S</strong><span style="white-space: pre"> </span>段（本科时期）</li>
-        <li><span style="white-space: pre">    -</span> <img src="valorant.png" alt="VAL Logo" class="game-logo"> 300 小时<span style="white-space: pre"> </span><strong>神话I</strong>（硕士时期）</li>
+        <li class="fps-item"><img src="nz.jpg" alt="NZ Logo" class="game-logo"> 全国<strong>16</strong>强（高中时期）</li>
+        <li class="fps-item"><img src="CSGO.jpg" alt="CSGO Logo" class="game-logo"> 1800 小时<strong>S</strong>段（本科时期）</li>
+        <li class="fps-item"><img src="valorant.png" alt="VAL Logo" class="game-logo"> 300 小时<strong>神话I</strong>（硕士时期）</li>
         <li><span class="icon">🍼</span> 现在已经“电子ED”：享受追剧摸鱼</li>
         <li><span class="icon">🎓</span> 开着 阿维塔11 走遍川西、云南与大西北的每一寸土地</li>
         <li><span class="icon">💬</span> <b>“少年时代虽已逝，成人世界永不至。”</b></li>
