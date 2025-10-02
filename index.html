@@ -273,6 +273,36 @@
 
     .note { font-size: 0.8em; color: #666; }
 
+    .fun-list li {
+      position: relative;
+      padding-left: 28px; /* 为图标留出空间 */
+      margin-bottom: 6px;
+      font-size: 0.9em;
+      min-height: 1.2em;
+    }
+
+    .fun-list .icon {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 28px;
+      text-align: center;
+    }
+
+    /* 确保 FPS 条目不受影响 */
+    .fps-item {
+      position: relative;
+      padding-left: 2.5em !important;
+      text-indent: 0;
+    }
+
+    .fps-item::before {
+      content: "-";
+      position: absolute;
+      left: 1.5em;
+      color: #333;
+    }
+
   /* 响应式微调（窄屏，手机端） */
   @media (max-width: 700px) {
     .research-interests {
@@ -387,6 +417,21 @@
       min-width: 28px; /* 保证对齐 */
       text-align: center;
     }
+    .fun-list li {
+    padding-left: 24px; /* 手机端稍小的图标空间 */
+  }
+
+  .fun-list .icon {
+    width: 24px; /* 手机端图标区域稍小 */
+  }
+
+  .fps-item {
+    padding-left: 2.2em !important; /* 手机端 FPS 缩进调整 */
+  }
+
+  .fps-item::before {
+    left: 1.2em; /* 手机端破折号位置调整 */
+  }
   /* 让论文列表与其他内容左对齐 */
   #publications ol,
   #publications-zh ol {
@@ -664,7 +709,7 @@
         <li class="fps-item"><img src="valorant.png" alt="VAL Logo" class="game-logo"> 300 小时<strong>神话I</strong>（硕士时期）</li>
         <li><span class="icon">🍼</span> 现在已经“电子ED”：享受追剧摸鱼</li>
         <li><span class="icon">🎓</span> 开着 阿维塔11 走遍川西、云南与大西北的每一寸土地</li>
-        <li><span class="icon">💬</span><strong>“少年时代虽已逝，成人世界永不至。”</strong></li>
+        <li><span class="icon">💬</span><strong>“年少虽已逝，成人永不至。”</strong></li>
       </ul>
     </div>
 
