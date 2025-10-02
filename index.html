@@ -201,24 +201,46 @@
       background: #fafafa;
       margin-top: 16px;
     }
+    .fun-list strong {
+      margin: 0 0.3em; /* 左右各 0.3em 的边距 */
+    }
+    .fun-list li {
+      position: relative;
+      padding-left: 28px; /* 为图标留出空间 */
+      margin-bottom: 6px;
+      font-size: 0.9em;
+      min-height: 1.2em;
+    }
+    .fun-list .icon {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 28px;
+      text-align: center;
+    }
+    /* 确保 FPS 条目不受影响 */
+    .fps-item {
+      position: relative;
+      padding-left: 2.5em !important;
+      text-indent: 0;
+    }
+    .fps-item::before {
+      content: "-";
+      position: absolute;
+      left: 1.5em;
+      color: #333;
+    }
     /* 修复 FPS 条目在手机端的缩进问题 */
     .fps-item {
       position: relative;
       padding-left: 2.5em !important; /* 使用 padding 来实现缩进 */
       text-indent: 0; /* 重置文本缩进 */
     }
-    /* 默认显示逗号 */
-    .comma {
-      display: inline;
-    }
     .fps-item::before {
       content: "-";
       position: absolute;
       left: 1.5em; /* 调整破折号位置 */
       color: #333;
-    }
-    .fun-list strong {
-      margin: 0 0.3em; /* 左右各 0.3em 的边距 */
     }
 
     main {
@@ -228,6 +250,10 @@
     }
     .mobile-break {
       display: none;
+    }
+    /* 默认显示逗号 */
+    .comma {
+      display: inline;
     }
     section {
       margin-bottom: 40px;
@@ -272,36 +298,6 @@
     }
 
     .note { font-size: 0.8em; color: #666; }
-
-    .fun-list li {
-      position: relative;
-      padding-left: 28px; /* 为图标留出空间 */
-      margin-bottom: 6px;
-      font-size: 0.9em;
-      min-height: 1.2em;
-    }
-
-    .fun-list .icon {
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 28px;
-      text-align: center;
-    }
-
-    /* 确保 FPS 条目不受影响 */
-    .fps-item {
-      position: relative;
-      padding-left: 2.5em !important;
-      text-indent: 0;
-    }
-
-    .fps-item::before {
-      content: "-";
-      position: absolute;
-      left: 1.5em;
-      color: #333;
-    }
 
   /* 响应式微调（窄屏，手机端） */
   @media (max-width: 700px) {
@@ -513,7 +509,7 @@
         <li><span class="icon">🔤</span> Chinese (of course 😀) · English (reasonable 🤔) · French (almost forgotten 😅)</li>
         <li><span class="icon">🎶</span> Music, movies, fashion, food, photography, and nature</li>
         <li><span class="icon">🍴</span> Eats anything except 🍌 — loves all cuisines</li>
-        <li><span class="icon">📋</span> Ex-Head Moderator of Huawei Honor Tieba (now Honor Mobile Tieba), 2015–2017 </li>
+        <li><span class="icon">📋</span> Ex-Head Moderator of <em>"Huawei Honor Tieba"</em> (now <em>"Honor Mobile Tieba"</em>), 2015–2017 </li>
         <li><span class="icon">🔫</span> Ex-FPS talent: </li>
         <li class="fps-item"><img src="nz.jpg" alt="NZ Logo" class="game-logo"> <strong>Top 16</strong> nationally (in high school)</li>
         <li class="fps-item"><img src="CSGO.jpg" alt="CSGO Logo" class="game-logo"> <strong>Rank S</strong> after 1800 hours (in undergraduate)</li>
@@ -702,7 +698,7 @@
         <li><span class="icon">🔤</span> 中文（那不然呢 😀）· 英语（确实 🤔）· 法语（快忘完了都 😅）</li>
         <li><span class="icon">🎶</span> 音乐、电影、时尚、美食、摄影、大自然 </li>
         <li><span class="icon">🍴</span> 什么都吃，除了 <span class="icon">🍌</span> —— 爱吃所有菜系（韩国菜除外）</li>
-        <li><span class="icon">📋</span> 前 华为荣耀 贴吧（今荣耀手机吧）大吧主（2015–2017） </li>
+        <li><span class="icon">📋</span> 前《华为荣耀》贴吧（今《荣耀手机》吧）大吧主（2015–2017） </li>
         <li><span class="icon">🔫</span> 前 FPS“天才少年”: </li>
         <li class="fps-item"><img src="nz.jpg" alt="NZ Logo" class="game-logo"> 全国<strong>16</strong>强（高中时期）</li>
         <li class="fps-item"><img src="CSGO.jpg" alt="CSGO Logo" class="game-logo"> 1800 小时<strong>S</strong>段（本科时期）</li>
