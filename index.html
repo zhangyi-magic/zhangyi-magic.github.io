@@ -66,24 +66,49 @@
     section#news-zh h2 {
       font-size: 1.2em;
     }
-    .news-list {
-      line-height: 1.2; /* 单倍行距 */
-      padding-left: 20px;
-      margin: 0;
-    }
-    .news-list li {
-      margin-bottom: 4px; /* 减少行间距 */
-      list-style-type: disc;
-    }
-    .news-date {
-      color: #666;
-      font-size: 0.94em;
-      font-weight: 500;
-      min-width: 85px;
-      flex-shrink: 0;
-      margin-right: 8px;
-      text-align: left; /* 右对齐更整齐 */
-    }
+.news-list {
+  line-height: 1.2;
+  padding-left: 20px;
+  margin: 0;
+}
+
+.news-list li {
+  margin-bottom: 4px;
+  display: flex;
+  align-items: flex-start;
+  position: relative;
+  padding-left: 16px; /* 为小圆点留出空间 */
+  list-style: none; /* 移除默认列表样式 */
+}
+
+/* 手动添加小圆点 */
+.news-list li::before {
+  content: "•";
+  position: absolute;
+  left: 6px;
+  top: -0.1em;
+  color: #333;
+  font-size: 1.1em;
+}
+
+.news-date {
+  color: #666;
+  font-size: 0.94em;
+  font-weight: 500;
+  flex-shrink: 0;
+  margin-right: 8px;
+  text-align: left;
+}
+
+.news-content {
+  margin-left: 0;
+  flex: 1;
+  min-width: 0;
+}
+#zh .news-content {
+  font-size: 0.94em; /* 调小字体 */
+}
+
     /* 专门针对导师/合作者的人名链接 */
     .sub-info a,
     em a {
@@ -576,14 +601,33 @@
       <section id="news">
         <h2><strong>News</strong></h2>
         <ul class="news-list">
-          <li><span class="news-date">06. 2025</span> One paper accepted to MICCAI 2025.</li>
-          <li><span class="news-date">02. 2025</span> Started my PhD at NJU.</li>
-          <li><span class="news-date">12. 2024</span> One paper made public (no updates expected).</li>
-          <li><span class="news-date">07. 2024</span> Completed internship at IHPC, A*STAR.</li>
-          <li><span class="news-date">01. 2024</span> One review paper accepted to AIR.</li>
-          <li><span class="news-date">08. 2023</span> One paper accepted to IEEE TMI.</li>
+          <li>
+            <span class="news-date">06. 2025</span>
+            <span class="news-content">One paper accepted to MICCAI 2025.</span>
+          </li>
+          <li>
+            <span class="news-date">02. 2025</span>
+            <span class="news-content">Started my PhD at NJU.</span>
+          </li>
+          <li>
+            <span class="news-date">12. 2024</span>
+            <span class="news-content">One paper made public (no updates expected).</span>
+          </li>
+          <li>
+            <span class="news-date">07. 2024</span>
+            <span class="news-content">Completed internship at IHPC, A*STAR.</span>
+          </li>
+          <li>
+            <span class="news-date">01. 2024</span>
+            <span class="news-content">One review paper accepted to AIR.</span>
+          </li>
+          <li>
+            <span class="news-date">08. 2023</span>
+            <span class="news-content">One paper accepted to IEEE TMI.</span>
+          </li>
         </ul>
       </section>
+
       <section id="education">
         <h2><strong>Education</strong></h2>
         <ul>
@@ -782,16 +826,34 @@
 
     <main>
       <section id="news-zh">
-        <h2><strong>近期动态</strong></h2>
+        <h2><strong>News</strong></h2>
         <ul class="news-list">
-          <li><span class="news-date">06. 2025</span> 一篇论文被 MICCAI 2025 接收</li>
-          <li><span class="news-date">02. 2025</span> 开启在南京大学的博士阶段生活</li>
-          <li><span class="news-date">12. 2024</span> 一篇论文发布在 arXiv（大概率不会再推进）</li>
-          <li><span class="news-date">07. 2024</span> 完成新加坡 A*STAR IHPC 科研实习</li>
-          <li><span class="news-date">01. 2024</span> 一篇综述论文被 AIR 期刊接收</li>
-          <li><span class="news-date">08. 2023</span> 一篇论文被 IEEE TMI 期刊接收</li>
+          <li>
+            <span class="news-date">06. 2025</span>
+            <span class="news-content">一篇论文被 MICCAI 2025 接收</span>
+          </li>
+          <li>
+            <span class="news-date">02. 2025</span>
+            <span class="news-content">开启在南京大学的博士阶段生活</span>
+          </li>
+          <li>
+            <span class="news-date">12. 2024</span>
+            <span class="news-content">一篇论文发布在 arXiv（但大概率不再推进）</span>
+          </li>
+          <li>
+            <span class="news-date">07. 2024</span>
+            <span class="news-content">完成新加坡 A*STAR IHPC 科研实习</span>
+          </li>
+          <li>
+            <span class="news-date">01. 2024</span>
+            <span class="news-content">一篇综述论文被 AIR 期刊接收</span>
+          </li>
+          <li>
+            <span class="news-date">08. 2023</span>
+            <span class="news-content">一篇论文被 IEEE TMI 期刊接收</span>
+          </li>
         </ul>
-    </section>
+      </section>
       <section id="education-zh">
         <h2><strong>教育背景</strong></h2>
         <ul>
