@@ -61,6 +61,25 @@
       font-style: italic;
     }
 
+    /* News 部分样式 */
+    .news-list {
+      line-height: 1.2; /* 单倍行距 */
+      padding-left: 20px;
+      margin: 0;
+    }
+    .news-list li {
+      margin-bottom: 4px; /* 减少行间距 */
+      list-style-type: disc;
+    }
+.news-date {
+  color: #666;
+  font-size: 0.94em;
+  font-weight: 500;
+  min-width: 85px;
+  flex-shrink: 0;
+  margin-right: 12px;
+  text-align: left; /* 右对齐更整齐 */
+}
     /* 专门针对导师/合作者的人名链接 */
     .sub-info a,
     em a {
@@ -313,6 +332,15 @@
     #zh section h2 {
       letter-spacing: 0.08em;
     }
+
+    .news-list {
+      padding-left: 16px;
+    }
+    .news-list li {
+      margin-bottom: 3px;
+      font-size: 0.9em;
+    }
+
     .research-interests {
     white-space: normal;   /* 允许换行 */
     word-break: break-word;
@@ -541,6 +569,16 @@
     </div>
 
     <main>
+      <section id="news">
+        <h2><strong>News</strong></h2>
+        <ul class="news-list">
+          <li><span class="news-date">06. 2025</span> One paper accepted to MICCAI 2025.</li>
+          <li><span class="news-date">02. 2025</span> Started my PhD at NJU.</li>
+          <li><span class="news-date">07. 2024</span> Completed research internship at IHPC, A*STAR, Singapore.</li>
+          <li><span class="news-date">01. 2024</span> One review paper accepted to AIR.</li>
+          <li><span class="news-date">08. 2023</span> One paper accepted to IEEE TMI.</li>
+        </ul>
+      </section>
       <section id="education">
         <h2><strong>Education</strong></h2>
         <ul>
@@ -738,6 +776,16 @@
     </div>
 
     <main>
+      <section id="news-zh">
+        <h2><strong>近期动态</strong></h2>
+        <ul class="news-list">
+          <li><span class="news-date">06. 2025</span> 一篇论文被 MICCAI 2025 接收</li>
+          <li><span class="news-date">02. 2025</span> 开启在南京大学的博士阶段生活</li>
+          <li><span class="news-date">07. 2024</span> 完成新加坡 A*STAR IHPC 科研实习</li>
+          <li><span class="news-date">01. 2024</span> 一篇综述论文被 AIR 期刊接收</li>
+          <li><span class="news-date">08. 2023</span> 一篇论文被 IEEE TMI 期刊接收</li>
+        </ul>
+    </section>
       <section id="education-zh">
         <h2><strong>教育背景</strong></h2>
         <ul>
