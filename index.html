@@ -292,6 +292,64 @@
       left: 1.5em; /* 调整破折号位置 */
       color: #333;
     }
+/* infras 部分样式 */
+.infra-list {
+  padding-left: 20px;
+  margin: 0;
+}
+
+.infra-item {
+  margin-bottom: 30px;
+  list-style-type: disc;
+}
+
+.infra-title {
+  font-size: 1.1em;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.infra-description {
+  margin-bottom: 12px;
+  line-height: 1.5;
+  color: #555;
+}
+
+.infra-milestones {
+  padding-left: 20px;
+  margin: 0;
+}
+
+.infra-milestones li {
+  margin-bottom: 6px;
+  line-height: 1.4;
+  color: #555;
+}
+
+.infra-date {
+  color: #666;
+  font-style: italic;
+  font-size: 0.9em;
+}
+
+/* GIF 图片画廊样式 */
+.infra-gallery {
+  display: flex;
+  gap: 15px;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 15px;
+  flex-wrap: wrap;
+}
+
+.infra-gif {
+  width: 270px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
 
     main {
       max-width: 900px;
@@ -783,6 +841,30 @@
         </ol>
       </section>
 
+      <section id="infrastructure">
+        <h2><strong>Research Infrastructure</strong></h2>
+        <ul class="infra-list">
+          <li class="infra-item">
+            <h3 class="infra-title">Abdominopelvic Lymph Node Analysis System</h3>
+            <p class="infra-description">Collaborating with clinical radiologists to construct large-scale annotated datasets and computational frameworks for lymph node detection, longitudinal tracking, and metastasis prediction in abdominal malignancies. <span class="infra-date">[Deployed at West China Hospital of Sichuan University]</span></p>
+            <ul class="infra-milestones">
+              <li>Established the initial detection dataset comprising <strong>268 CT volumes</strong> with <strong>6,800+</strong> meticulously annotated lymph nodes. <span class="infra-date">[October 2022]</span></li>
+              <li>Extended the collection to a second-phase detection dataset with <strong>400 CT volumes</strong> and <strong>10,000+</strong> comprehensive annotations. <span class="infra-date">[December 2024] - to be open sourced</span></li>
+              <li class="highlight-milestone">Pioneered the <strong>first expert-curated longitudinal tracking dataset</strong>, featuring <strong>200+ temporal CT pairs</strong> with <strong>2,800+ precisely matched lymph node trajectories</strong> — representing the world's first fully manually annotated temporal medical image correspondence dataset. <span class="infra-date">[December 2024] - to be open sourced</span></li>
+          </ul>
+          </li>
+          <li class="infra-item">
+            <h3 class="infra-title">Abdominopelvic Cancer Integrated Platform</h3>
+            <p class="infra-description">Developing an integrated platform for large-scale CT scan visualization, data management, and precise annotation workflows. <span class="infra-date">[Deployed at West China Hospital of Sichuan University]</span></p>
+            <div class="infra-gallery">
+              <img src="main-small.gif" alt="Main page" class="infra-gif">
+              <img src="func1-small.gif" alt="Function page" class="infra-gif">
+              <img src="func2-small.gif" alt="Annotation page" class="infra-gif">
+            </div>
+          </li>
+        </ul>
+      </section>
+
       <section id="services">
         <h2><strong>Services</strong></h2>
         <ul>
@@ -1010,6 +1092,30 @@
             <em>arXiv preprint, 2024.</em>
           </li>
         </ol>
+      </section>
+
+      <section id="infrastructure-zh">
+        <h2><strong>基础设施建设</strong></h2>
+        <ul class="infra-list">
+          <li class="infra-item">
+            <h3 class="infra-title">腹盆腔淋巴结分析系统</h3>
+            <p class="infra-description">与临床放射科医生合作，构建大规模标注数据集和计算框架，用于腹部恶性肿瘤的淋巴结检测、纵向追踪和转移预测。 <span class="infra-date">[应用于四川大学华西医院]</span></p>
+            <ul class="infra-milestones">
+              <li>建立初始检测数据集，包含<strong>268例CT</strong>和<strong>6,800+</strong>精准标注的淋巴结。<span class="infra-date">[2022年10月]</span></li>
+              <li>扩展第二期检测数据集，包含<strong>400例CT</strong>和<strong>10,000+</strong>全面标注。<span class="infra-date">[2024年12月] - 将开源</span></li>
+              <li class="highlight-milestone">开创了<strong>首个专家标注的纵向追踪数据集</strong>，包含<strong>200+时序CT对</strong>和<strong>2,800+精确匹配的淋巴结轨迹</strong> —— 也许是世界上第一个完整人工精细标注的时序医学图像对应关系数据集。<span class="infra-date">[2024年12月] - 将开源</span></li>
+            </ul>
+          </li>
+          <li class="infra-item">
+            <h3 class="infra-title">腹盆腔癌症分析平台</h3>
+            <p class="infra-description">开发用于大规模CT扫描可视化、数据管理和精准标注工作流程的一体化平台。 <span class="infra-date">[应用于四川大学华西医院]</span></p>
+            <div class="infra-gallery">
+              <img src="main-small.gif" alt="淋巴结检测与分割界面" class="infra-gif">
+              <img src="func1-small.gif" alt="跨时间点的纵向淋巴结追踪" class="infra-gif">
+              <img src="func2-small.gif" alt="平台仪表盘与标注工具" class="infra-gif">
+            </div>
+          </li>
+        </ul>
       </section>
 
       <section id="services-zh">
