@@ -548,6 +548,18 @@
     .fps-item::before {
       left: 0.8em; /* 手机端调整破折号位置 */
     }
+
+    .infra-gallery {
+      display: flex;
+      flex-direction: column; /* 确保竖向排列 */
+      align-items: center; /* 水平居中 */
+      justify-content: center;
+      gap: 10px;
+    }
+    .infra-gif {
+      width: 280px; /* 手机端稍大一些 */
+      max-width: 90%; /* 防止超出屏幕 */
+    }
   }
     .lang-btn {
       position: fixed;   /* 固定，不随滚动条滚动 */
@@ -623,11 +635,6 @@
     /* 语言区块的显示/隐藏控制 */
     .lang-section { display: none; }
     .lang-section.active { display: block; }
-
-    .infra-gallery {
-      justify-content: center; /* 手机端居中 */
-      gap: 10px;
-    }
 
   </style>
 </head>
