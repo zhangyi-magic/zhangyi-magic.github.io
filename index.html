@@ -9,6 +9,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Yi Zhang (张懿) | Academic Profile</title>
   <style>
+    a {
+      color: #4C0099 !important;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+
     #zh {
       font-family: "Microsoft YaHei", "微软雅黑", sans-serif;
       letter-spacing: 0.08em;  /* 字间距，可根据需要调大或调小 */
@@ -104,17 +112,6 @@
     }
     #zh .news-content {
       font-size: 0.94em; /* 调小字体 */
-    }
-
-    /* 专门针对导师/合作者的人名链接 */
-    .sub-info a,
-    em a {
-      color: #4C0099 !important;
-      text-decoration: none;
-    }
-    .sub-info a:hover,
-    em a:hover {
-      text-decoration: underline;
     }
 
     header {
@@ -292,64 +289,64 @@
       left: 1.5em; /* 调整破折号位置 */
       color: #333;
     }
-/* resourcess 部分样式 */
-.resources-list {
-  padding-left: 20px;
-  margin: 0;
-}
+    /* resourcess 部分样式 */
+    .resources-list {
+      padding-left: 20px;
+      margin: 0;
+    }
 
-.resources-item {
-  margin-bottom: 30px;
-  list-style-type: disc;
-}
+    .resources-item {
+      margin-bottom: 30px;
+      list-style-type: disc;
+    }
 
-.resources-title {
-  font-size: 1.1em;
-  font-weight: 600;
-  color: #333;
-  margin-bottom: 8px;
-}
+    .resources-title {
+      font-size: 1.1em;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 8px;
+    }
 
-.resources-description {
-  margin-bottom: 12px;
-  line-height: 1.5;
-  color: #555;
-}
+    .resources-description {
+      margin-bottom: 12px;
+      line-height: 1.5;
+      color: #555;
+    }
 
-.resources-milestones {
-  padding-left: 20px;
-  margin: 0;
-}
+    .resources-milestones {
+      padding-left: 20px;
+      margin: 0;
+    }
 
-.resources-milestones li {
-  margin-bottom: 6px;
-  line-height: 1.4;
-  color: #555;
-}
+    .resources-milestones li {
+      margin-bottom: 6px;
+      line-height: 1.4;
+      color: #555;
+    }
 
-.resources-date {
-  color: #666;
-  font-style: italic;
-  font-size: 0.9em;
-}
+    .resources-date {
+      color: #666;
+      font-style: italic;
+      font-size: 0.9em;
+    }
 
-/* GIF 图片画廊样式 */
-.resources-gallery {
-  display: flex;
-  gap: 15px;
-  justify-content: flex-start;
-  align-items: center;
-  margin-top: 15px;
-  flex-wrap: wrap;
-}
+    /* GIF 图片画廊样式 */
+    .resources-gallery {
+      display: flex;
+      gap: 15px;
+      justify-content: flex-start;
+      align-items: center;
+      margin-top: 15px;
+      flex-wrap: wrap;
+    }
 
-.resources-gif {
-  width: 270px;
-  object-fit: cover;
-  border-radius: 8px;
-  border: 1px solid #ddd;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
+    .resources-gif {
+      width: 270px;
+      object-fit: cover;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
 
     main {
       max-width: 900px;
@@ -366,16 +363,7 @@
     section {
       margin-bottom: 40px;
     }
-    #publications a,
-    #publications-zh a {
-      color: #4C0099;
-      text-decoration: none;
-    }
 
-    #publications a:hover,
-    #publications-zh a:hover {
-      text-decoration: underline;
-    }
     h2 {
       font-size: 1.5em;
       margin-bottom: 16px;
@@ -613,7 +601,7 @@
     /* 调整数字标记的位置 */
     #publications ol li,
     #publications-zh ol li {
-      padding-left: 12px;
+      padding-left: 4px;
     }
 
     /* ---------- 新增样式：语言切换按钮与显示控制（对现有风格影响极小） ---------- */
@@ -710,12 +698,16 @@
         <h2><strong>News</strong></h2>
         <ul class="news-list">
           <li>
+            <span class="news-date">2025.10</span>
+            <span class="news-content">Won First Prize in the 1st Data and AI Implementation Competition.</span>
+          </li>
+          <li>
             <span class="news-date">2025.06</span>
-            <span class="news-content">One paper accepted to MICCAI 2025.</span>
+            <span class="news-content">One paper accepted at MICCAI 2025.</span>
           </li>
           <li>
             <span class="news-date">2025.02</span>
-            <span class="news-content">Started my PhD journey at NJU.</span>
+            <span class="news-content">Started PhD studies at NJU.</span>
           </li>
           <li>
             <span class="news-date">2024.12</span>
@@ -727,11 +719,11 @@
           </li>
           <li>
             <span class="news-date">2024.01</span>
-            <span class="news-content">One review paper accepted to AIR.</span>
+            <span class="news-content">One paper accepted in AIR.</span>
           </li>
           <li>
             <span class="news-date">2023.08</span>
-            <span class="news-content">One paper accepted to IEEE TMI.</span>
+            <span class="news-content">One paper accepted in IEEE TMI.</span>
           </li>
         </ul>
       </section>
@@ -790,6 +782,16 @@
           <li>
             <strong>Data Engineer</strong><span class="comma">, </span><br class="mobile-break">February 2019 – August 2019<br>
             BONC Ltd., Shanghai, China
+          </li>
+        </ul>
+      </section>
+
+      <section id="competitions">
+        <h2><strong>Competition</strong></h2>
+        <ul>
+          <li>
+	    <strong>🥇Gold Award</strong>, <strong><a href="https://mp.weixin.qq.com/s/3dgU7P8mxCwfN9b1MRXPQA " target="_blank">The 1st Data and AI Implementation Competition</a></strong>, <br class="mobile-break">October 2025<br>
+            Organizer: Hangzhou D5 Data & Binjiang Institute of AI, ZJUT<br>
           </li>
         </ul>
       </section>
@@ -960,6 +962,10 @@
         <h2><strong>近期动态</strong></h2>
         <ul class="news-list">
           <li>
+            <span class="news-date">2025. 10</span>
+            <span class="news-content">获得“第一届数据与AI落地大赛”冠军</span>
+          </li>
+          <li>
             <span class="news-date">2025. 06</span>
             <span class="news-content">一篇论文被 MICCAI 2025 接收</span>
           </li>
@@ -1025,23 +1031,33 @@
         <h2><strong>工作经历</strong></h2>
         <ul>
           <li>
-            <strong>课题组组长、科研助理</strong><span class="comma">，</span><br class="mobile-break">2022 年 6 月 ~ 2025 年 8 月<br>
+            <strong>课题组组长、科研助理</strong><span class="comma">，</span><br class="mobile-break"> 2022 年 6 月 ~ 2025 年 8 月<br>
             机器智能实验室（MI-Lab），四川大学，成都，中国
           </li>
           <li>
-            <strong>实习研究员</strong><span class="comma">，</span><br class="mobile-break">2024 年 1 月 ~ 2024 年 7 月<br>
+            <strong>实习研究员</strong><span class="comma">，</span><br class="mobile-break"> 2024 年 1 月 ~ 2024 年 7 月<br>
             高性能计算研究所（IHPC），科学技术研究局（A*STAR），新加坡<br>
             <div class="sub-info">
 	      <em>导师：<a href="https://liangli-zhen.github.io/" target="_blank">甄亮立</a>（音）资深研究员 和 <a href="https://scholar.google.com/citations?user=nk4iMegAAAAJ&hl=en" target="_blank">王梓舟</a> 研究员</em>
             </div>
           </li>
           <li>
-            <strong>教学干事</strong><span class="comma">，</span><br class="mobile-break">2020 年 1 月 ~ 2020 年 10 月<br>
+            <strong>教学干事</strong><span class="comma">，</span><br class="mobile-break"> 2020 年 1 月 ~ 2020 年 10 月<br>
             重庆三峡医药高等专科学校，重庆，中国
           </li>
           <li>
-            <strong>数据工程师</strong><span class="comma">，</span><br class="mobile-break">2019 年 2 月 ~ 2019 年 8 月<br>
+            <strong>数据工程师</strong><span class="comma">，</span><br class="mobile-break"> 2019 年 2 月 ~ 2019 年 8 月<br>
             东方国信科技股份有限公司，上海，中国
+          </li>
+        </ul>
+      </section>
+
+      <section id="competitions-zh">
+        <h2><strong>竞赛获奖</strong></h2>
+        <ul>
+          <li>
+	    <strong>🥇冠军</strong>, <strong><a href="https://mp.weixin.qq.com/s/3dgU7P8mxCwfN9b1MRXPQA " target="_blank">第一届数据与AI落地大赛</a></strong>， <br class="mobile-break"> 2025 年 10 月<br>
+            主办方: 杭州五维数据 – 浙工大人工智能创新研究院<br>
           </li>
         </ul>
       </section>
