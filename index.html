@@ -85,23 +85,22 @@
       display: flex;
       align-items: flex-start;
       position: relative;
-      padding-left: 16px; /* 为小圆点留出空间 */
+      padding-left: 12px; /* 为小圆点留出空间 */
       list-style: none; /* 移除默认列表样式 */
     }
-    /* 手动添加小圆点 */
-.news-list li::before {
-  content: "•";
-  position: absolute;
-  left: 6px;
-  top: 2px;          /* 改为固定像素值 */
-  color: #333;
-  font-size: 14px;   /* 统一字体大小 */
-}
 
-/* 移除中文的特殊调整 */
-#zh .news-list li::before {
-  font-size: 12px;
-}
+    .news-list li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 4px; /* 直接控制圆点宽度 */
+      height: 4px; /* 直接控制圆点高度 */
+      background-color: #333; /* 圆点颜色 */
+      border-radius: 50%; /* 使其变成圆形 */
+    }
+
     .news-date {
       color: #666;
       font-size: 0.94em;
@@ -425,9 +424,10 @@
     }
     /* 手动添加小圆点 */
     .news-list li::before {
-      top: 2px;        /* 手机端微调 */
-      font-size: 14px; /* 保持一致性 */
+      margin-left: 6px;
+      top: 9px;        /* 手机端微调 */
     }
+
     .news-date {
       color: #666;
       font-size: 0.85em;
@@ -442,10 +442,7 @@
       min-width: 0;
       font-size: 0.85em; /* 调小字体 */
     }
-    #zh .news-list li::before {
-      top: -2px;
-      font-size: 14px;
-    }
+
     #zh .news-content {
       font-size: 0.85em; /* 调小字体 */
     }
