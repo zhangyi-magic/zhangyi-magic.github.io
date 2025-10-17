@@ -89,17 +89,19 @@
       list-style: none; /* 移除默认列表样式 */
     }
     /* 手动添加小圆点 */
-    .news-list li::before {
-      content: "•";
-      position: absolute;
-      left: 6px;
-      top: 0.2em;
-      color: #333;
-      font-size: 12px;
-    }
-    #zh .news-list li::before {
-      top: 0.12em;
-    }
+.news-list li::before {
+  content: "•";
+  position: absolute;
+  left: 6px;
+  top: 2px;          /* 改为固定像素值 */
+  color: #333;
+  font-size: 14px;   /* 统一字体大小 */
+}
+
+/* 移除中文的特殊调整 */
+#zh .news-list li::before {
+  font-size: 12px;
+}
     .news-date {
       color: #666;
       font-size: 0.94em;
@@ -423,12 +425,8 @@
     }
     /* 手动添加小圆点 */
     .news-list li::before {
-      content: "•";
-      position: absolute;
-      left: 6px;
-      top: 0.06em;
-      color: #333;
-      font-size: 14px;
+      top: 2px;        /* 手机端微调 */
+      font-size: 14px; /* 保持一致性 */
     }
     .news-date {
       color: #666;
@@ -445,8 +443,8 @@
       font-size: 0.85em; /* 调小字体 */
     }
     #zh .news-list li::before {
-      top: 0.06em;
-      font-size: 12px;
+      top: -2px;
+      font-size: 14px;
     }
     #zh .news-content {
       font-size: 0.85em; /* 调小字体 */
@@ -590,27 +588,27 @@
     }
 
     /* ---------- 新增样式：语言切换按钮与显示控制（对现有风格影响极小） ---------- */
-.lang-btn {
-  position: fixed;
-  top: 8px;
-  right: 8px;
-  z-index: 1200;
-  padding: 4px;     /* 增加上下padding */
-  min-width: 20px;
-  text-align: center;
-  border-radius: 6px;
-  border: none;
-  background: #4C0099;
-  color: #fff;
-  font-size: 12px;
-  font-weight: 400;
-  cursor: pointer;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    .lang-btn {
+      position: fixed;
+      top: 8px;
+      right: 8px;
+      z-index: 1200;
+      padding: 4px;     /* 增加上下padding */
+      min-width: 20px;
+      text-align: center;
+      border-radius: 6px;
+      border: none;
+      background: #4C0099;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 400;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
 
-  /* 关键修复 */
-  line-height: 1.2;      /* 适中的行高 */
-  box-sizing: border-box;
-}
+      /* 关键修复 */
+      line-height: 1.2;      /* 适中的行高 */
+      box-sizing: border-box;
+    }
     .lang-btn:hover { background: #360073; }
 
     /* 语言区块的显示/隐藏控制 */
