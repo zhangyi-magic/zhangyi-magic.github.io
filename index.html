@@ -89,6 +89,49 @@
       list-style: none; /* 移除默认列表样式 */
     }
 
+    /* 默认隐藏旧新闻（英文+中文都生效） */
+    #news .news-old,
+    #news-zh .news-old {
+      display: none;
+    }
+
+    /* 展开时显示旧新闻（英文+中文都生效） */
+    #news.news-expanded .news-old,
+    #news-zh.news-expanded .news-old {
+      display: flex;
+    }
+
+    /* 更圆润的小箭头（用 CSS 画，不用 ▶ 字符） */
+    .news-arrow{
+      display:inline-block;
+      width: 6px;
+      height: 6px;
+      margin-right: 6px;
+      border-right: 2px solid currentColor;
+      border-bottom: 2px solid currentColor;
+      border-radius: 1px;                 /* 轻微圆润 */
+      transform: rotate(-45deg) translateY(-1px); /* 默认像“>” */
+      transition: transform .15s ease;
+      vertical-align: middle;
+    }
+
+    /* 展开时变成“^”（并稍微上移） */
+    #news.news-expanded .news-arrow,
+    #news-zh.news-expanded .news-arrow{
+      transform: rotate(630deg) translateX(0px);
+    }
+    /* toggle 文本样式：斜体 + 下划线 */
+    .news-toggle{
+      font-size: 0.9em;
+      color: grey;
+      cursor: pointer;
+      margin-left: 12px;
+      user-select: none;
+      letter-spacing: 0.02em;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
     .news-list li::before {
       content: "";
       position: absolute;
@@ -717,6 +760,10 @@
             <span class="news-content">One paper accepted in IEEE TMI.</span>
           </li>
         </ul>
+        <span class="news-toggle" data-label="Show earlier" data-hide="Hide earlier">
+          <span class="news-arrow"></span>
+          <span class="news-toggle-text">Show earlier</span>
+        </span>
       </section>
 
       <section id="education">
@@ -997,6 +1044,10 @@
             <span class="news-content">一篇论文被 IEEE TMI 期刊接收</span>
           </li>
         </ul>
+        <span class="news-toggle" data-label="显示更多" data-hide="隐藏">
+          <span class="news-arrow"></span>
+          <span class="news-toggle-text">显示更多</span>
+        </span>
       </section>
       <section id="education-zh">
         <h2><strong>教育背景</strong></h2>
@@ -1261,6 +1312,53 @@
         }
       });
     })();
+
+    (function () {
+      const ONE_YEAR = 365 * 24 * 60 * 60 * 1000;
+      const now = new Date();
+
+      document.querySelectorAll('#news, #news-zh').forEach(section => {
+        const items = section.querySelectorAll('.news-list li');
+        const toggle = section.querySelector('.news-toggle');
+        const toggleText = section.querySelector('.news-toggle-text');
+
+        if (!toggle || !toggleText) return;
+
+        let hasOld = false;
+
+        items.forEach(li => {
+          const dateSpan = li.querySelector('.news-date');
+          if (!dateSpan) return;
+
+          const parts = dateSpan.textContent.trim().split('.');
+          if (parts.length < 2) return;
+
+          const y = parseInt(parts[0], 10);
+          const m = parseInt(parts[1], 10) - 1;
+          const itemDate = new Date(y, m, 1);
+
+          if (now - itemDate > ONE_YEAR) {
+            li.classList.add('news-old');
+            hasOld = true;
+          }
+        });
+
+        if (!hasOld) {
+          toggle.style.display = 'none';
+          return;
+        }
+
+        // 默认收起
+        section.classList.remove('news-expanded');
+        toggleText.textContent = toggle.dataset.label;
+
+        toggle.addEventListener('click', () => {
+          const expanded = section.classList.toggle('news-expanded');
+          toggleText.textContent = expanded ? toggle.dataset.hide : toggle.dataset.label;
+        });
+      });
+    })();
+
   </script>
 </body>
 </html>
