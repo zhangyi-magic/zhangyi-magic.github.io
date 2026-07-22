@@ -70,10 +70,6 @@
     }
 
     /* News 部分样式 */
-    section#news h2,
-    section#news-zh h2 {
-      font-size: 1.2em;
-    }
     .news-list {
       line-height: 1.2;
       padding-left: 20px;
@@ -442,6 +438,19 @@
 
     .note { font-size: 0.9em; color: #666; }
 
+    .bio-text {
+      margin: 0;
+      padding-left: 14px;
+      border-left: 3px solid #4C0099;
+      color: #333;
+      font-size: 1.02em;
+      line-height: 1.7;
+    }
+
+    #zh .bio-text {
+      font-size: 1em;
+    }
+
   /* 响应式微调（窄屏，手机端） */
   @media (max-width: 700px) {
     #zh {
@@ -468,8 +477,7 @@
     /* 手动添加小圆点 */
     .news-list li::before {
       margin-left: 6px;
-      top: 8px;        /
-    * 手机端微调 */
+      top: 8px;        /* 手机端微调 */
     }
     #zh .news-list li::before {
       top: 9px;        /* 手机端微调 */
@@ -498,6 +506,11 @@
     white-space: normal;   /* 允许换行 */
     word-break: break-word;
     text-align: center;    /* 居中显示 */
+    }
+    .bio-text {
+      padding-left: 12px;
+      font-size: 0.96em;
+      text-align: left;
     }
     .header-container {
       flex-direction: column;
@@ -728,6 +741,14 @@
     </div>
 
     <main>
+      <section id="bio">
+        <h2><strong>Biography</strong></h2>
+        <p class="bio-text">
+          I am a CS/AI PhD candidate at Nanjing University, advised by Assoc. Prof. Shuo Chen. My research focuses on computer vision, semi- and weakly-supervised learning, and medical image analysis.
+          Previously, I worked on medical image computing at Sichuan University and A*STAR IHPC.
+        </p>
+      </section>
+
       <section id="news">
         <h2><strong>News</strong></h2>
         <ul class="news-list">
@@ -1012,6 +1033,13 @@
     </div>
 
     <main>
+      <section id="bio-zh">
+        <h2><strong>个人简介</strong></h2>
+        <p class="bio-text">
+          我目前是南京大学计算机科学与技术/人工智能方向博士生，导师为陈硕副教授。我的研究聚焦于计算机视觉、半监督与弱监督学习、医学影像分析。此前，我在四川大学和新加坡 A*STAR IHPC 从事医学影像计算相关研究。
+        </p>
+      </section>
+
       <section id="news-zh">
         <h2><strong>动态</strong></h2>
         <ul class="news-list">
