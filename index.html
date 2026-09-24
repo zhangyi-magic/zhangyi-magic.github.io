@@ -1,10 +1,8 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<link
-  rel="stylesheet"
-  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-/>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Yi Zhang (张懿) | Academic Profile</title>
@@ -17,9 +15,93 @@
       text-decoration: underline;
     }
 
+    :is(#bio, #bio-zh) a[href],
+    :is(#bio, #bio-zh) a[href]:visited {
+      color: #4C0099 !important;
+    }
+
+    .inline-link-pill {
+        position: relative;
+        z-index: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-left: 4px;
+      top: -0.4px;
+      gap: 4px;
+      width: 58px;
+      padding: 4px 8px;
+      box-sizing: border-box;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      background: transparent;
+      color: #fff !important;
+      font-size: 0.74em;
+      font-weight: 600;
+        line-height: 1.25;
+        vertical-align: 0.1px;
+        box-shadow: 0 0 9px rgba(196, 105, 39, 0.18);
+        transition: box-shadow 0.16s ease, transform 0.16s ease;
+      }
+
+    .inline-link-pill::before {
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      border-radius: inherit;
+        background: linear-gradient(115deg, #a94f20 0%, #cf6c2c 42%, #efa064 68%, #bd5a24 100%);
+        background-size: 200% 100%;
+        content: "";
+        filter: blur(1.3px);
+        opacity: 0.96;
+        pointer-events: none;
+        transform: scale(1.015);
+        animation: news-toggle-glow 6.5s ease-in-out infinite;
+      }
+
+    .inline-link-pill > span,
+    .inline-link-pill > i {
+      position: relative;
+      top: 0.2px;
+      left: -0.8px;
+      z-index: 1;
+      display: inline-flex;
+      align-items: center;
+      line-height: 1;
+      white-space: nowrap;
+    }
+
+    .inline-link-pill > span {
+      transform: translateY(-1px);
+    }
+
+    .inline-link-pill:hover {
+        box-shadow: 0 0 13px rgba(196, 105, 39, 0.25), 0 3px 7px rgba(45, 35, 52, 0.1);
+        color: #fff !important;
+        text-decoration: none;
+        transform: translateY(-1px);
+      }
+
+    a.inline-link-pill,
+    a.inline-link-pill:visited {
+        color: #fff !important;
+      }
+
+    @media (prefers-reduced-motion: reduce) {
+      .inline-link-pill::before {
+        animation: none;
+      }
+    }
+
+    /* Keep profile-related links in the original text style, with extra weight. */
+    :is(#education, #experience, #education-zh, #experience-zh)
+    a[href]:not([href^="mailto:"]) {
+      font-weight: 600;
+    }
+
     #zh {
       font-family: "Microsoft YaHei", "微软雅黑", sans-serif;
-      letter-spacing: 0.08em;  /* 字间距，可根据需要调大或调小 */
+      letter-spacing: 0.02em;  /* 字间距，可根据需要调大或调小 */
       line-height: 1.7;        /* 行高，增加阅读舒适度 */
     }
     /* 为中文版的教育背景增加行间距 */
@@ -36,6 +118,16 @@
       margin-left: 4px;
       margin-top: -3px;
     }
+    :is(#experience, #experience-zh) .school-logo[src="machineilab.png"] {
+      transform: translateX(-1px);
+    }
+    :is(#experience, #experience-zh) .school-logo[src="is.png"] {
+      transform: translateX(-2px);
+    }
+    :is(#experience, #experience-zh) .school-logo[src="sanxiayizhuan.jpg"] {
+      transform: translateX(-2px);
+    }
+
     .game-logo {
       display: inline-block;
       width: 1em;
@@ -55,7 +147,8 @@
       text-align: left;        /* 默认左对齐 */
     }
     body {
-      font-family: Georgia, serif;
+      /*font-family: Georgia, serif;*/
+      font-family: 'Space Grotesk', "Trebuchet MS", Helvetica, sans-serif;
       margin: 0;
       padding: 0;
       background: #fff;
@@ -79,7 +172,7 @@
     .news-list li {
       margin-bottom: 4px;
       display: flex;
-      align-items: flex-start;
+      align-items: baseline;
       position: relative;
       padding-left: 12px; /* 为小圆点留出空间 */
       list-style: none; /* 移除默认列表样式 */
@@ -88,23 +181,62 @@
     /* 默认隐藏旧新闻（英文+中文都生效） */
     #news .news-old,
     #news-zh .news-old {
-      display: none;
+      display: grid;
+      grid-template-rows: 0fr;
+      margin-bottom: 0;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-5px);
+      transition:
+        grid-template-rows 0.28s ease,
+        margin-bottom 0.28s ease,
+        opacity 0.2s ease,
+        filter 0.28s ease,
+        transform 0.28s ease;
+    }
+
+    #news:not(.news-expanded) .news-old.news-old-preview,
+    #news-zh:not(.news-expanded) .news-old.news-old-preview {
+      grid-template-rows: 1fr;
+      margin-bottom: 4px;
+      opacity: var(--news-preview-opacity);
+      filter: blur(var(--news-preview-blur));
+      transform: translateY(0);
     }
 
     /* 展开时显示旧新闻（英文+中文都生效） */
     #news.news-expanded .news-old,
     #news-zh.news-expanded .news-old {
+      grid-template-rows: 1fr;
+      margin-bottom: 4px;
+      opacity: 1;
+      filter: blur(0);
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    .news-old-inner {
       display: flex;
+      align-items: baseline;
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      #news .news-old,
+      #news-zh .news-old {
+        transition: none;
+      }
     }
 
     /* 更圆润的小箭头（用 CSS 画，不用 ▶ 字符） */
     .news-arrow{
       display:inline-block;
-      width: 6px;
-      height: 6px;
-      margin-right: 6px;
-      border-right: 2px solid currentColor;
-      border-bottom: 2px solid currentColor;
+      width: 5px;
+      height: 5px;
+      margin-right: 5px;
+      border-right: 1.5px solid #fff;
+      border-bottom: 1.5px solid #fff;
       border-radius: 1px;                 /* 轻微圆润 */
       transform: rotate(-45deg) translateY(-1px); /* 默认像“>” */
       transition: transform .15s ease;
@@ -114,18 +246,98 @@
     /* 展开时变成“^”（并稍微上移） */
     #news.news-expanded .news-arrow,
     #news-zh.news-expanded .news-arrow{
+      border-color: #77717d;
       transform: rotate(630deg) translateX(0px);
     }
-    /* toggle 文本样式：斜体 + 下划线 */
     .news-toggle{
-      font-size: 0.9em;
-      color: grey;
+      position: relative;
+      display: flex;
+      align-items: center;
+      width: fit-content;
+      margin: 12px auto 0;
+      padding: 3px 10px;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      background: transparent;
+      box-shadow:
+        0 0 11px rgba(76, 0, 153, 0.22),
+        0 2px 6px rgba(76, 0, 153, 0.12);
+      color: #fff;
       cursor: pointer;
-      margin-left: 12px;
+      font: inherit;
+      font-size: 0.5em;
+      font-weight: 500;
+      line-height: 1.25;
       user-select: none;
       letter-spacing: 0.02em;
-      text-decoration: underline;
-      text-underline-offset: 2px;
+      transition: border-color 0.18s ease, color 0.18s ease, background 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .news-toggle::before {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      border-radius: inherit;
+      background: linear-gradient(115deg, #3b006d 0%, #6813a1 42%, #a75bd0 68%, #4C0099 100%);
+      background-size: 200% 100%;
+      content: "";
+      filter: blur(2.2px);
+      opacity: 0.96;
+      pointer-events: none;
+      transform: scale(1.015);
+      animation: news-toggle-glow 6.5s ease-in-out infinite;
+      transition: opacity 0.2s ease;
+    }
+
+    .news-toggle > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .news-toggle:hover {
+      border-color: transparent;
+      color: #fff;
+      box-shadow:
+        0 0 14px rgba(76, 0, 153, 0.28),
+        0 3px 8px rgba(76, 0, 153, 0.14);
+    }
+
+    #news.news-expanded .news-toggle,
+    #news-zh.news-expanded .news-toggle {
+      border-color: #d3d0d5;
+      background: #ecebed;
+      box-shadow: none;
+      color: #77717d;
+    }
+
+    #news.news-expanded .news-toggle::before,
+    #news-zh.news-expanded .news-toggle::before {
+      opacity: 0;
+      animation: none;
+    }
+
+    #news.news-expanded .news-toggle:hover,
+    #news-zh.news-expanded .news-toggle:hover {
+      border-color: #c4c0c6;
+      background: #e5e3e7;
+      box-shadow: none;
+      color: #625d66;
+    }
+
+    @keyframes news-toggle-glow {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .news-toggle::before {
+        animation: none;
+      }
+    }
+
+    .news-toggle:focus-visible {
+      outline: 2px solid rgba(76, 0, 153, 0.24);
+      outline-offset: 2px;
     }
 
     .news-list li::before {
@@ -144,8 +356,10 @@
       color: #666;
       font-size: 0.94em;
       font-weight: 500;
-      flex-shrink: 0;
-      margin-right: 8px;
+      flex: 0 0 5.5ch;
+      width: 5.5ch;
+      margin-right: 1em;
+      font-variant-numeric: tabular-nums;
       text-align: left;
     }
     .news-content {
@@ -211,6 +425,7 @@
     .toggle-btn[aria-expanded="true"] { background: #eee; }
 
     .header-text {
+      width: 600px;
       max-width: 600px;
     }
 
@@ -228,6 +443,15 @@
       margin: 6px 0;
       font-size: 1.05em;
       color: #555;
+    }
+
+    /* Keep research topics understated, following a classic academic profile. */
+    .header-text p.research-interests {
+      margin: 10px 0 8px;
+      color: #777;
+      font-size: 0.86em;
+      font-weight: 400;
+      line-height: 1.55;
     }
 
     /* 左右布局（地点/学校 左侧，图标组 右侧） */
@@ -261,6 +485,278 @@
     }
     .contact-right a:hover { color: #2c3e50; }
 
+    /* Arcade-style publication record, kept transparent over the sidebar. */
+    .publication-scoreboard {
+      max-width: 357px;
+      margin: 28px auto 4px;
+      padding: 8px 8px 6px;
+      box-sizing: border-box;
+      color: #3a3441;
+      font-family: "Courier New", Consolas, monospace;
+      text-align: left;
+    }
+
+    .profile-section-divider {
+      --divider-slant: 12px;
+      --divider-thickness: 20px;
+      width: calc(100% + 40px);
+      height: calc(var(--divider-thickness) + var(--divider-slant));
+      margin: 24px 0 24px -20px;
+      background: #fff;
+      clip-path: polygon(
+        0 0,
+        100% var(--divider-slant),
+        100% 100%,
+        0 var(--divider-thickness)
+      );
+      pointer-events: none;
+    }
+
+    .publication-scoreboard__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 6px;
+      padding-bottom: 5px;
+      border-bottom: 1px solid #d8d0df;
+    }
+
+    .publication-scoreboard__game-title {
+      position: relative;
+      margin: 0 0 24px;
+      color: #34303a;
+      font-family: Impact, "Arial Black", sans-serif;
+      font-size: calc(1.08rem + 1px);
+      font-style: italic;
+      font-weight: 900;
+      letter-spacing: 0.065em;
+      line-height: 1;
+      text-align: center;
+      text-shadow: 1px 1px 0 rgba(76, 0, 153, 0.14);
+      transform: skewX(-7deg);
+    }
+
+    .publication-scoreboard__game-title::after {
+      display: block;
+      width: 48px;
+      height: 2px;
+      margin: 4px auto 0;
+      background: linear-gradient(90deg, transparent, #4C0099 24%, #4C0099 76%, transparent);
+      content: "";
+      opacity: 0.65;
+    }
+
+    .publication-scoreboard__game-title span {
+      color: #4C0099;
+    }
+
+    .publication-scoreboard__player {
+      margin: 4px 0 0;
+      padding-top: 9px;
+      border-top: 1px solid #ddd;
+      color: #77717d;
+      font-size: calc(0.58rem + 1px);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      line-height: 1;
+      text-align: right;
+    }
+
+    .publication-scoreboard__player::before {
+      display: inline-block;
+      width: 5.25px;
+      height: 5.25px;
+      margin-right: 5px;
+      border-radius: 1px;
+      background: #17798a;
+      box-shadow: 0 0 5px rgba(23, 121, 138, 0.48);
+      content: "";
+      vertical-align: 1px;
+    }
+
+    .publication-scoreboard__player span {
+      color: #4C0099;
+      letter-spacing: 0.04em;
+    }
+
+    .shot-scope {
+      position: relative;
+      display: inline-block;
+      width: 13px;
+      height: 13px;
+      margin-left: 7px;
+      box-sizing: border-box;
+      border: 1.5px solid #4C0099;
+      border-radius: 50%;
+      background: radial-gradient(circle, #4C0099 0 1px, transparent 1.5px);
+      vertical-align: -1px;
+    }
+
+    .shot-scope::before,
+    .shot-scope::after {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      background: #4C0099;
+      content: "";
+      opacity: 0.8;
+    }
+
+    .shot-scope::before {
+      width: 19px;
+      height: 1px;
+      transform: translate(-50%, -50%);
+    }
+
+    .shot-scope::after {
+      width: 1px;
+      height: 19px;
+      transform: translate(-50%, -50%);
+    }
+
+    .publication-scoreboard__title {
+      color: #4C0099;
+      font-size: calc(0.72rem + 1px);
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      line-height: 1;
+      text-shadow: 0 0 6px rgba(76, 0, 153, 0.22);
+    }
+
+    .publication-scoreboard__title::before {
+      content: none;
+    }
+
+    .publication-scoreboard__title::after {
+      content: none;
+    }
+
+    .publication-scoreboard__meta {
+      color: #333;
+      font-size: calc(0.58rem + 1px);
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      line-height: 1;
+      text-shadow: 0 0 5px rgba(23, 121, 138, 0.18);
+    }
+
+    .publication-scoreboard__meta::before {
+      content: none;
+    }
+
+
+    .score-row {
+      display: grid;
+      grid-template-columns: 61px minmax(44px, 1fr) 36px;
+      align-items: center;
+      min-height: 21px;
+      column-gap: 8.5px;
+      font-size: calc(0.68rem + 1px);
+      font-weight: 700;
+      line-height: 1;
+      transition: background-color 0.16s ease, transform 0.16s ease;
+    }
+
+    .score-row:hover {
+      background: linear-gradient(90deg, rgba(76, 0, 153, 0.055), rgba(23, 121, 138, 0.025), transparent 88%);
+      transform: translateX(2px);
+    }
+
+    .score-row--medical {
+      margin-top: 4px;
+      padding-top: 5px;
+      border-top: 1px solid #ddd;
+    }
+
+    .score-venue {
+      color: #3a3441;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .score-total {
+      display: flex;
+      justify-content: flex-end;
+      gap: 1px;
+      color: #9a6500;
+      font-size: calc(0.66rem + 1px);
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .score-total strong {
+      color: #9a6500;
+      font-weight: 700;
+    }
+
+    .score-track {
+      position: relative;
+      height: 9px;
+    }
+
+    .score-track::before {
+      position: absolute;
+      top: 3px;
+      right: 0;
+      left: 0;
+      height: 3px;
+      background: radial-gradient(circle, #c5c0ca 0 0.5px, transparent 1px) left center / 6px 3px repeat-x;
+      content: "";
+      opacity: 0.72;
+    }
+
+    .score-marker {
+      position: absolute;
+      top: 1pt;
+      left: clamp(1px, var(--rate), calc(100% - 1px));
+      width: 4px;
+      height: 4px;
+      transform: translateX(-50%);
+      background: transparent;
+    }
+
+    .score-marker::before {
+      position: absolute;
+      top: 75%;
+      left: 50%;
+      width: 9px;
+      height: 4px;
+      border-radius: 999px;
+      transform: translate(-50%, -50%) scale(1.015);
+      background: linear-gradient(115deg, #3b006d 0%, #6813a1 42%, #a75bd0 68%, #4C0099 100%);
+      background-size: 200% 100%;
+      box-shadow: 0 0 4px rgba(76, 0, 153, 0.22);
+      content: "";
+      filter: blur(0.6px);
+      opacity: 0.96;
+      animation: news-toggle-glow 3.5s ease-in-out infinite;
+    }
+
+    .score-row:hover .score-marker::before {
+      filter: blur(0.6px);
+      transform: translate(-50%, -50%) scale(1.015);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .score-row,
+      .score-marker::before {
+        transition: none;
+      }
+
+      .score-marker::before {
+        animation: none;
+      }
+
+      .score-row:hover {
+        transform: none;
+      }
+
+      .score-row:hover .score-marker::before {
+        transform: translate(-50%, -50%) scale(1.015);
+      }
+
+    }
+
     /* 个性区（默认收起）*/
     .personal-section {
       max-width: 900px;
@@ -274,11 +770,11 @@
       border-top: none;
     }
     .personal-section p {
-      margin: 8px 10px 10px 10px; /* 上边距 4px，下边距 8px，与列表间隔匹配 */
+      margin: 2px 4px 8px;
       font-weight: bold;
     }
     .personal-section.open {
-      padding: 16px 20px;
+      padding: 12px 10px;
       max-height: 6200px; /* 够放内容，若内容更多可调大 */
       opacity: 1;
       border: 1px dashed #ccc;
@@ -288,6 +784,11 @@
     }
     .fun-list strong {
       margin: 0 0.3em; /* 左右各 0.3em 的边距 */
+    }
+    .fun-list {
+      margin-top: 6px;
+      margin-bottom: 0;
+      padding-left: 0px;
     }
     .fun-list li {
       position: relative;
@@ -364,7 +865,8 @@
     .resources-milestones li {
       margin-bottom: 6px;
       line-height: 1.4;
-      color: #555;
+      color: #707070;
+      font-size: 0.92em;
     }
 
     .resources-date {
@@ -375,16 +877,17 @@
 
     /* GIF 图片画廊样式 */
     .resources-gallery {
-      display: flex;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 15px;
-      justify-content: flex-start;
       align-items: center;
+      justify-items: center;
       margin-top: 15px;
-      flex-wrap: wrap;
     }
 
     .resources-gif {
-      width: 270px;
+      width: 100%;
+      max-width: 270px;
       object-fit: cover;
       border-radius: 8px;
       border: 1px solid #ddd;
@@ -395,6 +898,164 @@
       max-width: 900px;
       margin: 40px auto;
       padding: 0 20px;
+    }
+
+    /* 桌面端：固定左侧信息栏，正文在右侧滚动 */
+    @media (min-width: 701px) {
+      :root {
+        --sidebar-width: 280px;
+        --layout-half-width: 610px;
+        --content-center-offset: 290px;
+      }
+
+      header {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: max(20px, calc(50vw - var(--layout-half-width)));
+        z-index: 10;
+        width: var(--sidebar-width);
+        box-sizing: border-box;
+        overflow-y: auto;
+        padding: 28px 18px;
+        border-right: 0;
+        border-bottom: 0;
+        box-shadow: none;
+        /*box-shadow: inset -1px 0 #ddd;*/
+      }
+
+      .header-container {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        max-width: none;
+        width: 100%;
+        min-height: 100%;
+        text-align: center;
+      }
+
+      .avatar-wrapper {
+        min-width: 0;
+        width: 100%;
+        align-items: center;
+      }
+
+      .profile-pic {
+        width: 120px;
+        height: 120px;
+      }
+
+      .header-text {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        width: 100%;
+        max-width: none;
+        margin-top: 16px;
+        text-align: center;
+      }
+
+      .publication-scoreboard {
+        width: 84%;
+        margin-top: 0;
+        margin-bottom: 8px;
+      }
+
+      .profile-section-divider {
+        flex: 0 0 calc(var(--divider-thickness) + var(--divider-slant));
+        width: calc(100% + 36px);
+        margin: auto 0 auto -18px;
+      }
+
+      .header-text h1 {
+        font-size: 1.75em;
+      }
+
+      .research-interests {
+        white-space: normal;
+        text-align: center;
+      }
+
+      .contact {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .contact-left {
+        flex-direction: column;
+        gap: 2px;
+        text-align: center;
+      }
+
+      .contact-right {
+        margin-left: 0;
+      }
+
+      .personal-section {
+        position: fixed;
+        top: var(--personal-panel-top, 198px);
+        bottom: auto;
+        left: max(20px, calc(50vw - var(--layout-half-width)));
+        z-index: 11;
+        width: var(--sidebar-width);
+        box-sizing: border-box;
+        margin: 0;
+        overflow-y: hidden;
+      }
+
+      .personal-section.open {
+        max-height: calc(100vh - var(--personal-panel-top, 198px) - 8px);
+        margin-top: 0;
+      }
+
+      .personal-section.open.is-settled {
+        overflow-y: auto;
+      }
+
+      .section-nav {
+        position: fixed;
+        top: 0;
+        left: max(calc(50vw - var(--content-center-offset)), calc(var(--sidebar-width) + 40px));
+        width: min(900px, calc(100vw - var(--sidebar-width) - 80px));
+        z-index: 9;
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        box-sizing: border-box;
+        min-height: 52px;
+        padding: 15px 40px 10px;
+        background: rgba(255, 255, 255, 0.96);
+        border-bottom: 1px solid #ddd;
+        backdrop-filter: blur(8px);
+      }
+
+      .section-nav a {
+        color: #555;
+        font-size: 1.0em;
+        font-weight: 600;
+        text-decoration: none;
+        white-space: nowrap;
+      }
+
+      .section-nav a:hover {
+        color: #4C0099;
+      }
+
+      main {
+        width: min(900px, calc(100vw - var(--sidebar-width) - 80px));
+        box-sizing: border-box;
+        margin: 92px 0 40px max(calc(50vw - var(--content-center-offset)), calc(var(--sidebar-width) + 40px));
+      }
+
+      footer {
+        width: min(900px, calc(100vw - var(--sidebar-width) - 80px));
+        box-sizing: border-box;
+        margin: 40px 0 0 max(calc(50vw - var(--content-center-offset)), calc(var(--sidebar-width) + 40px));
+      }
+
+      section {
+        scroll-margin-top: 76px;
+      }
     }
     .mobile-break {
       display: none;
@@ -427,6 +1088,119 @@
     ul { padding-left: 20px; margin: 0; }
     li { margin-bottom: 8px; }
 
+    /* Quiet typographic group labels aligned with the list content below. */
+    #experience > h3,
+    #experience-zh > h3 {
+      width: fit-content;
+      box-sizing: border-box;
+      margin: 20px 0 9px !important;
+      padding: 0 0 4px;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
+      color: #4f4a52 !important;
+      font-size: 0.9em !important;
+      font-weight: 600;
+      letter-spacing: 0.025em;
+      line-height: 1.35;
+    }
+
+    #experience > h3 strong,
+    #experience-zh > h3 strong {
+      font-weight: 600;
+    }
+
+    #experience > h3::after,
+    #experience-zh > h3::after {
+      content: none;
+    }
+
+    .publications-section .publication-year {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      width: fit-content;
+      box-sizing: border-box;
+      margin: 12px 0 8px !important;
+      padding: 3px 9px;
+      border: 1px solid #ded9e2;
+      border-radius: 999px;
+      background: #f7f5f8;
+      box-shadow: 0 0 0 3px #fff;
+      color: #625c67 !important;
+      font-size: 0.78em !important;
+      font-weight: 500;
+      letter-spacing: 0.035em;
+      line-height: 1.25;
+    }
+
+    .publications-section .publication-year b {
+      position: relative;
+      top: 0.5px;
+      font-weight: 600;
+    }
+
+    .publications-section > .publication-year:first-of-type,
+    .publications-section .publication-list-stage > .publication-year:first-child {
+      margin-top: -4px !important;
+    }
+
+    .publications-section[data-view="all"] .publication-list-stage {
+      position: relative;
+      display: flow-root;
+    }
+
+    .publications-section[data-view="all"] .publication-year-list {
+      position: relative;
+      display: flow-root;
+      padding-left: 20px;
+      list-style: disc;
+    }
+
+    .publications-section[data-view="all"] .publication-year-list::before {
+      content: none;
+    }
+
+    .publications-section[data-view="all"] .publication-year-list > li {
+      position: relative;
+      padding-left: 0;
+    }
+
+    #experience > h3:first-of-type,
+    #experience-zh > h3:first-of-type {
+      margin-top: 0 !important;
+    }
+
+    #experience > ul,
+    #experience-zh > ul {
+      position: relative;
+      margin: 0 0 20px;
+      padding-left: 20px;
+      list-style: disc;
+    }
+
+    #experience > ul:last-child,
+    #experience-zh > ul:last-child {
+      margin-bottom: 0;
+    }
+
+    #experience > ul > li,
+    #experience-zh > ul > li {
+      position: relative;
+      margin: 0;
+      padding: 0 0 14px;
+      color: inherit;
+      font-size: inherit;
+      line-height: inherit;
+    }
+
+    #experience > ul > li:last-child,
+    #experience-zh > ul > li:last-child {
+      padding-bottom: 0;
+    }
+
     footer {
       text-align: center;
       font-size: 0.9em;
@@ -436,7 +1210,466 @@
       margin-top: 40px;
     }
 
+    .dedication {
+      margin: 0 0 6px;
+      font-size: 0.9em;
+      font-style: italic;
+    }
+
     .note { font-size: 0.9em; color: #666; }
+
+    .publication-note {
+      margin: -8px 0 16px;
+      font-size: 0.8em;
+      color: #666;
+    }
+
+    .publication-note-mobile {
+      display: none;
+    }
+
+    .publication-subheader {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin: -8px 0 16px;
+    }
+
+    .publication-subheader .publication-note {
+      margin: 0;
+    }
+
+    .publication-view-toggle {
+      position: relative;
+      z-index: 2;
+      display: inline-flex;
+      align-items: center;
+      flex: 0 0 auto;
+      padding: 2px;
+      border: 1px solid #d8d0df;
+      border-radius: 999px;
+      background: #f7f5f8;
+    }
+
+    .publication-view-toggle button {
+      position: relative;
+      z-index: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 3px 10px;
+      border: 0;
+      border-radius: 999px;
+      background: transparent;
+      color: #77717d;
+      cursor: pointer;
+      font: inherit;
+      font-size: 0.72em;
+      font-weight: 600;
+      line-height: 1.25;
+      transition: background-color 0.16s ease, color 0.16s ease;
+    }
+
+    .publication-view-toggle button::before {
+      position: absolute;
+      inset: 1px;
+      z-index: -1;
+      border-radius: inherit;
+      background: linear-gradient(115deg, #3b006d 0%, #6813a1 42%, #a75bd0 68%, #4C0099 100%);
+      background-size: 200% 100%;
+      content: "";
+      filter: blur(1.4px);
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(0.2px) scale(1.015);
+      transition: opacity 0.18s ease;
+    }
+
+    .publication-view-toggle button:hover {
+      color: #4C0099;
+    }
+
+    .publication-view-toggle button[aria-pressed="true"] {
+      background: transparent;
+      color: #fff;
+    }
+
+    .publication-view-toggle button[aria-pressed="true"]::before {
+      opacity: 0.96;
+      animation: news-toggle-glow 4.5s ease-in-out infinite;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .publication-view-toggle button[aria-pressed="true"]::before {
+        animation: none;
+      }
+    }
+
+    .publication-selection-help {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      align-self: center;
+      width: 15px;
+      height: 15px;
+      margin: 0 2px 0 4px;
+      border: 1px solid #aaa3ae;
+      border-radius: 50%;
+      color: #77717d;
+      cursor: help;
+      font-size: 10px;
+      font-weight: 700;
+      line-height: 1;
+      outline: none;
+      opacity: 1;
+      transform: translateX(0) scale(1);
+      visibility: visible;
+      transition:
+        width 0.24s cubic-bezier(0.22, 1, 0.36, 1),
+        margin 0.24s cubic-bezier(0.22, 1, 0.36, 1),
+        border-width 0.2s ease,
+        opacity 0.18s ease,
+        transform 0.24s cubic-bezier(0.22, 1, 0.36, 1),
+        visibility 0s linear;
+    }
+
+    .publication-view-toggle button[data-publication-view="all"][aria-pressed="true"] ~ .publication-selection-help {
+      width: 0;
+      margin-right: 0;
+      margin-left: 0;
+      border-width: 0;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateX(-5px) scale(0.72);
+      visibility: hidden;
+      transition:
+        width 0.24s cubic-bezier(0.22, 1, 0.36, 1),
+        margin 0.24s cubic-bezier(0.22, 1, 0.36, 1),
+        border-width 0.2s ease,
+        opacity 0.18s ease,
+        transform 0.24s cubic-bezier(0.22, 1, 0.36, 1),
+        visibility 0s linear 0.24s;
+    }
+
+    .publication-selection-help:hover,
+    .publication-selection-help:focus-visible {
+      border-color: #4C0099;
+      color: #4C0099;
+    }
+
+    .publication-selection-help::before {
+      position: absolute;
+      top: calc(100% + 8px);
+      right: -4px;
+      z-index: 20;
+      width: 260px;
+      padding: 9px 11px;
+      border: 1px solid #d8d0df;
+      border-radius: 6px;
+      background: #fff;
+      box-shadow: 0 5px 16px rgba(40, 31, 47, 0.12);
+      color: #555;
+      content: attr(data-tooltip);
+      font-size: 12px;
+      font-weight: 400;
+      line-height: 1.5;
+      opacity: 0;
+      pointer-events: none;
+      text-align: left;
+      transform: translateY(-3px);
+      transition: opacity 0.16s ease, transform 0.16s ease;
+      visibility: hidden;
+      white-space: normal;
+    }
+
+    .publication-selection-help::after {
+      position: absolute;
+      top: calc(100% + 3px);
+      right: 3px;
+      z-index: 21;
+      width: 9px;
+      height: 9px;
+      border-top: 1px solid #d8d0df;
+      border-left: 1px solid #d8d0df;
+      background: #fff;
+      content: "";
+      opacity: 0;
+      pointer-events: none;
+      transform: rotate(45deg);
+      visibility: hidden;
+    }
+
+    .publication-selection-help:hover::before,
+    .publication-selection-help:hover::after,
+    .publication-selection-help:focus::before,
+    .publication-selection-help:focus::after {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .publication-selection-help:hover::before,
+    .publication-selection-help:focus::before {
+      transform: translateY(0);
+    }
+
+    .publications-section[data-view="selected"] .publication-year {
+      display: none;
+    }
+
+    .publications-section[data-view="selected"] .publication-year-list {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+
+    .publications-section[data-view="selected"] .publication-year-list > li:not(.is-selected-publication) {
+      display: none;
+    }
+
+    .publications-section.is-switching {
+      clip-path: inset(-24px 0 -24px 0);
+    }
+
+    .publication-list-stage {
+      will-change: transform, opacity;
+    }
+
+    .publication-thumbnail-frame,
+    .publication-thumbnail {
+      display: none;
+    }
+
+    .publication-details {
+      display: contents;
+    }
+
+    .publication-venue-badge,
+    .publication-selected-note,
+    .publication-selected-actions {
+      display: none;
+    }
+
+    .publications-section[data-view="selected"] .publication-year-list {
+      padding-left: 0;
+      list-style: none;
+    }
+
+    #publications[data-view="selected"] .publication-year-list,
+    #publications-zh[data-view="selected"] .publication-year-list {
+      padding-left: 0;
+    }
+
+    .publications-section[data-view="selected"] .is-selected-publication {
+      display: grid;
+      grid-template-columns: 220px minmax(0, 1fr);
+      gap: 18px;
+      align-items: center;
+      margin: 0 0 14px;
+      padding: 12px !important;
+      border-radius: 8px;
+      background: transparent;
+      list-style: none;
+      transition: background-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+    }
+
+    .publications-section[data-view="selected"] .is-selected-publication:hover {
+      background: rgba(255, 255, 255, 0.72);
+      box-shadow: 0 7px 18px rgba(45, 35, 52, 0.1);
+      transform: translateY(-3px);
+    }
+
+    .publications-section[data-view="selected"] .publication-thumbnail-frame {
+      display: block;
+      overflow: hidden;
+      width: 220px;
+      background: #fff;
+      box-shadow: 0 3px 10px rgba(45, 35, 52, 0.14);
+    }
+
+    .publications-section[data-view="selected"] .publication-thumbnail-frame.is-extra-wide {
+      aspect-ratio: 2.4 / 1;
+    }
+
+    .publications-section[data-view="selected"] .publication-thumbnail {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .publications-section[data-view="selected"] .publication-thumbnail-frame.is-extra-wide .publication-thumbnail {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .publications-section[data-view="selected"] .publication-details {
+      display: block;
+      min-width: 0;
+    }
+
+    .publications-section[data-view="selected"] .publication-full-venue,
+    .publications-section[data-view="selected"] .publication-venue-break {
+      display: none;
+    }
+
+    .publications-section[data-view="selected"] .publication-venue-badge {
+      display: inline-flex;
+      align-items: center;
+      margin-right: 7px;
+      padding: 2px 7px;
+      border: 1px solid currentColor;
+      border-radius: 999px;
+      background: var(--venue-badge-bg, rgba(70, 80, 90, 0.08));
+      color: var(--venue-badge-color, #59636d);
+      font-size: 0.68em;
+      font-weight: 700;
+      letter-spacing: 0.035em;
+      line-height: 1.35;
+      vertical-align: 1px;
+    }
+
+    .publications-section[data-view="selected"] .publication-selected-note {
+      display: block;
+      margin-top: 5px;
+      color: #706a73;
+      font-size: 0.88em;
+      font-style: italic;
+      line-height: 1.55;
+    }
+
+    .publications-section[data-view="selected"] .publication-selected-actions {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      margin-top: 8px;
+    }
+
+    .publication-action {
+      position: relative;
+      z-index: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      width: 58px;
+      padding: 4px 8px;
+      box-sizing: border-box;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      background: transparent;
+      box-shadow: 0 0 9px var(--action-glow, rgba(70, 80, 90, 0.16));
+      font-size: 0.74em;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 1.25;
+      text-decoration: none;
+      transition: box-shadow 0.16s ease, transform 0.16s ease;
+    }
+
+    .publication-action::before {
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      border-radius: inherit;
+      background: var(--action-gradient);
+      background-size: 200% 100%;
+      content: "";
+      filter: blur(1.3px);
+      opacity: 0.96;
+      pointer-events: none;
+      transform: scale(1.015);
+      animation: news-toggle-glow 6.5s ease-in-out infinite;
+    }
+
+    .publication-action > * {
+      position: relative;
+      top: 0.2px;
+      z-index: 1;
+      display: inline-flex;
+      align-items: center;
+      line-height: 1;
+    }
+
+    .publication-action i {
+      transform: translateY(0);
+    }
+
+    .publication-action span {
+      transform: translateY(-0.5px);
+    }
+
+    .publication-action--pdf span {
+      transform: translateY(0);
+    }
+
+    a.publication-action--pdf,
+    a.publication-action--pdf:visited,
+    a.publication-action--pdf:hover {
+      --action-gradient: linear-gradient(115deg, #762824 0%, #a83e37 42%, #df8978 68%, #8f332e 100%);
+      --action-glow: rgba(154, 64, 56, 0.2);
+      color: #fff !important;
+    }
+
+    a.publication-action--code,
+    a.publication-action--code:visited,
+    a.publication-action--code:hover {
+      --action-gradient: linear-gradient(115deg, #244d72 0%, #356b9e 42%, #78a9d0 68%, #2d5d89 100%);
+      --action-glow: rgba(53, 107, 158, 0.2);
+      color: #fff !important;
+    }
+
+    .publication-action:hover {
+      box-shadow:
+        0 0 13px var(--action-glow, rgba(70, 80, 90, 0.22)),
+        0 3px 7px rgba(45, 35, 52, 0.1);
+      text-decoration: none;
+      transform: translateY(-1px);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .publication-action::before {
+        animation: none;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .publications-section[data-view="selected"] .is-selected-publication {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 12px;
+        align-items: start;
+        padding: 10px !important;
+      }
+
+      .publications-section[data-view="selected"] .publication-thumbnail-frame {
+        overflow: visible;
+        width: 100%;
+        aspect-ratio: auto;
+      }
+
+      .publications-section[data-view="selected"] .publication-thumbnail-frame.is-extra-wide {
+        aspect-ratio: auto;
+      }
+
+      .publications-section[data-view="selected"] .publication-thumbnail,
+      .publications-section[data-view="selected"] .publication-thumbnail-frame.is-extra-wide .publication-thumbnail {
+        width: 100%;
+        height: auto;
+        object-fit: contain;
+        object-position: center;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .publications-section[data-view="selected"] .is-selected-publication {
+        transition: none;
+      }
+
+      .publications-section[data-view="selected"] .is-selected-publication:hover {
+        transform: none;
+      }
+    }
 
     .bio-text {
       margin: 0;
@@ -447,8 +1680,56 @@
       line-height: 1.7;
     }
 
+    .bio-contact {
+      margin: 12px 0 0;
+      color: #555;
+      font-style: italic;
+    }
+
     #zh .bio-text {
       font-size: 1em;
+    }
+
+    .research-focus {
+      margin: 14px 0 4px;
+    }
+
+    .research-focus-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .research-focus-item {
+      padding: 12px 14px;
+      /*border: 0.1px solid #e2e2e2;*/
+      /*border-radius: 3px;*/
+      background: #fafafa;
+    }
+
+    .research-focus-item h4 {
+      margin: 0 0 3px;
+      color: #333;
+      font-size: 0.96em;
+      font-weight: 600;
+      line-height: 1.35;
+    }
+
+    .research-focus-item p {
+      margin: 0;
+      color: #666;
+      font-size: 0.86em;
+      line-height: 1.5;
+    }
+
+    .current-focus {
+      margin-top: 14px;
+    }
+
+    #services li,
+    #services-zh li {
+      margin-bottom: 2px;
+      line-height: 1.4;
     }
 
   /* 响应式微调（窄屏，手机端） */
@@ -469,7 +1750,7 @@
     .news-list li {
       margin-bottom: 4px;
       display: flex;
-      align-items: flex-start;
+      align-items: baseline;
       position: relative;
       padding-left: 16px; /* 为小圆点留出空间 */
       list-style: none; /* 移除默认列表样式 */
@@ -488,7 +1769,7 @@
       font-size: 0.85em;
       font-weight: 500;
       flex-shrink: 0;
-      margin-right: 8px;
+      margin-right: 1em;
       text-align: left;
     }
     .news-content {
@@ -512,6 +1793,9 @@
       font-size: 0.96em;
       text-align: left;
     }
+    .research-focus-grid {
+      grid-template-columns: 1fr;
+    }
     .header-container {
       flex-direction: column;
       align-items: center;
@@ -529,6 +1813,7 @@
     }
 
     .header-text {
+      width: 100%;
       max-width: 100%;
     }
 
@@ -633,15 +1918,15 @@
       left: 1.2em; /* 手机端破折号位置调整 */
     }
     /* 让论文列表与其他内容左对齐 */
-    #publications ol,
-    #publications-zh ol {
-      padding-left: 20px; /* 与其他内容对齐 */
+    #publications ul,
+    #publications-zh ul {
+      padding-left: 20px;
     }
 
     /* 调整数字标记的位置 */
-    #publications ol li,
-    #publications-zh ol li {
-      padding-left: 4px;
+    #publications ul li,
+    #publications-zh ul li {
+      padding-left: 0;
     }
 
     /* ---------- 新增样式：语言切换按钮与显示控制（对现有风格影响极小） ---------- */
@@ -672,6 +1957,397 @@
     .lang-section { display: none; }
     .lang-section.active { display: block; }
 
+    /* ===== Refined navigation, sticky section headings, and metadata hierarchy ===== */
+    :root {
+      --sticky-nav-height: 52px;
+      --refined-purple: #4C0099;
+      --refined-purple-line: rgba(76, 0, 153, 0.42);
+      --refined-secondary: #6e6872;
+    }
+
+    /* Shared visual language for supporting information. */
+    .sub-info,
+    .secondary-details,
+    .publication-meta-block {
+      margin-top: 6px;
+      padding: 3px 0 3px 12px;
+      border-left: 2px solid var(--refined-purple-line);
+      background: linear-gradient(90deg, rgba(76, 0, 153, 0.025), transparent 72%);
+      color: var(--refined-secondary);
+      font-size: 0.9em;
+      font-style: normal;
+      line-height: 1.58;
+    }
+
+    .sub-info strong,
+    .secondary-details strong,
+    .publication-meta-block strong {
+      color: #4e4852;
+      font-weight: 600;
+    }
+
+    .sub-info em {
+      color: inherit;
+      font-style: normal;
+    }
+
+    .award-secondary {
+      margin-top: 5px;
+    }
+
+    #education > ul > li:not(:last-child),
+    #zh #education-zh > ul > li:not(:last-child) {
+      margin-bottom: 14px;
+    }
+
+    /* Institution-colored secondary details. */
+    .sub-info.sub-info--scu {
+      border-left-color: rgba(180, 16, 10, 0.58);
+      background: linear-gradient(90deg, rgba(180, 16, 10, 0.025), transparent 72%);
+    }
+
+    .sub-info.sub-info--scu a,
+    .sub-info.sub-info--scu a:visited {
+      color: #a43a32 !important;
+    }
+
+    .sub-info.sub-info--astar {
+      border-left-color: rgba(0, 48, 135, 0.59);
+      background: linear-gradient(90deg, rgba(0, 48, 135, 0.030), transparent 72%);
+    }
+
+    .sub-info.sub-info--astar a,
+    .sub-info.sub-info--astar a:visited {
+      color: #003087 !important;
+    }
+
+    :is(#education, #education-zh) > ul > li:nth-child(3) > .sub-info {
+      border-left-color: rgba(0, 126, 116, 0.59);
+      background: linear-gradient(90deg, rgba(0, 126, 116, 0.034), transparent 72%);
+    }
+
+    .publication-year-list.publication-era--nju .publication-meta-block {
+      border-left-color: var(--refined-purple-line);
+      background: linear-gradient(90deg, rgba(76, 0, 153, 0.025), transparent 72%);
+    }
+
+    .publication-year-list.publication-era--scu .publication-meta-block {
+      border-left-color: rgba(180, 16, 10, 0.58);
+      background: linear-gradient(90deg, rgba(180, 16, 10, 0.025), transparent 72%);
+    }
+
+    :is(#projects, #projects-zh) .secondary-details {
+      border-left-color: rgba(180, 16, 10, 0.58);
+      background: linear-gradient(90deg, rgba(180, 16, 10, 0.025), transparent 72%);
+    }
+
+    :is(#projects, #projects-zh) a,
+    :is(#projects, #projects-zh) a:visited {
+      color: #a43a32 !important;
+    }
+
+    .resources-milestones-secondary {
+      margin-bottom: 12px;
+    }
+
+    .resources-milestone + .resources-milestone {
+      margin-top: 4px;
+    }
+
+    .lang-section main > section > ul > li::marker,
+    #publications[data-view="all"] .publication-year-list > li::marker,
+    #publications-zh[data-view="all"] .publication-year-list > li::marker {
+      color: #222;
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+    }
+
+    .publication-year-list > li > a,
+    .publication-details > a {
+      color: #333 !important;
+      font-size: 1.015em;
+      font-weight: 400;
+      /*font-weight: 600;*/
+      line-height: 1.45;
+    }
+
+    .publication-meta-block em {
+      color: #77717b;
+      font-size: 0.96em;
+      font-style: normal;
+    }
+
+    .publications-section[data-view="selected"] .publication-meta-block {
+      margin-top: 6px;
+    }
+
+    .publications-section[data-view="selected"] .publication-selected-note {
+      margin-top: 4px;
+    }
+
+    /* Each heading remains directly beneath the navigation until its section ends. */
+    main > section {
+      position: relative;
+      overflow: visible;
+      scroll-margin-top: var(--sticky-nav-height);
+    }
+
+    main > section > h2,
+    .publication-sticky-header {
+      position: sticky;
+      top: var(--sticky-nav-height);
+      z-index: 8;
+      box-sizing: border-box;
+      background: #fff;
+      box-shadow: none;
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
+
+    main > section > h2 {
+      margin: 0 -8px 16px;
+      padding: 8px 8px 6px;
+      border-bottom-color: rgba(80, 80, 80, 0.2);
+      box-shadow: 0 4px 5px -5px rgba(45, 45, 45, 0.18);
+    }
+
+    .publication-sticky-header {
+      margin: 0 -8px 16px;
+      padding: 8px;
+    }
+
+    .publication-sticky-header > h2 {
+      position: static;
+      z-index: auto;
+      margin: 0;
+      padding: 0 0 6px;
+      border-bottom-color: rgba(80, 80, 80, 0.2);
+      background: transparent;
+      box-shadow: 0 4px 5px -5px rgba(45, 45, 45, 0.18);
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
+
+    .publication-sticky-header > .publication-subheader {
+      margin: 8px 0 0;
+    }
+
+    /* Current-section indicator shared by desktop and mobile navigation. */
+    .section-nav a {
+      position: relative;
+      transition: color 0.18s ease;
+    }
+
+    .section-nav a::after {
+      position: absolute;
+      right: 50%;
+      bottom: -10px;
+      left: 50%;
+      height: 2px;
+      border-radius: 999px;
+      background: var(--refined-purple);
+      content: "";
+      opacity: 0;
+      transition: right 0.24s cubic-bezier(0.22, 1, 0.36, 1), left 0.24s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.18s ease;
+    }
+
+    .section-nav a.is-current,
+    .section-nav a.is-current:hover {
+      color: var(--refined-purple) !important;
+      text-decoration: none;
+    }
+
+    .section-nav a.is-current::after {
+      right: 0;
+      left: 0;
+      opacity: 1;
+    }
+
+    @media (min-width: 701px) {
+      .section-nav {
+        background: #fff;
+        box-shadow: none;
+        border-bottom: 1px solid rgba(80, 80, 80, 0.2);
+        -webkit-backdrop-filter: none;
+        backdrop-filter: none;
+      }
+    }
+
+    @media (max-width: 700px) {
+      :root {
+        --sticky-nav-height: 48px;
+      }
+
+      body > #lang-toggle.lang-btn {
+        transition: opacity 0.18s ease, transform 0.18s ease, visibility 0s linear;
+      }
+
+      body > #lang-toggle.lang-btn.is-hidden-after-nav {
+        opacity: 0;
+        pointer-events: none;
+        transform: translateY(-8px);
+        visibility: hidden;
+        transition: opacity 0.18s ease, transform 0.18s ease, visibility 0s linear 0.18s;
+      }
+
+      .profile-section-divider {
+        display: none;
+      }
+
+      main {
+        margin-top: 18px;
+      }
+
+      .lang-section main > section {
+        margin-bottom: 18px;
+      }
+
+      .lang-section > .personal-section {
+        position: absolute;
+        top: var(--personal-panel-top, 150px);
+        right: auto;
+        bottom: auto;
+        left: var(--personal-panel-left, 12px);
+        z-index: 90;
+        width: var(--personal-panel-width, calc(100vw - 24px));
+        max-width: none;
+        margin: 0;
+        padding: 0 10px;
+        box-shadow: none;
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      .lang-section > .personal-section.open {
+        max-height: var(--personal-panel-max-height, 70vh);
+        margin-top: 0;
+        padding: 12px 10px;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        box-shadow: 0 12px 30px rgba(36, 30, 41, 0.14);
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .mobile-scoreboard-slot {
+        display: block;
+        margin: 16px -20px -40px;
+        padding: 26px 20px 30px;
+        border-top: 1px solid #ddd;
+        background: #f5f5f5;
+      }
+
+      #services,
+      #services-zh {
+        margin-bottom: 0;
+      }
+
+      .mobile-scoreboard-slot > .publication-scoreboard {
+        width: min(100%, 357px);
+        max-width: 357px;
+        margin: 0 auto;
+      }
+
+      .section-nav {
+        position: sticky;
+        top: 0;
+        z-index: 60;
+        display: flex;
+        min-height: var(--sticky-nav-height);
+        align-items: center;
+        gap: 18px;
+        box-sizing: border-box;
+        padding: 0 16px;
+        overflow-x: auto;
+        border-bottom: 0;
+        background-color: #fff;
+        background-image: linear-gradient(rgba(76, 0, 153, 0.11), rgba(76, 0, 153, 0.11));
+        background-repeat: no-repeat;
+        background-position: left bottom;
+        background-size: 100% 1px;
+        box-shadow: none;
+        -webkit-backdrop-filter: none;
+        backdrop-filter: none;
+        scrollbar-width: none;
+      }
+
+      .section-nav::-webkit-scrollbar {
+        display: none;
+      }
+
+      .section-nav a {
+        flex: 0 0 auto;
+        padding: 14px 0 12px;
+        color: #666 !important;
+        font-size: 0.78em;
+        font-weight: 600;
+        line-height: 1;
+        text-decoration: none;
+        white-space: nowrap;
+      }
+
+      .section-nav a::after {
+        bottom: -4px;
+      }
+
+      main > section > h2,
+      .publication-sticky-header {
+        margin-right: -4px;
+        margin-left: -4px;
+        padding-right: 4px;
+        padding-left: 4px;
+      }
+
+      .publication-sticky-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        padding-top: 8px;
+        padding-bottom: 6px;
+        border-bottom: 1px solid rgba(80, 80, 80, 0.2);
+        box-shadow: 0 4px 5px -5px rgba(45, 45, 45, 0.18);
+      }
+
+      .publication-sticky-header > h2 {
+        flex: 0 1 auto;
+        min-width: 0;
+        padding-bottom: 0;
+        border-bottom: 0;
+        box-shadow: none;
+        white-space: nowrap;
+      }
+
+      .publication-sticky-header > .publication-subheader {
+        flex: 0 0 auto;
+        margin: 0;
+      }
+
+      .publication-sticky-header .publication-note {
+        display: none;
+      }
+
+      .publications-section > .publication-note-mobile {
+        display: block;
+        margin: 10px 0 0;
+        color: #666;
+        font-size: 0.76em;
+        line-height: 1.4;
+        text-align: right;
+      }
+
+      .publications-section .publication-list-stage > .publication-year:first-child {
+        margin-top: 2px !important;
+      }
+
+      .sub-info,
+      .secondary-details,
+      .publication-meta-block {
+        padding-left: 9px;
+        font-size: 0.88em;
+      }
+    }
+
   </style>
 </head>
 <body>
@@ -690,8 +2366,8 @@
 
         <div class="header-text">
           <h1>Yi Zhang <span class="no-bold-paren">(张懿)</span></h1>
-          <p>CS/AI PhD Candidate</p>
-          <p class="research-interests">Computer Vision · Semi- & Weakly-Supervised Learning · Medical Image Analysis</p>
+          <p>CS/AI Ph.D. Candidate</p>
+          <p class="research-interests">Object Detection <br> Semi-Supervised Learning <br> Open-Vocabulary Visual Recognition <br> Medical Image Analysis</p>
 
           <div class="contact" aria-label="contact and affiliation">
             <div class="contact-left">
@@ -715,54 +2391,126 @@
               <!-- 若未来需要再加平台，直接追加 <a> 即可 -->
             </div>
           </div>
+          <div style="margin-top: 16px; text-align: center; font-size: 0.78rem; color: #666; line-height: 1.6;">
+            <div style="font-style: italic; letter-spacing: 0.5px;">“Boyhood is gone, <br> adulthood never comes.”</div>
+            <div style="margin-top: 20px; display: flex; justify-content: center; gap: 16px;">
+              <a href="#" style="color: #555; text-decoration: none; border-bottom: 1px dotted #ccc;">📄 CV</a>
+              <a href="#" style="color: #555; text-decoration: none; border-bottom: 1px dotted #ccc;">📝 Blog</a>
+            </div>
+          </div>
+          <div class="profile-section-divider" aria-hidden="true"></div>
+          <section class="publication-scoreboard" aria-label="Publication record">
+            <div class="publication-scoreboard__game-title">PAPER <span>STRIKE</span><span class="shot-scope" aria-hidden="true"></span></div>
+            <div class="publication-scoreboard__header">
+              <span class="publication-scoreboard__title">VENUE</span>
+              <span class="publication-scoreboard__meta">ACC / SUB</span>
+            </div>
+            <div class="score-row"><span class="score-venue">CVPR</span><span class="score-track" role="img" aria-label="0 percent acceptance rate"><span class="score-marker" style="--rate: 0%;"></span></span><span class="score-total"><strong>0</strong><span>/</span>1</span></div>
+            <div class="score-row"><span class="score-venue">ICCV</span><span class="score-track" role="img" aria-label="No submissions yet"></span><span class="score-total"><strong>0</strong><span>/</span>0</span></div>
+            <div class="score-row"><span class="score-venue">ECCV</span><span class="score-track" role="img" aria-label="No submissions yet"></span><span class="score-total"><strong>0</strong><span>/</span>0</span></div>
+            <div class="score-row"><span class="score-venue">NeurIPS</span><span class="score-track" role="img" aria-label="67 percent acceptance rate"><span class="score-marker" style="--rate: 67%;"></span></span><span class="score-total"><strong>2</strong><span>/</span>3</span></div>
+            <div class="score-row"><span class="score-venue">ICML</span><span class="score-track" role="img" aria-label="No submissions yet"></span><span class="score-total"><strong>0</strong><span>/</span>0</span></div>
+            <div class="score-row"><span class="score-venue">ICLR</span><span class="score-track" role="img" aria-label="No submissions yet"></span><span class="score-total"><strong>0</strong><span>/</span>0</span></div>
+            <div class="score-row"><span class="score-venue">AAAI</span><span class="score-track" role="img" aria-label="0 percent acceptance rate"><span class="score-marker" style="--rate: 0%;"></span></span><span class="score-total"><strong>0</strong><span>/</span>1</span></div>
+            <div class="score-row score-row--medical"><span class="score-venue">MICCAI</span><span class="score-track" role="img" aria-label="100 percent acceptance rate"><span class="score-marker" style="--rate: 100%;"></span></span><span class="score-total"><strong>1</strong><span>/</span>1</span></div>
+            <div class="score-row"><span class="score-venue">MIA</span><span class="score-track" role="img" aria-label="0 percent acceptance rate"><span class="score-marker" style="--rate: 0%;"></span></span><span class="score-total"><strong>0</strong><span>/</span>1</span></div>
+            <div class="score-row"><span class="score-venue">TMI</span><span class="score-track" role="img" aria-label="100 percent acceptance rate"><span class="score-marker" style="--rate: 100%;"></span></span><span class="score-total"><strong>1</strong><span>/</span>1</span></div>
+            <div class="publication-scoreboard__player">PLAYER: <span>ZyEverX</span></div>
+          </section>
         </div>
       </div>
     </header>
 
+    <nav class="section-nav" aria-label="Section navigation">
+      <a href="#bio">About</a>
+      <a href="#news">News</a>
+      <a href="#education">Education</a>
+      <a href="#experience">Experience</a>
+      <a href="#competitions">Awards</a>
+      <a href="#publications">Publications</a>
+      <a href="#projects">Projects</a>
+      <a href="#services">Services</a>
+    </nav>
+
     <!-- 折叠区（英文，默认收起）-->
     <div id="personal-section" class="personal-section" aria-hidden="true">
-      <p><strong>Hidesuwa</strong></p>
+      <p><strong>Hidesuwa~</strong></p>
       <ul class="fun-list">
         <li><span class="icon">🌍</span> A wandering AI newbie on earth</li>
         <li><span class="icon">🎯</span> Published<strong>ZERO</strong>papers at <del>TMI</del>, MIA, or <del>MICCAI</del>.</li>
-        <li><span class="icon">🚫</span> Published<strong>ZERO</strong>papers at CVPR, ICCV, ECCV, ICML, NeurIPS, or ICLR.</li>
+        <li><span class="icon">🚫</span> Published<strong>ZERO</strong>papers at CVPR, ICCV, ECCV, ICML, <del>NeurIPS</del>, or ICLR.</li>
         <li><span class="icon">🔤</span> Chinese (of course 😀) · English (reasonable 🤔) · French (almost forgotten 😅)</li>
-        <li><span class="icon">🎶</span> Music, movies, fashion, food, photography, and nature</li>
+        <li><span class="icon">🎶</span> Music, movies, fashion, food, nature, and photography</li>
         <li><span class="icon">🍴</span> Eats anything except 🍌 — loves all cuisines</li>
         <li><span class="icon">📋</span> Ex-Head Moderator of <em>"Huawei Honor Tieba"</em> during high school</li>
         <li><span class="icon">🔫</span> Ex-FPS "talent": </li>
         <li class="fps-item"><img src="nz.jpg" alt="NZ Logo" class="game-logo"> <strong>Top 16 Nationally</strong> (in high school)</li>
         <li class="fps-item"><img src="CSGO.jpg" alt="CSGO Logo" class="game-logo"> <strong>Rank S</strong> after 1,600 hours (in undergraduate)</li>
         <li class="fps-item"><img src="valorant.png" alt="VAL Logo" class="game-logo"> <strong>Immortal I</strong> after 300 hours (in graduate)</li>
-        <li><span class="icon">🍼</span> Now "electronically ED": chill with dramas </li>
-        <li><span class="icon">🎓</span> Driving the AVATR 11 across every inch of western Sichuan, Yunnan, and the Grand Northwest of China.</li>
-        <li><span class="icon">💬</span> <b>"Boyhood is gone, adulthood never comes."</b></li>
+        <li><span class="icon">🍼</span> Now "electronically ED": chill with dramas and single-player games </li>
+        <li><span class="icon">🏔️</span> Driving my car across every inch of western Sichuan, Yunnan, and the Grand Northwest of China.</li>
       </ul>
     </div>
 
     <main>
       <section id="bio">
-        <h2><strong>Biography</strong></h2>
+        <h2>🔍<strong>About Me</strong></h2>
         <p class="bio-text">
-          I am a CS/AI PhD candidate at Nanjing University, advised by Assoc. Prof. Shuo Chen. My research focuses on computer vision, semi- and weakly-supervised learning, and medical image analysis.
-          Previously, I worked on medical image computing at Sichuan University and A*STAR IHPC.
+          Hi! I’m Yi Zhang (张懿), a CS/AI Ph.D. candidate at <a href="https://www.nju.edu.cn/" target="_blank">Nanjing University</a>,
+          advised by Assoc. Prof. <a href="https://shuochenya.github.io/index.html" target="_blank">Shuo Chen</a>.
+          Previously, I began my research journey at <a href="https://www.scu.edu.cn/" target="_blank" class="bio-link-scu">Sichuan University</a>,
+          where I received my M.Eng. in Artificial Intelligence under the supervision
+          of Full Prof. <a href="https://cs.scu.edu.cn/info/1288/19755.htm" target="_blank" class="bio-link-scu">Haixian Zhang</a>,
+          followed by a wonderful research internship at <a href="https://www.a-star.edu.sg/ihpc" target="_blank" class="bio-link-astar">A*STAR</a>
+          <a href="https://www.a-star.edu.sg/ihpc" target="_blank" class="bio-link-astar">IHPC</a> (now <a href="https://www.a-star.edu.sg/iaic" target="_blank" class="bio-link-astar">IAIC</a>).
+          My research interests are:
         </p>
+        <div class="research-focus">
+          <div class="research-focus-grid">
+            <article class="research-focus-item">
+              <h4>Object Detection</h4>
+              <p>Reliable detection across object scales and challenging visual conditions.</p>
+            </article>
+            <article class="research-focus-item">
+              <h4>Semi-Supervised Learning</h4>
+              <p>Learning robust visual models from limited labels and abundant unlabeled data.</p>
+            </article>
+            <article class="research-focus-item">
+              <h4>Open-Vocabulary Visual Recognition</h4>
+              <p>Recognizing and localizing concepts beyond fixed training categories.</p>
+            </article>
+            <article class="research-focus-item">
+              <h4>Medical Image Analysis</h4>
+              <p>Applying computer vision to clinically meaningful image understanding.</p>
+            </article>
+          </div>
+        </div>
+        <p class="bio-text current-focus">Currently, I am conducting research on semi-supervised learning for real-time DETRs and participating in a steel plate surface defect detection competition.</p>
+        <p class="bio-contact">✨ I welcome opportunities for collaboration and thoughtful discussion—feel free to reach out by <a href="mailto:zhangy_magic@smail.nju.edu.cn">email</a>.</p>
       </section>
 
       <section id="news">
-        <h2><strong>News</strong></h2>
+        <h2>🔥<strong>News</strong></h2>
         <ul class="news-list">
+<!--          <li>-->
+<!--            <span class="news-date">2026.11</span>-->
+<!--            <span class="news-content">Won the championship and National First Prize in AIC 2026 as team leader.</span>-->
+<!--          </li>-->
+          <li>
+            <span class="news-date">2026.09</span>
+            <span class="news-content">Two papers have been accepted at NeurIPS 2026.</span>
+          </li>
           <li>
             <span class="news-date">2025.10</span>
-            <span class="news-content">Won First Prize in the 2025 Data and AI Implementation Competition.</span>
+            <span class="news-content">Won the championship in 2025 Data and AI Implementation Competition as team leader.</span>
           </li>
           <li>
             <span class="news-date">2025.06</span>
-            <span class="news-content">One paper accepted at MICCAI 2025.</span>
+            <span class="news-content">One paper was accepted at MICCAI 2025.</span>
           </li>
           <li>
             <span class="news-date">2025.02</span>
-            <span class="news-content">Started my PhD journey at NJU.</span>
+            <span class="news-content">Started my Ph.D. journey at NJU.</span>
           </li>
           <li>
             <span class="news-date">2024.12</span>
@@ -774,73 +2522,82 @@
           </li>
           <li>
             <span class="news-date">2024.01</span>
-            <span class="news-content">One paper accepted in AIR.</span>
+            <span class="news-content">One paper was accepted by AIR.</span>
           </li>
           <li>
-            <span class="news-date">2023.08</span>
-            <span class="news-content">One paper accepted in IEEE TMI.</span>
+            <span class="news-date">2023.09</span>
+            <span class="news-content">One paper was accepted by IEEE TMI.</span>
           </li>
         </ul>
-        <span class="news-toggle" data-label="Show earlier" data-hide="Hide earlier">
+        <button type="button" class="news-toggle" data-label="Show More" data-hide="Show Less">
           <span class="news-arrow"></span>
-          <span class="news-toggle-text">Show earlier</span>
-        </span>
+          <span class="news-toggle-text">Show More</span>
+        </button>
       </section>
 
       <section id="education">
-        <h2><strong>Education</strong></h2>
+        <h2>🎓<strong>Education</strong></h2>
         <ul>
           <li>
-	    <img src="nju_logo.png" alt="NJU Logo" class="school-logo">
-	    <strong>Ph.D. Candidate</strong>, <strong>Computer Science</strong><span class="comma">, </span> <br class="mobile-break">February 2025 – Present<br>
-            Nanjing University, Suzhou, China<br>
-	    <div class="sub-info">
-              Reliable Machine Intelligence Lab (REMI-Lab)<br>
-              <strong>Advisor</strong>: Assoc. Prof. <a href="https://shuochenya.github.io/index.html" target="_blank">Shuo Chen</a> (Excellent Young Scientists Fund (overseas), Municipal (GUSU) Leading Talents Fund)
-        </div>
+            <img src="nju_logo.png" alt="NJU Logo" class="school-logo">
+            <strong>Ph.D. Candidate</strong>, <strong>Computer Science</strong><span class="comma">, </span> <br class="mobile-break">February 2025 – Present<br>
+                Nanjing University, Suzhou, China<br>
+            <div class="sub-info">
+                  Reliable Machine Intelligence Group (<a href="https://shuochenya.github.io/index#members">REMI</a>), PCALab@NJU<br>
+                  <strong>Advisor</strong>: Assoc. Prof. <a href="https://shuochenya.github.io/index.html" target="_blank">Shuo Chen</a>
+              (Excellent Young Scientists Fund (Overseas), Municipal Leading Talents Fund)
+            </div>
           </li>
           <li>
-	    <img src="scu_logo.png" alt="SCU_Logo" class="school-logo">
-            <strong>M.Eng.</strong>, <strong>Artificial Intelligence</strong><span class="comma">, </span><br class="mobile-break">June 2021 – June 2024<br>
-            Sichuan University, Chengdu, China<br>
-	    <div class="sub-info">
-              Machine Intelligence Lab (MI-Lab)<br>
-              <strong>Advisor</strong>: Prof. <a href="https://scholar.google.com/citations?user=YzGmRoAAAAAJ&hl=en&oi=ao" target="_blank">Haixian Zhang</a><br>
-              <strong>Honors</strong>: Outstanding Graduate & Student Awards, Outstanding Thesis Award Nomination (3%)
-        </div>
+            <img src="scu_logo.png" alt="SCU_Logo" class="school-logo">
+                <strong>M.Eng.</strong>, <strong>Artificial Intelligence</strong><span class="comma">, </span><br class="mobile-break">June 2021 – June 2024<br>
+                Sichuan University, Chengdu, China<br>
+            <div class="sub-info sub-info--scu">
+                  Machine Intelligence Lab (<a href="http://www.machineilab.org/" target="_blank">MachineILab</a>)<br>
+                  <strong>Advisor</strong>: Full Prof. <a href="https://cs.scu.edu.cn/info/1288/19755.htm" target="_blank">Haixian Zhang</a><br>
+                  <strong>Honors</strong>: Outstanding Graduate & Student Awards, Outstanding Dissertation Award Nomination (3%)
+            </div>
           </li>
           <li>
 	    <img src="shnu_logo.png" alt="SHNU_Logo" class="school-logo">-<img src="uca_logo.png" alt="UCA_Logo" class="school-logo">
             <strong>B.Sc.</strong>, <strong>Computer Science</strong><span class="comma">, </span><br class="mobile-break">September 2015 – July 2019<br>
              Shanghai Normal University, Shanghai, China - Université Clermont Auvergne, Clermont-Ferrand, France<br>
         <div class="sub-info">
-            <strong>Honors</strong>: The Xu Guangqi Elite Program (1%)<br>
+            <strong>Honors</strong>: Xu Guangqi Honors Class (1%), Four Consecutive Years Academic Scholarships
         </div>
           </li>
         </ul>
       </section>
 
       <section id="experience">
-        <h2><strong>Experience</strong></h2>
+        <h2>💼<strong>Experience</strong></h2>
 
         <h3 style="margin-top: 0; color: #333; font-size: 1.1em;"><strong>Professional</strong></h3>
         <ul>
           <li>
+            <img src="machineilab.png" alt="MachineILab Logo" class="school-logo">
             <strong>Research Assistant</strong><span class="comma">, </span><br class="mobile-break">August 2024 – August 2025<br>
-            MI-Lab, Sichuan University, Chengdu, China
-          </li>
-          <li>
-            <strong>Intern Researcher</strong><span class="comma">, </span><br class="mobile-break">January 2024 – July 2024<br>
-            Institute of High Performance Computing (IHPC), Agency for Science, Technology and Research (A*STAR), Singapore<br>
-            <div class="sub-info">
-              <em><strong>Mentor</strong>: Senior Scientist <a href="https://liangli-zhen.github.io/" target="_blank">Liangli Zhen</a> and Scientist <a href="https://scholar.google.com/citations?user=nk4iMegAAAAJ&hl=en" target="_blank">Zizhou Wang</a></em>
+	        MachineILab, Sichuan University, Chengdu, China
+            <div class="sub-info sub-info--scu">
+                <strong>Supervisor</strong>: Full Prof. <a href="https://cs.scu.edu.cn/info/1288/19755.htm" target="_blank">Haixian Zhang</a><br>
             </div>
           </li>
           <li>
-            <strong>Academic Affairs Officer</strong><span class="comma">, </span><br class="mobile-break">January 2020 – October 2020<br>
-            Chongqing Three Gorges Medical College, Chongqing, China
+            <img src="astar.png" alt="A*STAR Logo" class="school-logo">
+            <strong>Research Intern</strong><span class="comma">, </span><br class="mobile-break">January 2024 – July 2024<br>
+            IHPC (now IAIC), A*STAR, Fusionopolis, Singapore<br>
+            <div class="sub-info sub-info--astar">
+              <em><strong>Supervisors</strong>: Senior Scientist <a href="https://liangli-zhen.github.io/" target="_blank">Liangli Zhen</a> and
+                Scientist <a href="https://scholar.google.com/citations?user=nk4iMegAAAAJ&hl=en" target="_blank">Zizhou Wang</a></em>
+            </div>
           </li>
+<!--          <li>-->
+<!--            <img src="sanxiayizhuan.jpg" alt="CTGMC Logo" class="school-logo">-->
+<!--            <strong>Academic Affairs Officer</strong><span class="comma">, </span><br class="mobile-break">January 2020 – October 2020<br>-->
+<!--            Chongqing Three Gorges Medical College, Chongqing, China-->
+<!--          </li>-->
           <li>
+            <img src="bonc.png" alt="BONC Logo" class="school-logo">
             <strong>Data Engineer</strong><span class="comma">, </span><br class="mobile-break">February 2019 – August 2019<br>
             BONC Ltd., Shanghai, China
           </li>
@@ -849,98 +2606,199 @@
         <h3 style="margin-top: 20px; color: #333; font-size: 1.1em;"><strong>Academic Leadership</strong></h3>
         <ul>
           <li>
-            <strong>PhD Cohort Representative (2025 Intake)</strong><span class="comma">, </span><br class="mobile-break">October 2025 – Present<br>
+            <img src="is.png" alt="IS Logo" class="school-logo">
+            <strong>Doctoral Cohort Representative, 2025 Intake</strong><span class="comma">, </span><br class="mobile-break">October 2025 – Present<br>
             School of Intelligence Science & Technology, Nanjing University, Suzhou, China<br>
           </li>
           <li>
-            <strong>Research Team Leader</strong><span class="comma">, </span><br class="mobile-break">June 2022 – February 2025<br>
-            MI-Lab, Sichuan University, Chengdu, China
+            <img src="machineilab.png" alt="MachineILab Logo" class="school-logo">
+            <strong>Research Group Leader</strong><span class="comma">, </span><br class="mobile-break">June 2022 – February 2025<br>
+	    MachineILab, Sichuan University, Chengdu, China
           </li>
         </ul>
       </section>
 
       <section id="competitions">
-        <h2><strong>Competition</strong></h2>
+        <h2>🏆<strong>Honors and Awards</strong></h2>
         <ul>
+<!--      <li>-->
+<!--   	    <strong>🥇 National First Prize (¥8,000 prize), Team Leader</strong>,  December 2026<br>-->
+<!--      	    <strong>The 2026 Global Campus Artificial Intelligence Algorithm Elite Competition (AIC 2026) </strong> <a href="https://www.aicomp.cn/" target="_blank" rel="noopener noreferrer">[Page]</a><br>-->
+<!--            <div class="secondary-details award-secondary">-->
+<!--              <strong>Track</strong>: "AI + Steel" Plate Surface Defect Detection <a href="https://www.aicomp.cn/tracks/tracks-6/4174.html" target="_blank" rel="noopener noreferrer">[Page]</a><br>-->
+<!--	    	  <strong>Organizer</strong>: AIC Committee & Nanjing Iron & Steel Co. & Communist Youth League of Nanjing-->
+<!--            </div>-->
+<!--	  </li>-->
 	  <li>
-   	    <strong>🥇 Team Leader, Champion (with a ¥30,000 prize)</strong>,  October 2025<br>
-    	    <strong>The 2025 Data and AI Implementation Competition: "Empowering Intelligence Through Data"</strong> <a href="https://mp.weixin.qq.com/s/3dgU7P8mxCwfN9b1MRXPQA" target="_blank">[link]</a><br>
-    	    Organizer: Hangzhou D5 Data & Binjiang Institute of AI, ZJUT & Science and Technology Bureau of Hangzhou
+   	    <strong>🥇 Champion (¥30,000 prize), Team Leader</strong>,  October 2025<br>
+      	    <strong>The 2025 Data and AI Implementation Competition: "Empowering Intelligence Through Data" </strong> <a href="https://mp.weixin.qq.com/s/3dgU7P8mxCwfN9b1MRXPQA" target="_blank" rel="noopener noreferrer">[Page]</a><br>
+     	    <div class="secondary-details award-secondary">
+              <strong>Organizer</strong>: Hangzhou D5 Data & Binjiang Institute of AI, ZJUT & Science and Technology Bureau of Hangzhou
+            </div>
 	  </li>
         </ul>
       </section>
 
-      <section id="research-interests">
-        <h2><strong>Research Interests</strong></h2>
-        <ul>
-          <li><b>Computer Vision</b>: Object Detection</li>
-          <li><b>Semi- & Weakly-Supervised Learning</b>: Semi-/Weakly-Supervised Object Detection</li>
-          <li><b>Medical Image Analysis</b>: 3D/Longitudinal CT Computing, Computational Pathology</li>
+      <section id="publications" class="publications-section" data-view="all">
+        <div class="publication-sticky-header">
+          <h2>📜<strong>Publications</strong></h2>
+          <div class="publication-subheader">
+            <p class="publication-note">(* indicates equal contribution)</p>
+            <div class="publication-view-toggle" role="group" aria-label="Publication view">
+              <button type="button" data-publication-view="all" aria-pressed="true">All</button>
+              <button type="button" data-publication-view="selected" aria-pressed="false">Selected</button>
+              <span class="publication-selection-help" tabindex="0" role="note" aria-label="How selected publications are chosen"
+                    data-tooltip="Selection is not based on first or co-first authorship or publication prestige. These are works I personally value.">?</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2026 -->
+        <h3 class="publication-year" style="margin-top: 20px; color: #333; font-size: 1.1em;">
+          <b>2026</b>
+        </h3>
+        <ul class="publication-year-list publication-era--nju">
+          <li class="is-selected-publication" data-code='https://github.com/maoyij/Asymmetric-Matching'
+              data-thumbnail="./BUTR.png" data-selected-note="A remarkably simple budget-aware perspective on tiny (dense) object detection.">
+            <a href="https://link.springer.com/chapter/10.1007/978-3-032-05114-1_4" target="_blank">
+                Dynamic Query as Budgeting for Tiny Object Detection</a>.<br>
+            <strong><u>Y Zhang</u></strong>, D Xiong, G Gao, X Zhang, Y Qiu, Y Zhou, S Chen.<br>
+            <em>
+              The Fortieth Annual Conference on Neural Information Processing Systems
+              (<strong>NeurIPS</strong>), 2026.
+            </em>
+          </li>
+
+          <li class="is-selected-publication" data-code='https://github.com/maoyij/Asymmetric-Matching'
+              data-thumbnail="./OHATP.png" data-selected-note="Geometry- and topology-aware graph anomaly detection.">
+            <a href="https://link.springer.com/chapter/10.1007/978-3-032-05114-1_4" target="_blank">
+                OHATP: Graph Anomaly Detection with Orthogonal-Hyperspherical Augmentation and Topology Perception</a>.<br>
+            Y Qiu, <strong><u>Y Zhang</u></strong>, D Xiong, G Gao, S Chen.<br>
+            <em>
+              The Fortieth Annual Conference on Neural Information Processing Systems
+              (<strong>NeurIPS</strong>), 2026.
+            </em>
+          </li>
         </ul>
-      </section>
 
-      <section id="publications">
-        <h2><strong>Selected Publications</strong></h2>
-
-        <h3 style="margin-top: 20px; color: #333; font-size: 1.1em;"><b>Journal Papers </b><span class="note">(* contributed equally)</span></h3>
-        <ol reversed>
-          <li>
-            <strong><a href="https://link.springer.com/article/10.1007/s10462-024-10762-x" target="_blank">From Single to Universal: Tiny Lesion Detection in Medical Imaging</a></strong>.<br>
-            <strong><u>Y Zhang</u></strong>, Y Mao, X Lu, X Zou, H Huang, X Li, J Li, H Zhang.<br>
-            <em>Artificial Intelligence Review (<strong>AIR</strong>), 2024.</em>
-          </li>
-          <li>
-            <strong><a href="https://onlinelibrary.wiley.com/doi/full/10.1155/2024/7629441" target="_blank">An Intelligent System of Predicting Lymph Node Metastasis in Colorectal Cancer Using 3D CT Scans</a></strong>.<br>
-            M Xie*, <strong><u>Y Zhang</u></strong>*, X Li, J Li, X Zou, Y Mao, H Zhang.<br>
-            <em>International Journal of Intelligent Systems (<strong>IJIS</strong>), 2024.</em>
-          </li>
-          <li>
-            <strong><a href="https://ieeexplore.ieee.org/abstract/document/10305186/" target="_blank">FAOT-Net: A 1.5-stage Framework for 3D Pelvic Lymph Node Detection with Online Candidate Tuning</a></strong>.<br>
-            <strong><u>Y Zhang</u></strong>, J Li, X Li, M Xie, MT Islam, H Zhang.<br>
-            <em>IEEE Transactions on Medical Imaging (<strong>TMI</strong>), 2023.</em>
-          </li>
-        </ol>
-
-        <h3 style="margin-top: 20px; color: #333; font-size: 1.1em;"><b>Conference Papers</b></h3>
-        <ol reversed>
-          <li>
-            <strong><a href="https://link.springer.com/chapter/10.1007/978-3-032-05114-1_4" target="_blank">Asymmetric Matching in Abdominal Lymph Nodes of Follow-Up CT Scans</a></strong>.<br>
+        <!-- 2025 -->
+        <h3 class="publication-year" style="margin-top: 20px; color: #333; font-size: 1.1em;">
+          <b>2025</b>
+        </h3>
+        <ul class="publication-year-list publication-era--scu">
+          <li class="is-selected-publication" data-pdf='https://papers.miccai.org/miccai-2025/paper/3853_paper.pdf' data-code='https://github.com/maoyij/Asymmetric-Matching'
+              data-thumbnail="./AysMatch.png" data-selected-note="Asymmetric lymph node correspondence modeling for longitudinal 3D CT scans.">
+            <a href="https://link.springer.com/chapter/10.1007/978-3-032-05114-1_4" target="_blank">
+                Asymmetric Matching in Abdominal Lymph Nodes of Follow-Up CT Scans</a>.<br>
             Y Mao, <strong><u>Y Zhang</u></strong>, X Zou, Y Zheng, H Zhang.<br>
-            <em>International Conference on Medical Image Computing and Computer Assisted Intervention (<strong>MICCAI</strong>), 2025.</em>
+            <em>
+              International Conference on Medical Image Computing and Computer Assisted Intervention
+              (<strong>MICCAI</strong>), 2025.
+            </em>
           </li>
-          <li>
-            <strong><a href="https://ieeexplore.ieee.org/abstract/document/10822670" target="_blank">MMUDA: A Mutual Multi-Task Learning Network with Unsupervised Domain Adaptation for Glaucoma Screening</a></strong>.<br>
-            T Yin, <strong><u>Y Zhang</u></strong>, D Wu, W Shang, H Zhang.<br>
-            <em>IEEE International Conference on Bioinformatics and Biomedicine (<strong>BIBM</strong>), 2024.</em>
+          <li class="is-selected-publication" data-pdf='https://arxiv.org/pdf/2411.11487'
+              data-thumbnail="./LookGroup.png" data-selected-note="Mixing multiple slides for joint learning in survival prediction.">
+            <a href="https://arxiv.org/abs/2411.11487" target="_blank">
+                Look a Group at Once: Multi-Slide Modeling for Survival Prediction</a>.<br>
+            X Li*, <strong><u>Y Zhang*</u></strong>, Y Xie, J Yang, X Wang, H Chen, H Zhang.<br>
+            <em>arXiv preprint.</em>
           </li>
-          <li>
-            <strong><a href="https://ieeexplore.ieee.org/abstract/document/10385936" target="_blank">Predicting Lymph Node Metastasis of Colorectal Cancer in CT Scans Using Attention-Based Multiple Instance Learning</a></strong>.<br>
-            M Xie, <strong><u>Y Zhang</u></strong>, X Li, Y Mao, X Zou, H Zhang.<br>
-            <em>IEEE International Conference on Bioinformatics and Biomedicine (<strong>BIBM</strong>), 2023.</em>
-          </li>
-        </ol>
+        </ul>
 
-        <h3 style="margin-top: 20px; color: #333; font-size: 1.1em;"><b>Preprint Papers </b><span class="note">(* contributed equally)</span></h3>
-        <ol reversed>
+        <!-- 2024 -->
+        <h3 class="publication-year" style="margin-top: 20px; color: #333; font-size: 1.1em;">
+          <b>2024</b>
+        </h3>
+        <ul class="publication-year-list publication-era--scu">
           <li>
-            <strong><a href="https://arxiv.org/abs/2411.11487" target="_blank">Look a Group at Once: Multi-Slide Modeling for Survival Prediction</a></strong>.<br>
-            X Li*, <strong><u>Y Zhang</u></strong>*, Y Xie, J Yang, X Wang, H Chen, H Zhang.<br>
-            <em>arXiv preprint, 2024.</em>
+            <a href="https://ieeexplore.ieee.org/abstract/document/10822670" target="_blank">
+                MMUDA: A Mutual Multi-Task Learning Network with Unsupervised Domain Adaptation for Glaucoma Screening</a>.<br>
+            T Yin, <strong><u>Y Zhang</u></strong>, D Wu, W Shang, H Zhang.<br>
+            <em>
+              IEEE International Conference on Bioinformatics and Biomedicine
+              (<strong>BIBM</strong>), 2024.
+            </em>
           </li>
-        </ol>
+
+          <li>
+            <a href="https://link.springer.com/article/10.1007/s10462-024-10762-x" target="_blank">
+                From Single to Universal: Tiny Lesion Detection in Medical Imaging</a>.<br>
+            <strong><u>Y Zhang</u></strong>, Y Mao, X Lu, X Zou, H Huang, X Li, J Li, H Zhang.<br>
+            <em>
+              Artificial Intelligence Review (<strong>AIR</strong>), 2024.
+            </em>
+          </li>
+
+          <li class="is-selected-publication" data-pdf='https://onlinelibrary.wiley.com/doi/epdf/10.1155/2024/7629441'
+              data-thumbnail="./CRCMeta.png" data-selected-note="A system for predicting CRC lymph node metastasis directly from 3D CT scans.">
+            <a href="https://onlinelibrary.wiley.com/doi/full/10.1155/2024/7629441" target="_blank">
+                An Intelligent System of Predicting Lymph Node Metastasis in Colorectal Cancer Using 3D CT Scans</a>.<br>
+            M Xie*, <strong><u>Y Zhang*</u></strong>, X Li, J Li, X Zou, Y Mao, H Zhang.<br>
+            <em>
+              International Journal of Intelligent Systems (<strong>IJIS</strong>), 2024.
+            </em>
+          </li>
+        </ul>
+
+        <!-- 2023 -->
+        <h3 class="publication-year" style="margin-top: 20px; color: #333; font-size: 1.1em;">
+          <b>2023</b>
+        </h3>
+        <ul class="publication-year-list publication-era--scu">
+          <li>
+            <a href="https://ieeexplore.ieee.org/abstract/document/10385936" target="_blank">
+                Predicting Lymph Node Metastasis of Colorectal Cancer in CT Scans Using Attention-Based Multiple Instance Learning</a>.<br>
+            M Xie, <strong><u>Y Zhang</u></strong>, X Li, Y Mao, X Zou, H Zhang.<br>
+            <em>
+              IEEE International Conference on Bioinformatics and Biomedicine
+              (<strong>BIBM</strong>), 2023.
+            </em>
+          </li>
+
+          <li>
+            <a href="https://ieeexplore.ieee.org/abstract/document/10305186/" target="_blank">
+                FAOT-Net: A 1.5-stage Framework for 3D Pelvic Lymph Node Detection with Online Candidate Tuning</a>.<br>
+            <strong><u>Y Zhang</u></strong>, J Li, X Li, M Xie, MT Islam, H Zhang.<br>
+            <em>
+              IEEE Transactions on Medical Imaging (<strong>TMI</strong>), 2023.
+            </em>
+          </li>
+
+          <li>
+            <a href="https://ieeexplore.ieee.org/abstract/document/10191996/" target="_blank">
+                A Multi-task Network with Centerline Supervision for 3D Pelvis Artery Segmentation on CECT images</a>.<br>
+            J Cui, <strong><u>Y Zhang</u></strong>, M Xie, H Zhang.<br>
+            <em>
+              International Joint Conference on Neural Networks (<strong>IJCNN</strong>), 2023.
+            </em>
+          </li>
+
+          <li>
+            <a href="https://link.springer.com/chapter/10.1007/978-3-031-37249-0_4" target="_blank">
+                Utilizing Implicit Feedback for User Mainstreaminess Evaluation and Bias Detection in Recommender Systems</a>.<br>
+            K Zhang, X Li, <strong><u>Y Zhang</u></strong>, H Zhang.<br>
+            <em>
+              International Workshop on Algorithmic Bias in Search and Recommendation, 2023.
+            </em>
+          </li>
+        </ul>
+        <p class="publication-note publication-note-mobile">(* indicates equal contribution)</p>
       </section>
 
-      <section id="resources">
-        <h2><strong>Research Resources</strong></h2>
+      <section id="projects">
+        <h2>🧰<strong>Projects</strong></h2>
         <ul class="resources-list">
           <li class="resources-item">
             <h3 class="resources-title">Abdominopelvic Lymph Node Dataset Suite</h3>
             <p class="resources-description">Developed in collaboration with West China Hospital's Colorectal Cancer Center for full-cycle lymph node metastasis analysis in abdominopelvic cancers, including:</p>
-            <ul class="resources-milestones">
-              <li class="highlight-milestone"><strong>World's largest</strong> detection dataset: <strong>400</strong> CT volumes, <strong>10,400</strong> nodes. <span class="resources-date">[to be open sourced]</span></li>
-              <li class="highlight-milestone"><strong>World's largest</strong> metastasis dataset: <strong>517</strong> CT volumes with pathological label, <strong>11,925</strong> nodes. <span class="resources-date">[to be open sourced]</span></li>
-              <li class="highlight-milestone"><strong>World's first</strong> longitudinal tracking dataset: <strong>583</strong> temporal CT pairs, <strong>9,649</strong> matched node pairs. <span class="resources-date">[to be open sourced]</span></li>
-          </ul>
+            <div class="secondary-details resources-milestones-secondary">
+              <div class="resources-milestone">World's largest detection dataset: <strong>400</strong> CT volumes, <strong>10,400</strong> nodes. <span class="resources-date">[to be open sourced]</span></div>
+              <div class="resources-milestone">World's largest metastasis dataset: <strong>517</strong> CT volumes with pathological label, <strong>11,925</strong> nodes. <span class="resources-date">[to be open sourced]</span></div>
+              <div class="resources-milestone">World's first longitudinal tracking dataset: <strong>583</strong> temporal CT pairs, <strong>9,649</strong> matched node pairs. <span class="resources-date">[to be open sourced]</span></div>
+            </div>
+            <p class="resources-description">⭐ Thanks to Chief Physician <a href="https://www.wchscu.cn/expertlist/detail/68448.html" target="_blank"><strong>Ziqiang Wang</strong></a>,
+              Associate Chief Physician <a href="https://www.wchscu.cn/expertlist/detail/68550.html" target="_blank"><strong>Mingtian Wei</strong></a>,
+              Attending Physician <a href="https://www.wchscu.cn/expertlist/detail/68974.html" target="_blank"><strong>Xuyang Yang</strong></a>. 💐 Special thanks to Dr. <strong>Hao Huang</strong>.</p>
           </li>
           <li class="resources-item">
             <h3 class="resources-title">Medical Image Integrated Platform</h3>
@@ -955,11 +2813,13 @@
       </section>
 
       <section id="services">
-        <h2><strong>Services</strong></h2>
+        <h2>🤝<strong>Academic Services</strong></h2>
         <ul>
           <li>
-            <strong>Journal Reviewer</strong><br>
-            IEEE Transactions on Medical Imaging (<strong>TMI</strong>)<br>
+            <strong>Conference Reviewer</strong>: NeurIPS.
+          </li>
+          <li>
+            <strong>Journal Reviewer</strong>: TMI, Neural Networks.
           </li>
         </ul>
       </section>
@@ -967,7 +2827,8 @@
     </main>
 
     <footer>
-      © 2025 Yi Zhang. All rights reserved.
+      <p class="dedication">In loving memory of my uncle, Wei Zhang (张伟).</p>
+      © Yi Zhang | Last updated: September, 2026
     </footer>
   </div>
 
@@ -983,8 +2844,8 @@
 
         <div class="header-text">
           <h1>张 懿 <span class="no-bold-paren">(Yi Zhang)</span></h1>
-          <p>计算机科学与技术/人工智能 博士生</p>
-          <p class="research-interests">计算机视觉  ·  半监督学习  ·  弱监督学习  ·  医学影像分析</p>
+          <p>计算机科学与技术/人工智能<br>博士生</p>
+          <p class="research-interests">目标检测 · 半监督学习<br>开放词汇视觉识别 · 医学影像分析</p>
 
           <div class="contact" aria-label="联系与单位">
             <div class="contact-left">
@@ -993,7 +2854,7 @@
             </div>
 
             <div class="contact-right">
-              <a href="mailto:zhangyi_magic@smail.nju.edu.cn" title="邮箱">
+              <a href="mailto:zhangy_magic@smail.nju.edu.cn" title="邮箱">
                 <i class="fa-solid fa-envelope"></i>
               </a>
               <a href="https://github.com/zhangyi-magic" target="_blank" title="GitHub">
@@ -1007,9 +2868,46 @@
               </a>
             </div>
           </div>
+          <div style="margin-top: 16px; text-align: center; font-size: 0.78rem; color: #666; line-height: 1.6;">
+            <div style="font-style: italic; letter-spacing: 0.5px;">“Boyhood is gone, <br> adulthood never comes.”</div>
+            <div style="margin-top: 16px; display: flex; justify-content: center; gap: 20px;">
+              <a href="#" style="color: #555; text-decoration: none; border-bottom: 1px dotted #ccc;">📄 简历</a>
+              <a href="#" style="color: #555; text-decoration: none; border-bottom: 1px dotted #ccc;">📝 博客</a>
+            </div>
+          </div>
+          <div class="profile-section-divider" aria-hidden="true"></div>
+          <section class="publication-scoreboard" aria-label="论文投稿记录">
+            <div class="publication-scoreboard__game-title">PAPER <span>STRIKE</span><span class="shot-scope" aria-hidden="true"></span></div>
+            <div class="publication-scoreboard__header">
+              <span class="publication-scoreboard__title">会议/期刊</span>
+              <span class="publication-scoreboard__meta">中稿/投稿</span>
+            </div>
+            <div class="score-row"><span class="score-venue">CVPR</span><span class="score-track" role="img" aria-label="中稿率 0%"><span class="score-marker" style="--rate: 0%;"></span></span><span class="score-total"><strong>0</strong><span>/</span>1</span></div>
+            <div class="score-row"><span class="score-venue">ICCV</span><span class="score-track" role="img" aria-label="暂无投稿"></span><span class="score-total"><strong>0</strong><span>/</span>0</span></div>
+            <div class="score-row"><span class="score-venue">ECCV</span><span class="score-track" role="img" aria-label="暂无投稿"></span><span class="score-total"><strong>0</strong><span>/</span>0</span></div>
+            <div class="score-row"><span class="score-venue">NeurIPS</span><span class="score-track" role="img" aria-label="中稿率 67%"><span class="score-marker"></span></span><span class="score-total"><strong>2</strong><span>/</span>3</span></div>
+            <div class="score-row"><span class="score-venue">ICML</span><span class="score-track" role="img" aria-label="暂无投稿"></span><span class="score-total"><strong>0</strong><span>/</span>0</span></div>
+            <div class="score-row"><span class="score-venue">ICLR</span><span class="score-track" role="img" aria-label="暂无投稿"></span><span class="score-total"><strong>0</strong><span>/</span>0</span></div>
+            <div class="score-row"><span class="score-venue">AAAI</span><span class="score-track" role="img" aria-label="中稿率 0%"><span class="score-marker" style="--rate: 0%;"></span></span><span class="score-total"><strong>0</strong><span>/</span>1</span></div>
+            <div class="score-row score-row--medical"><span class="score-venue">MICCAI</span><span class="score-track" role="img" aria-label="中稿率 100%"><span class="score-marker" style="--rate: 100%;"></span></span><span class="score-total"><strong>1</strong><span>/</span>1</span></div>
+            <div class="score-row"><span class="score-venue">MIA</span><span class="score-track" role="img" aria-label="中稿率 0%"><span class="score-marker" style="--rate: 0%;"></span></span><span class="score-total"><strong>0</strong><span>/</span>1</span></div>
+            <div class="score-row"><span class="score-venue">TMI</span><span class="score-track" role="img" aria-label="中稿率 100%"><span class="score-marker" style="--rate: 100%;"></span></span><span class="score-total"><strong>1</strong><span>/</span>1</span></div>
+            <div class="publication-scoreboard__player">PLAYER: <span>ZyEverX</span></div>
+          </section>
         </div>
       </div>
     </header>
+
+    <nav class="section-nav" aria-label="页面导航">
+      <a href="#bio-zh">关于我</a>
+      <a href="#news-zh">最新动态</a>
+      <a href="#education-zh">教育背景</a>
+      <a href="#experience-zh">工作和经历</a>
+      <a href="#competitions-zh">荣誉和获奖</a>
+      <a href="#publications-zh">论文</a>
+      <a href="#projects-zh">项目</a>
+      <a href="#services-zh">学术服务</a>
+    </nav>
 
     <!-- 折叠区（中文）-->
     <div id="personal-section-zh" class="personal-section" aria-hidden="true">
@@ -1017,68 +2915,102 @@
       <ul class="fun-list">
         <li><span class="icon">🌍</span> 到处跑的 AI 菜狗</li>
         <li><span class="icon">🎯</span> 在 MI 三巨头 <del>TMI</del>、MIA、<del>MICCAI</del> 上发表论文<strong>零</strong>篇</li>
-        <li><span class="icon">🚫</span> 在 CV 三大会 CVPR、ICCV、ECCV 和 ML 三大会 ICML、NeurIPS、ICLR 上发表论文<strong>零</strong>篇</li>
+        <li><span class="icon">🚫</span> 在 CV 三大会 CVPR、ICCV、ECCV 和 ML 三大会 ICML、<del>NeurIPS</del>、ICLR 上发表论文<strong>零</strong>篇</li>
         <li><span class="icon">🔤</span> 中文（那不然呢 😀）· 英语（确实 🤔）· 法语（快忘完了都 😅）</li>
         <li><span class="icon">🎶</span> 音乐、电影、时尚、美食、摄影、大自然 </li>
-        <li><span class="icon">🍴</span> 什么都吃，除了 🍌 —— 爱吃所有菜系（韩国菜除外）</li>
+        <li><span class="icon">🍴</span> 什么都吃，除了 🍌 —— 其他菜系都爱吃</li>
         <li><span class="icon">📋</span> 前《华为荣耀》贴吧大吧主（高中时）</li>
         <li><span class="icon">🔫</span> 前 FPS“天才少年”: </li>
         <li class="fps-item"><img src="nz.jpg" alt="NZ Logo" class="game-logo"> <strong>全国16强</strong>（高中时）</li>
         <li class="fps-item"><img src="CSGO.jpg" alt="CSGO Logo" class="game-logo"> 1600 小时<strong>S</strong>分段（本科时）</li>
-        <li class="fps-item"><img src="valorant.png" alt="VAL Logo" class="game-logo"> 300 小时<strong>神话I</strong>（硕士时）</li>
-        <li><span class="icon">🍼</span> 现在已经“电子ED”：追剧摸鱼</li>
-        <li><span class="icon">🎓</span> 开着 阿维塔11 走遍川西、云南与大西北的每一寸土地</li>
-        <li><span class="icon">💬</span><strong>“年少虽已逝，成人永不至。”</strong></li>
+        <li class="fps-item"><img src="valorant.png" alt="VAL Logo" class="game-logo"> 300 小时<strong>神话I</strong>（读研时）</li>
+        <li><span class="icon">🍼</span> 现在已经“电子ED”：追剧摸鱼和单机游戏</li>
+        <li><span class="icon">🏔️</span> 开着车走遍川西、云南与大西北的每一寸土地</li>
       </ul>
     </div>
 
     <main>
       <section id="bio-zh">
-        <h2><strong>个人简介</strong></h2>
+        <h2>🔍<strong>关于我</strong></h2>
         <p class="bio-text">
-          我目前是南京大学计算机科学与技术/人工智能方向博士生，导师为陈硕副教授。我的研究聚焦于计算机视觉、半监督与弱监督学习、医学影像分析。此前，我在四川大学和新加坡 A*STAR IHPC 从事医学影像计算相关研究。
+          你好！我是张懿，目前是<a href="https://www.nju.edu.cn/" target="_blank">南京大学</a>计算机科学与技术/人工智能方向博士生，
+          导师为<a href="https://shuochenya.github.io/index.html" target="_blank">陈硕</a>副教授。
+          此前，我在<a href="https://www.scu.edu.cn/" target="_blank" class="bio-link-scu">四川大学</a>攻读人工智能硕士学位，
+          导师为<a href="https://cs.scu.edu.cn/info/1288/19755.htm" target="_blank" class="bio-link-scu">张海仙</a>教授，
+          随后，我在新加坡科技研究局（A*STAR）高性能计算研究所（<a href="https://www.a-star.edu.sg/ihpc" target="_blank" class="bio-link-astar">IHPC</a>，
+          现为先进智能与计算研究所（<a href="https://www.a-star.edu.sg/iaic" target="_blank" class="bio-link-astar">IAIC</a>））任研究实习生。我的研究兴趣有：
         </p>
+        <div class="research-focus">
+          <div class="research-focus-grid">
+            <article class="research-focus-item">
+              <h4>目标检测</h4>
+              <p>面向不同目标尺度与复杂视觉环境的可靠检测方法。</p>
+            </article>
+            <article class="research-focus-item">
+              <h4>半监督学习</h4>
+              <p>利用少量标注数据与大量无标注数据学习稳健的视觉模型。</p>
+            </article>
+            <article class="research-focus-item">
+              <h4>开放词汇视觉识别</h4>
+              <p>识别并定位固定训练类别之外的视觉概念。</p>
+            </article>
+            <article class="research-focus-item">
+              <h4>医学影像分析</h4>
+              <p>将计算机视觉方法应用于具有临床意义的医学影像理解。</p>
+            </article>
+          </div>
+        </div>
+        <p class="bio-text current-focus">目前，我正在开展面向实时 DETR 的半监督学习研究，并参加板材表面缺陷检测竞赛。</p>
+        <p class="bio-contact">✨ 欢迎合作与交流，可以通过<a href="mailto:zhangy_magic@smail.nju.edu.cn">电子邮件</a>联系我。</p>
       </section>
 
       <section id="news-zh">
-        <h2><strong>动态</strong></h2>
+        <h2>🔥<strong>动态</strong></h2>
         <ul class="news-list">
+<!--          <li>-->
+<!--            <span class="news-date">2026.11</span>-->
+<!--            <span class="news-content">作为队长获得 AIC 2026 板材缺陷检测赛道国赛一等奖</span>-->
+<!--          </li>-->
           <li>
-            <span class="news-date">2025. 10</span>
-            <span class="news-content">获得“第一届数据与AI落地大赛”冠军</span>
+            <span class="news-date">2026.09</span>
+            <span class="news-content">两篇论文被 NeurIPS 2026 接收</span>
           </li>
           <li>
-            <span class="news-date">2025. 06</span>
+            <span class="news-date">2025.10</span>
+            <span class="news-content">作为队长获得“第一届数据与AI落地大赛”冠军</span>
+          </li>
+          <li>
+            <span class="news-date">2025.06</span>
             <span class="news-content">一篇论文被 MICCAI 2025 接收</span>
           </li>
           <li>
-            <span class="news-date">2025. 02</span>
+            <span class="news-date">2025.02</span>
             <span class="news-content">在南京大学开启博士生涯</span>
           </li>
           <li>
-            <span class="news-date">2024. 12</span>
-            <span class="news-content">一篇论文发布在 arXiv（但大概率不再推进）</span>
+            <span class="news-date">2024.12</span>
+            <span class="news-content">一篇论文公开（但之后大概率不会再更新）</span>
           </li>
           <li>
-            <span class="news-date">2024. 07</span>
+            <span class="news-date">2024.07</span>
             <span class="news-content">完成在新加坡 A*STAR IHPC 的科研实习</span>
           </li>
           <li>
-            <span class="news-date">2024. 01</span>
-            <span class="news-content">一篇综述被 AIR 期刊接收</span>
+            <span class="news-date">2024.01</span>
+            <span class="news-content">一篇论文被 AIR 期刊接收</span>
           </li>
           <li>
-            <span class="news-date">2023. 08</span>
+            <span class="news-date">2023.09</span>
             <span class="news-content">一篇论文被 IEEE TMI 期刊接收</span>
           </li>
         </ul>
-        <span class="news-toggle" data-label="显示更多" data-hide="隐藏">
+        <button type="button" class="news-toggle" data-label="显示更多" data-hide="收起">
           <span class="news-arrow"></span>
           <span class="news-toggle-text">显示更多</span>
-        </span>
+        </button>
       </section>
       <section id="education-zh">
-        <h2><strong>教育背景</strong></h2>
+        <h2>🎓<strong>教育背景</strong></h2>
         <ul>
           <li>
             <img src="nju_logo.png" alt="NJU Logo" class="school-logo">
@@ -1086,8 +3018,8 @@
             2025 年 2 月 ~ 至今<br>
             南京大学，苏州，中国<br>
             <div class="sub-info">
-              可靠机器智能实验室（REMI-Lab）<br>
-              <strong>导师</strong>：<a href="https://shuochenya.github.io/index.html" target="_blank">陈硕</a> 副教授（国家优青（海外），姑苏青年教授，姑苏领军人才）
+              可靠机器智能研究组（<a href="https://shuochenya.github.io/index#members">REMI</a>），PCALab@NJU<br>
+              <strong>导师</strong>：<a href="https://shuochenya.github.io/index.html" target="_blank">陈硕</a> 副教授（国家优青（海外），姑苏领军人才，姑苏青年教授）
             </div>
           </li>
           <li>
@@ -1095,10 +3027,10 @@
             <strong>工学硕士</strong>，<strong>人工智能</strong><span class="comma">，</span><br class="mobile-break">
             2021 年 6 月 ~ 2024 年 6 月<br>
             四川大学，成都，中国<br>
-            <div class="sub-info">
-              机器智能实验室（MI-Lab）<br>
-              <strong>导师</strong>：<a href="https://scholar.google.com/citations?user=YzGmRoAAAAAJ&hl=en&oi=ao" target="_blank">张海仙</a> 教授<br>
-              <strong>荣誉</strong>：四川大学优秀学生 & 优秀毕业生，优秀毕业论文提名（3%）
+            <div class="sub-info sub-info--scu">
+              机器智能实验室（<a href="http://www.machineilab.org/" target="_blank">MachineILab</a>）<br>
+              <strong>导师</strong>：<a href="https://cs.scu.edu.cn/info/1288/19755.htm" target="_blank">张海仙</a> 教授<br>
+              <strong>荣誉</strong>：四川大学优秀学生 & 优秀毕业生，优秀硕士学位论文提名（3%）
             </div>
           </li>
           <li>
@@ -1107,34 +3039,37 @@
             2015 年 9 月 ~ 2019 年 7 月<br>
             上海师范大学，上海，中国 – 克莱蒙奥弗涅大学，克莱蒙费朗，法国
             <div class="sub-info">
-              <strong>荣誉</strong>：徐光启班（1%）
+              <strong>荣誉</strong>：徐光启荣誉班（1%），连续四年获得学业奖学金
             </div>
           </li>
         </ul>
       </section>
 
 <section id="experience-zh">
-  <h2><strong>工作和经历</strong></h2>
+  <h2>💼<strong>工作和经历</strong></h2>
   
   <h3 style="margin-top: 0; color: #333; font-size: 1.1em;"><strong>工作经历</strong></h3>
   <ul>
     <li>
+      <img src="machineilab.png" alt="MachineILab Logo" class="school-logo">
       <strong>科研助理</strong><span class="comma">， </span><br class="mobile-break">2024 年 8 月 ~ 2025 年 8 月<br>
       机器智能实验室，四川大学，成都，中国
     </li>
     <li>
+      <img src="astar.png" alt="A*STAR Logo" class="school-logo">
       <strong>实习研究员</strong><span class="comma">， </span><br class="mobile-break">2024 年 1 月 ~ 2024 年 7 月<br>
-      高性能计算研究所（IHPC），科学技术研究局（A*STAR），新加坡<br>
-      <div class="sub-info">
-        <em>导师：<a href="https://liangli-zhen.github.io/" target="_blank">甄亮立</a>资深研究员 和 <a href="https://scholar.google.com/citations?user=nk4iMegAAAAJ&hl=en" target="_blank">王梓舟</a> 研究员</em>
+      新加坡科技研究局（A*STAR）高性能计算研究所（IHPC，现 IAIC），启汇城（Fusionopolis），新加坡<br>
+      <div class="sub-info sub-info--astar">
+        <em>导师：<a href="https://liangli-zhen.github.io/" target="_blank">甄亮利 </a>资深研究员 和 <a href="https://scholar.google.com/citations?user=nk4iMegAAAAJ&hl=en" target="_blank">王梓舟</a> 研究员</em>
       </div>
     </li>
+<!--    <li>-->
+<!--      <strong>教务干事</strong><span class="comma">， </span><br class="mobile-break">2020 年 1 月 ~ 2020 年 10 月<br>-->
+<!--      重庆三峡医药高等专科学校，重庆，中国-->
+<!--    </li>-->
     <li>
-      <strong>教学干事</strong><span class="comma">， </span><br class="mobile-break">2020 年 1 月 ~ 2020 年 10 月<br>
-      重庆三峡医药高等专科学校，重庆，中国
-    </li>
-    <li>
-      <strong>数据开发工程师</strong><span class="comma">， </span><br class="mobile-break">2019 年 2 月 ~ 2019 年 8 月<br>
+      <img src="bonc.png" alt="BONC Logo" class="school-logo">
+      <strong>数据工程师</strong><span class="comma">， </span><br class="mobile-break">2019 年 2 月 ~ 2019 年 8 月<br>
       北京东方国信科技股份有限公司，上海，中国
     </li>
   </ul>
@@ -1142,10 +3077,12 @@
   <h3 style="margin-top: 20px; color: #333; font-size: 1.1em;"><strong>学业任职经历</strong></h3>
   <ul>
     <li>
+      <img src="is.png" alt="南京大学智能科学与技术学院 Logo" class="school-logo">
       <strong>博士班班长（2025级）</strong><span class="comma">， </span><br class="mobile-break">2025 年 10 月 ~ 至今<br>
       智能科学与技术学院，南京大学，苏州，中国<br>
     </li>
     <li>
+      <img src="machineilab.png" alt="MachineILab Logo" class="school-logo">
       <strong>课题组组长</strong><span class="comma">， </span><br class="mobile-break">2022 年 6 月 ~ 2025 年 2 月<br>
       机器智能实验室，四川大学，成都，中国
     </li>
@@ -1153,113 +3090,168 @@
 </section>
 
       <section id="competitions-zh">
-        <h2><strong>竞赛获奖</strong></h2>
+        <h2>🏆<strong>荣誉和获奖</strong></h2>
         <ul>
+<!--          <li>-->
+<!--            <strong>🥇 国赛一等奖（奖金 8000 元），队长</strong>，2026 年 12 月<br>-->
+<!--     	    <strong>2026年 全球校园人工智能算法精英大赛（AIC 2026）</strong> <a href="https://www.aicomp.cn/" target="_blank" rel="noopener noreferrer">[链接]</a><br>-->
+<!--            <div class="secondary-details award-secondary">-->
+<!--              <strong>赛道</strong>：“AI + 钢铁”板材表面缺陷检测 <a href="https://www.aicomp.cn/tracks/tracks-6/4174.html" target="_blank" rel="noopener noreferrer">[链接]</a><br>-->
+<!--              <strong>主办方</strong>：全球校园人工智能算法精英大赛组委会 & 南京钢铁股份有限公司 & 共青团南京市委-->
+<!--            </div>-->
+<!--	      </li>-->
           <li>
-	    <strong>🥇队长，冠军（奖金30000元）</strong>，2025 年 10 月<br>
-            <strong>“数据筑基，智能落地”</strong>|<strong> 第一届数据与AI落地大赛</strong> <a href="https://mp.weixin.qq.com/s/3dgU7P8mxCwfN9b1MRXPQA " target="_blank">[链接]</a><br>
-            主办方：杭州五维数据有限责任公司 & 浙工大人工智能创新研究院 & 杭州市科学技术局<br>
+	    <strong>🥇 冠军（奖金 30000 元），队长</strong>，2025 年 10 月<br>
+            <strong>“数据筑基，智能落地”</strong> | <strong>第一届数据与AI落地大赛</strong> <a href="https://mp.weixin.qq.com/s/3dgU7P8mxCwfN9b1MRXPQA" target="_blank" rel="noopener noreferrer">[链接]</a><br>
+            <div class="secondary-details award-secondary">
+              <strong>主办方</strong>：杭州五维数据有限责任公司 & 浙工大人工智能创新研究院 & 杭州市科学技术局
+            </div>
           </li>
         </ul>
       </section>
 
-      <section id="research-interests-zh">
-        <h2><strong>研究方向</strong></h2>
-        <ul>
-          <li><b>计算机视觉</b>：目标检测</li>
-          <li><b>半监督/弱监督学习</b>：半监督/弱监督目标检测</li>
-          <li><b>医学影像分析</b>：3D/纵向 CT 计算、计算病理学</li>
+      <section id="publications-zh" class="publications-section" data-view="all">
+        <div class="publication-sticky-header">
+          <h2>📜<strong>论文</strong></h2>
+          <div class="publication-subheader">
+            <p class="publication-note">（* 表示同等贡献）</p>
+            <div class="publication-view-toggle" role="group" aria-label="论文显示范围">
+              <button type="button" data-publication-view="all" aria-pressed="true">全部</button>
+              <button type="button" data-publication-view="selected" aria-pressed="false">精选</button>
+              <span class="publication-selection-help" tabindex="0" role="note" aria-label="精选论文的选择逻辑" data-tooltip="入选与是否一作、共同一作或发表的期刊/会议的等级无关；这里只收录我个人认可的工作。">?</span>
+            </div>
+          </div>
+        </div>
+
+        <h3 class="publication-year" style="margin-top: 20px; color: #333; font-size: 1.1em;"><b>2026</b></h3>
+        <ul class="publication-year-list publication-era--nju">
+          <li class="is-selected-publication" data-thumbnail="./BUTR.png" data-selected-note="一种格外简洁的面向微小（密集）目标检测的预算感知视角。">
+            <a href="https://link.springer.com/chapter/10.1007/978-3-032-05114-1_4" target="_blank">Dynamic Query as Budgeting for Tiny Object Detection</a>.<br>
+            <strong><u>张懿</u></strong>，熊迪，高歌，张翔越，邱一航，周羽萱，陈硕.<br>
+            <em>The Fortieth Annual Conference on Neural Information Processing Systems (<strong>NeurIPS</strong>), 2026.</em>
+          </li>
+          <li class="is-selected-publication" data-thumbnail="./OHATP.png" data-selected-note="面向图异常检测的几何与拓扑感知方法。">
+            <a href="https://link.springer.com/chapter/10.1007/978-3-032-05114-1_4" target="_blank">OHATP: Graph Anomaly Detection with Orthogonal-Hyperspherical Augmentation and Topology Perception</a>.<br>
+            邱一航，<strong><u>张懿</u></strong>，熊迪，高歌，陈硕.<br>
+            <em>The Fortieth Annual Conference on Neural Information Processing Systems (<strong>NeurIPS</strong>), 2026.</em>
+          </li>
         </ul>
-      </section>
 
-      <section id="publications-zh">
-        <h2><strong>部分论文</strong></h2>
-
-        <h3><strong>期刊论文</strong> <span class="note">（* 同等贡献）</span></h3>
-        <ol reversed>
-          <li>
-            <strong><a href="https://link.springer.com/article/10.1007/s10462-024-10762-x" target="_blank">From Single to Universal: Tiny Lesion Detection in Medical Imaging</a></strong>.<br>
-            <strong><u>张懿</u></strong>，毛轶绩，卢璇钰，邹星宇，黄昊，李欣洋，李佳悦，张海仙.<br>
-            <em>Artificial Intelligence Review (<strong>AIR</strong>), 2024.</em>
-          </li>
-          <li>
-            <strong><a href="https://onlinelibrary.wiley.com/doi/full/10.1155/2024/7629441" target="_blank">An Intelligent System of Predicting Lymph Node Metastasis in Colorectal Cancer Using 3D CT Scans</a></strong>.<br>
-            谢敏*，<strong><u>张懿</u></strong>*，李欣洋，李佳悦，邹星宇，毛轶绩，张海仙.<br>
-            <em>International Journal of Intelligent Systems (<strong>IJIS</strong>), 2024.</em>
-          </li>
-          <li>
-            <strong><a href="https://ieeexplore.ieee.org/abstract/document/10305186/" target="_blank">FAOT-Net: A 1.5-stage Framework for 3D Pelvic Lymph Node Detection with Online Candidate Tuning</a></strong>.<br>
-            <strong><u>张懿</u></strong>，李佳悦，李欣洋，谢敏，MT Islam，张海仙.<br>
-            <em>IEEE Transactions on Medical Imaging (<strong>TMI</strong>), 2023.</em>
-          </li>
-        </ol>
-
-        <h3><strong>会议论文</strong></h3>
-        <ol reversed>
-          <li>
-            <strong><a href="https://link.springer.com/chapter/10.1007/978-3-032-05114-1_4" target="_blank">Asymmetric Matching in Abdominal Lymph Nodes of Follow-Up CT Scans</a></strong>.<br>
+        <h3 class="publication-year" style="margin-top: 20px; color: #333; font-size: 1.1em;"><b>2025</b></h3>
+        <ul class="publication-year-list publication-era--scu">
+          <li class="is-selected-publication" data-pdf='https://papers.miccai.org/miccai-2025/paper/3853_paper.pdf' data-code='https://github.com/maoyij/Asymmetric-Matching'
+              data-thumbnail="./AysMatch.png" data-selected-note="面向纵向三维 CT 扫描的非对称淋巴结对应关系建模。">
+            <a href="https://link.springer.com/chapter/10.1007/978-3-032-05114-1_4" target="_blank">Asymmetric Matching in Abdominal Lymph Nodes of Follow-Up CT Scans</a>.<br>
             毛轶绩，<strong><u>张懿</u></strong>，邹星宇，郑玉玲，张海仙.<br>
             <em>International Conference on Medical Image Computing and Computer Assisted Intervention (<strong>MICCAI</strong>), 2025.</em>
           </li>
+          <li class="is-selected-publication" data-pdf='https://arxiv.org/pdf/2411.11487'
+              data-thumbnail="./LookGroup.png" data-selected-note="混合多张病理切片并进行联合学习以预测患者生存。">
+            <a href="https://arxiv.org/abs/2411.11487" target="_blank">Look a Group at Once: Multi-Slide Modeling for Survival Prediction</a>.<br>
+            李欣洋*，<strong><u>张懿*</u></strong>，谢易，杨剑飞，王茜，陈浩，张海仙.<br>
+            <em>arXiv preprint.</em>
+          </li>
+        </ul>
+
+        <h3 class="publication-year" style="margin-top: 20px; color: #333; font-size: 1.1em;"><b>2024</b></h3>
+        <ul class="publication-year-list publication-era--scu">
           <li>
-            <strong><a href="https://ieeexplore.ieee.org/abstract/document/10822670" target="_blank">MMUDA: A Mutual Multi-Task Learning Network with Unsupervised Domain Adaptation for Glaucoma Screening</a></strong>.<br>
+            <a href="https://ieeexplore.ieee.org/abstract/document/10822670" target="_blank">MMUDA: A Mutual Multi-Task Learning Network with Unsupervised Domain Adaptation for Glaucoma Screening</a>.<br>
             尹腾，<strong><u>张懿</u></strong>，吴达文，尚文一，张海仙.<br>
             <em>IEEE International Conference on Bioinformatics and Biomedicine (<strong>BIBM</strong>), 2024.</em>
           </li>
           <li>
-            <strong><a href="https://ieeexplore.ieee.org/abstract/document/10385936" target="_blank">Predicting Lymph Node Metastasis of Colorectal Cancer in CT Scans Using Attention-Based Multiple Instance Learning</a></strong>.<br>
+            <a href="https://link.springer.com/article/10.1007/s10462-024-10762-x" target="_blank">From Single to Universal: Tiny Lesion Detection in Medical Imaging</a>.<br>
+            <strong><u>张懿</u></strong>，毛轶绩，卢璇钰，邹星宇，黄昊，李欣洋，李佳悦，张海仙.<br>
+            <em>Artificial Intelligence Review (<strong>AIR</strong>), 2024.</em>
+          </li>
+          <li class="is-selected-publication" data-pdf='https://onlinelibrary.wiley.com/doi/epdf/10.1155/2024/7629441'
+              data-thumbnail="./CRCMeta.png" data-selected-note="一个直接基于三维 CT 扫描预测结直肠癌淋巴结转移的系统。">
+            <a href="https://onlinelibrary.wiley.com/doi/full/10.1155/2024/7629441" target="_blank">An Intelligent System of Predicting Lymph Node Metastasis in Colorectal Cancer Using 3D CT Scans</a>.<br>
+            谢敏*，<strong><u>张懿*</u></strong>，李欣洋，李佳悦，邹星宇，毛轶绩，张海仙.<br>
+            <em>International Journal of Intelligent Systems (<strong>IJIS</strong>), 2024.</em>
+          </li>
+        </ul>
+
+        <h3 class="publication-year" style="margin-top: 20px; color: #333; font-size: 1.1em;"><b>2023</b></h3>
+        <ul class="publication-year-list publication-era--scu">
+          <li>
+            <a href="https://ieeexplore.ieee.org/abstract/document/10385936" target="_blank">Predicting Lymph Node Metastasis of Colorectal Cancer in CT Scans Using Attention-Based Multiple Instance Learning</a>.<br>
             谢敏，<strong><u>张懿</u></strong>，李欣洋，毛轶绩，邹星宇，张海仙.<br>
             <em>IEEE International Conference on Bioinformatics and Biomedicine (<strong>BIBM</strong>), 2023.</em>
           </li>
-        </ol>
 
-        <h3><strong>预印论文</strong> <span class="note">（* 同等贡献）</span></h3>
-        <ol reversed>
           <li>
-            <strong><a href="https://arxiv.org/abs/2411.11487" target="_blank">Look a Group at Once: Multi-Slide Modeling for Survival Prediction</a></strong>.<br>
-            李欣洋*，<strong><u>张懿</u></strong>*，谢易，杨剑飞，王茜，陈浩，张海仙.<br>
-            <em>arXiv preprint, 2024.</em>
+            <a href="https://ieeexplore.ieee.org/abstract/document/10305186/" target="_blank">FAOT-Net: A 1.5-stage Framework for 3D Pelvic Lymph Node Detection with Online Candidate Tuning</a>.<br>
+            <strong><u>张懿</u></strong>，李佳悦，李欣洋，谢敏，MT Islam，张海仙.<br>
+            <em>IEEE Transactions on Medical Imaging (<strong>TMI</strong>), 2023.</em>
           </li>
-        </ol>
+
+          <li>
+            <a href="https://ieeexplore.ieee.org/abstract/document/10191996/" target="_blank">
+                A Multi-task Network with Centerline Supervision for 3D Pelvis Artery Segmentation on CECT images</a>.<br>
+            崔俊杰，<strong><u>张懿</u></strong>，谢敏，张海仙.<br>
+            <em>
+              International Joint Conference on Neural Networks (<strong>IJCNN</strong>), 2023.
+            </em>
+          </li>
+
+          <li>
+            <a href="https://link.springer.com/chapter/10.1007/978-3-031-37249-0_4" target="_blank">
+                Utilizing Implicit Feedback for User Mainstreaminess Evaluation and Bias Detection in Recommender Systems</a>.<br>
+            张宽易，李欣洋，<strong><u>张懿</u></strong>，张海仙.<br>
+            <em>
+              International Workshop on Algorithmic Bias in Search and Recommendation, 2023.
+            </em>
+          </li>
+        </ul>
+        <p class="publication-note publication-note-mobile">（* 表示同等贡献）</p>
       </section>
 
-      <section id="resources-zh">
-          <h2><strong>研究资源</strong></h2>
+      <section id="projects-zh">
+          <h2>🧰<strong>项目</strong></h2>
           <ul class="resources-list">
               <li class="resources-item">
                   <h3 class="resources-title">腹盆腔淋巴结数据集组</h3>
                   <p class="resources-description">与四川大学华西医院结直肠癌中心合作开发，用于腹盆腔癌症淋巴结转移的全周期分析，包含：</p>
-                  <ul class="resources-milestones">
-                      <li class="highlight-milestone"><strong>世界最大</strong>的检测数据集：<strong>400</strong>例CT影像，<strong>10400</strong>个淋巴结。<span class="resources-date">[待开源]</span></li>
-                      <li class="highlight-milestone"><strong>世界最大</strong>的转移数据集：<strong>517</strong>例带病理金标准标签的CT影像，<strong>11925</strong>个淋巴结。<span class="resources-date">[待开源]</span></li>
-                      <li class="highlight-milestone"><strong>世界首个</strong>纵向追踪数据集：<strong>583</strong>对时序CT影像，<strong>9649</strong>对匹配淋巴结。<span class="resources-date">[待开源]</span></li>
-                  </ul>
+                  <div class="secondary-details resources-milestones-secondary">
+                      <div class="resources-milestone">世界最大的检测数据集：<strong>400</strong>例CT影像，<strong>10400</strong>个淋巴结。<span class="resources-date">[待开源]</span></div>
+                      <div class="resources-milestone">世界最大的转移数据集：<strong>517</strong>例带病理标签的CT影像，<strong>11925</strong>个淋巴结。<span class="resources-date">[待开源]</span></div>
+                      <div class="resources-milestone">世界首个纵向追踪数据集：<strong>583</strong>对时序CT影像，<strong>9649</strong>对匹配淋巴结。<span class="resources-date">[待开源]</span></div>
+                  </div>
+            <p class="resources-description">⭐ 感谢主任医师<a href="https://www.wchscu.cn/expertlist/detail/68448.html" target="_blank"><strong>王自强</strong></a>，
+              副主任医师<a href="https://www.wchscu.cn/expertlist/detail/68550.html" target="_blank"><strong>魏明天</strong></a>，
+              主治医师<a href="https://www.wchscu.cn/expertlist/detail/68974.html" target="_blank"><strong>杨旭洋</strong></a>。
+              💐 特别感谢<strong>黄昊</strong>医生。</p>
               </li>
               <li class="resources-item">
-                  <h3 class="resources-title">医学影像一体化平台</h3>
-                  <p class="resources-description">用于大规模医学影像管理、可视化及标注的一体化平台。</p>
-                  <div class="resources-gallery">
-                      <img src="main-small.gif" alt="系统主界面" class="resources-gif">
-                      <img src="func1-small.gif" alt="功能操作界面" class="resources-gif">
-                      <img src="func2-small.gif" alt="标注工作界面" class="resources-gif">
-                  </div>
-              </li>
+                    <h3 class="resources-title">医学影像一体化平台</h3>
+                    <p class="resources-description">用于大规模医学影像管理、可视化及标注的一体化平台。</p>
+                    <div class="resources-gallery">
+                        <img src="main-small.gif" alt="系统主界面" class="resources-gif">
+                        <img src="func1-small.gif" alt="功能操作界面" class="resources-gif">
+                        <img src="func2-small.gif" alt="标注工作界面" class="resources-gif">
+                    </div>
+                </li>
           </ul>
       </section>
 
       <section id="services-zh">
-        <h2><strong>学术服务</strong></h2>
+        <h2>🤝<strong>学术服务</strong></h2>
         <ul>
           <li>
-            <strong>期刊审稿人</strong><br>
-            IEEE Transactions on Medical Imaging (<strong>TMI</strong>)
+            <strong>会议审稿人</strong>：NeurIPS.
+          </li>
+          <li>
+            <strong>期刊审稿人</strong>：TMI，Neural Networks.
           </li>
         </ul>
       </section>
     </main>
 
     <footer>
-      © 2025 张懿. 保留所有权利.
+      <p class="dedication">永远怀念我的大伯张伟</p>
+      © 张懿 | 最近更新：2026 年 9 月
     </footer>
   </div>
 
@@ -1274,19 +3266,59 @@
 
         if (!btn || !panel) return;
 
+        function syncPanelPosition() {
+          const buttonRect = btn.getBoundingClientRect();
+
+          if (window.matchMedia('(min-width: 701px)').matches) {
+            const panelTop = Math.round(buttonRect.bottom + 8);
+            panel.style.setProperty('--personal-panel-top', `${panelTop}px`);
+            panel.style.removeProperty('--personal-panel-left');
+            panel.style.removeProperty('--personal-panel-width');
+            panel.style.removeProperty('--personal-panel-max-height');
+          } else {
+            const viewportPadding = 12;
+            const panelWidth = Math.min(520, window.innerWidth - viewportPadding * 2);
+            const centeredLeft = buttonRect.left + buttonRect.width / 2 - panelWidth / 2;
+            const panelLeft = Math.max(
+              viewportPadding,
+              Math.min(window.innerWidth - panelWidth - viewportPadding, centeredLeft)
+            );
+            const panelTop = window.scrollY + buttonRect.bottom + 8;
+            const panelMaxHeight = Math.max(180, window.innerHeight - buttonRect.bottom - 20);
+
+            panel.style.setProperty('--personal-panel-top', `${Math.round(panelTop)}px`);
+            panel.style.setProperty('--personal-panel-left', `${Math.round(panelLeft)}px`);
+            panel.style.setProperty('--personal-panel-width', `${Math.round(panelWidth)}px`);
+            panel.style.setProperty('--personal-panel-max-height', `${Math.round(panelMaxHeight)}px`);
+          }
+        }
+
         function setOpen(open) {
           if (open) {
+            syncPanelPosition();
+            panel.classList.remove('is-settled');
             panel.classList.add('open');
             panel.setAttribute('aria-hidden', 'false');
             btn.setAttribute('aria-expanded', 'true');
             btn.textContent = '−';
           } else {
+            panel.classList.remove('is-settled');
             panel.classList.remove('open');
             panel.setAttribute('aria-hidden', 'true');
             btn.setAttribute('aria-expanded', 'false');
             btn.textContent = '+';
           }
         }
+
+        panel.addEventListener('transitionend', function (e) {
+          if (
+            e.target === panel &&
+            e.propertyName === 'max-height' &&
+            panel.classList.contains('open')
+          ) {
+            panel.classList.add('is-settled');
+          }
+        });
 
         // 初始收起
         setOpen(false);
@@ -1302,10 +3334,56 @@
             btn.click();
           }
         });
+
+        window.addEventListener('resize', function () {
+          if (panel.classList.contains('open')) syncPanelPosition();
+        });
       });
     })();
 
     // 语言切换按钮（右上）
+    // On narrow screens, place PAPER STRIKE after Academic Services without
+    // turning it into another navigation section. Restore it to the header on desktop.
+    (function () {
+      const mobileLayout = window.matchMedia('(max-width: 700px)');
+      const scoreboardEntries = [];
+
+      document.querySelectorAll('.lang-section').forEach(langSection => {
+        const scoreboard = langSection.querySelector('header .publication-scoreboard');
+        const services = langSection.querySelector('main > section[id^="services"]');
+        if (!scoreboard || !services || !scoreboard.parentNode) return;
+
+        const originalPosition = document.createComment('paper-strike-position');
+        scoreboard.parentNode.insertBefore(originalPosition, scoreboard);
+
+        const mobileSlot = document.createElement('div');
+        mobileSlot.className = 'mobile-scoreboard-slot';
+        mobileSlot.style.display = 'none';
+        services.insertAdjacentElement('afterend', mobileSlot);
+
+        scoreboardEntries.push({ scoreboard, originalPosition, mobileSlot });
+      });
+
+      function syncScoreboardPlacement() {
+        scoreboardEntries.forEach(({ scoreboard, originalPosition, mobileSlot }) => {
+          if (mobileLayout.matches) {
+            mobileSlot.style.display = 'block';
+            mobileSlot.appendChild(scoreboard);
+          } else if (originalPosition.parentNode) {
+            originalPosition.parentNode.insertBefore(scoreboard, originalPosition.nextSibling);
+            mobileSlot.style.display = 'none';
+          }
+        });
+      }
+
+      syncScoreboardPlacement();
+      if (mobileLayout.addEventListener) {
+        mobileLayout.addEventListener('change', syncScoreboardPlacement);
+      } else {
+        mobileLayout.addListener(syncScoreboardPlacement);
+      }
+    })();
+
     (function () {
       const toggleBtn = document.getElementById('lang-toggle');
       const enBlock = document.getElementById('en');
@@ -1341,6 +3419,47 @@
       });
     })();
 
+    // Hide the language switcher once the active mobile navigation reaches the top.
+    (function () {
+      const languageToggle = document.getElementById('lang-toggle');
+      const mobileLayout = window.matchMedia('(max-width: 700px)');
+      let updateFrame = 0;
+
+      if (!languageToggle) return;
+
+      function syncLanguageToggleVisibility() {
+        updateFrame = 0;
+
+        if (!mobileLayout.matches) {
+          languageToggle.classList.remove('is-hidden-after-nav');
+          return;
+        }
+
+        const activeNavigation = document.querySelector('.lang-section.active .section-nav');
+        const navigationReachedTop = activeNavigation && activeNavigation.getBoundingClientRect().top <= 0.5;
+        languageToggle.classList.toggle('is-hidden-after-nav', Boolean(navigationReachedTop));
+      }
+
+      function requestVisibilityUpdate() {
+        if (updateFrame) return;
+        updateFrame = window.requestAnimationFrame(syncLanguageToggleVisibility);
+      }
+
+      window.addEventListener('scroll', requestVisibilityUpdate, { passive: true });
+      window.addEventListener('resize', requestVisibilityUpdate);
+      languageToggle.addEventListener('click', () => {
+        window.requestAnimationFrame(requestVisibilityUpdate);
+      });
+
+      if (mobileLayout.addEventListener) {
+        mobileLayout.addEventListener('change', requestVisibilityUpdate);
+      } else {
+        mobileLayout.addListener(requestVisibilityUpdate);
+      }
+
+      syncLanguageToggleVisibility();
+    })();
+
     (function () {
       const ONE_YEAR = 365 * 24 * 60 * 60 * 1000;
       const now = new Date();
@@ -1353,6 +3472,7 @@
         if (!toggle || !toggleText) return;
 
         let hasOld = false;
+        const oldItems = [];
 
         items.forEach(li => {
           const dateSpan = li.querySelector('.news-date');
@@ -1367,8 +3487,32 @@
 
           if (now - itemDate > ONE_YEAR) {
             li.classList.add('news-old');
+
+            const inner = document.createElement('div');
+            inner.className = 'news-old-inner';
+            while (li.firstChild) inner.appendChild(li.firstChild);
+            li.appendChild(inner);
+
+            oldItems.push(li);
             hasOld = true;
           }
+        });
+
+        const previewLevels = [
+          { opacity: 0.5, blur: '0.45px' },
+          { opacity: 0.28, blur: '1.05px' },
+          { opacity: 0.12, blur: '1.7px' }
+        ];
+        oldItems.slice(0, previewLevels.length).forEach((li, index) => {
+          li.classList.add('news-old-preview');
+          li.style.setProperty(
+            '--news-preview-opacity',
+            previewLevels[index].opacity
+          );
+          li.style.setProperty(
+            '--news-preview-blur',
+            previewLevels[index].blur
+          );
         });
 
         if (!hasOld) {
@@ -1385,6 +3529,426 @@
           toggleText.textContent = expanded ? toggle.dataset.hide : toggle.dataset.label;
         });
       });
+    })();
+
+    // Toggle between the complete publication history and a year-free selected list.
+    (function () {
+      const venueBadgePalette = [
+        { color: '#1f6f78', background: 'rgba(31, 111, 120, 0.08)' },
+        { color: '#9a5b13', background: 'rgba(154, 91, 19, 0.08)' },
+        { color: '#2f6b4f', background: 'rgba(47, 107, 79, 0.08)' },
+        { color: '#9a4038', background: 'rgba(154, 64, 56, 0.08)' },
+        { color: '#3b638f', background: 'rgba(59, 99, 143, 0.08)' },
+        { color: '#5f6872', background: 'rgba(95, 104, 114, 0.08)' },
+        { color: '#a14f68', background: 'rgba(161, 79, 104, 0.08)' },
+        { color: '#6f772d', background: 'rgba(111, 119, 45, 0.08)' },
+        { color: '#8a5a44', background: 'rgba(138, 90, 68, 0.08)' },
+        { color: '#2f7a68', background: 'rgba(47, 122, 104, 0.08)' },
+        { color: '#8b6b18', background: 'rgba(139, 107, 24, 0.08)' },
+        { color: '#466a7a', background: 'rgba(70, 106, 122, 0.08)' }
+      ];
+
+      const randomizedVenueBadgePalette = [...venueBadgePalette];
+      for (let i = randomizedVenueBadgePalette.length - 1; i > 0; i -= 1) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [randomizedVenueBadgePalette[i], randomizedVenueBadgePalette[j]] =
+          [randomizedVenueBadgePalette[j], randomizedVenueBadgePalette[i]];
+      }
+
+      document.querySelectorAll('.publications-section').forEach(section => {
+        const buttons = section.querySelectorAll('[data-publication-view]');
+
+        section.querySelectorAll('.is-selected-publication').forEach((item, itemIndex) => {
+          if (item.querySelector(':scope > .publication-thumbnail')) return;
+
+          const details = document.createElement('div');
+          details.className = 'publication-details';
+          while (item.firstChild) details.appendChild(item.firstChild);
+
+          const thumbnailFrame = document.createElement('div');
+          thumbnailFrame.className = 'publication-thumbnail-frame';
+
+          const thumbnail = document.createElement('img');
+          thumbnail.className = 'publication-thumbnail';
+          thumbnail.src = item.dataset.thumbnail || './publication-placeholder.svg';
+          thumbnail.alt = '';
+          thumbnail.loading = 'lazy';
+
+          const updateThumbnailCrop = () => {
+            if (!thumbnail.naturalWidth || !thumbnail.naturalHeight) return;
+            thumbnailFrame.classList.toggle(
+              'is-extra-wide',
+              thumbnail.naturalWidth / thumbnail.naturalHeight > 3
+            );
+          };
+          thumbnail.addEventListener('load', updateThumbnailCrop);
+          if (thumbnail.complete) updateThumbnailCrop();
+
+          thumbnailFrame.appendChild(thumbnail);
+
+          item.append(thumbnailFrame, details);
+
+          const titleLink = details.querySelector('a');
+          const venueLine = details.querySelector('em');
+          const strongVenue = venueLine?.querySelector('strong')?.textContent.trim();
+          const venueAcronym = strongVenue ||
+            (venueLine?.textContent.includes('arXiv') ? 'arXiv' : '');
+
+          if (titleLink && venueLine && venueAcronym) {
+            venueLine.classList.add('publication-full-venue');
+            const venueBreak = venueLine.previousElementSibling;
+            if (venueBreak?.tagName === 'BR') {
+              venueBreak.classList.add('publication-venue-break');
+            }
+
+            const venueBadge = document.createElement('span');
+            venueBadge.className = 'publication-venue-badge';
+            venueBadge.dataset.venue = venueAcronym;
+            const isSpotlight = /\bspotlight\b/i.test(venueLine.textContent);
+            venueBadge.textContent = isSpotlight
+              ? `${venueAcronym} · Spotlight`
+              : venueAcronym;
+
+            const palette = randomizedVenueBadgePalette[
+              itemIndex % randomizedVenueBadgePalette.length
+            ];
+            venueBadge.style.setProperty('--venue-badge-color', palette.color);
+            venueBadge.style.setProperty('--venue-badge-bg', palette.background);
+            details.insertBefore(venueBadge, titleLink);
+
+            const selectedNote = document.createElement('span');
+            selectedNote.className = 'publication-selected-note';
+            selectedNote.textContent = item.dataset.selectedNote || '';
+            details.insertBefore(selectedNote, venueLine);
+
+            const actions = document.createElement('div');
+            actions.className = 'publication-selected-actions';
+
+            const pdfLink = document.createElement('a');
+            pdfLink.className = 'publication-action publication-action--pdf';
+            pdfLink.href = item.dataset.pdf || titleLink.href;
+            pdfLink.target = '_blank';
+            pdfLink.rel = 'noopener noreferrer';
+            pdfLink.innerHTML = '<i class="fa-solid fa-file-pdf" aria-hidden="true"></i><span>PDF</span>';
+            actions.appendChild(pdfLink);
+
+            const codeUrl = item.dataset.code;
+            if (codeUrl) {
+              const codeLink = document.createElement('a');
+              codeLink.className = 'publication-action publication-action--code';
+              codeLink.href = codeUrl;
+              codeLink.target = '_blank';
+              codeLink.rel = 'noopener noreferrer';
+            const codeLabel = section.id.endsWith('-zh') ? '代码' : 'Code';
+            codeLink.innerHTML = `<i class="fa-brands fa-git-alt" aria-hidden="true"></i><span>${codeLabel}</span>`;
+              actions.appendChild(codeLink);
+            }
+
+            details.insertBefore(actions, venueLine);
+          }
+        });
+
+        const listNodes = section.querySelectorAll(
+          ':scope > .publication-year, :scope > .publication-year-list'
+        );
+        const listStage = document.createElement('div');
+        listStage.className = 'publication-list-stage';
+        if (listNodes.length) {
+          section.insertBefore(listStage, listNodes[0]);
+          listNodes.forEach(node => listStage.appendChild(node));
+        }
+
+        let isSwitching = false;
+
+        function syncPublicationButtons(view) {
+          buttons.forEach(button => {
+            button.setAttribute(
+              'aria-pressed',
+              String(button.dataset.publicationView === view)
+            );
+          });
+        }
+
+        function setPublicationView(view) {
+          section.dataset.view = view;
+          syncPublicationButtons(view);
+        }
+
+        async function switchPublicationView(view) {
+          if (view === section.dataset.view || isSwitching) return;
+
+          const reduceMotion = window.matchMedia(
+            '(prefers-reduced-motion: reduce)'
+          ).matches;
+          if (reduceMotion || !listStage.animate) {
+            setPublicationView(view);
+            return;
+          }
+
+          isSwitching = true;
+          section.classList.add('is-switching');
+          section.setAttribute('aria-busy', 'true');
+          syncPublicationButtons(view);
+
+          const direction = view === 'selected' ? -1 : 1;
+
+          try {
+            const exitAnimation = listStage.animate(
+              [
+                { opacity: 1, transform: 'translateX(0)' },
+                { opacity: 0, transform: `translateX(${direction * 24}px)` }
+              ],
+              { duration: 150, easing: 'ease-in', fill: 'forwards' }
+            );
+            await exitAnimation.finished;
+            exitAnimation.cancel();
+
+            section.dataset.view = view;
+
+            const enterAnimation = listStage.animate(
+              [
+                { opacity: 0, transform: `translateX(${-direction * 24}px)` },
+                { opacity: 1, transform: 'translateX(0)' }
+              ],
+              { duration: 210, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' }
+            );
+            await enterAnimation.finished;
+          } finally {
+            listStage.getAnimations().forEach(animation => animation.cancel());
+            syncPublicationButtons(section.dataset.view);
+            section.classList.remove('is-switching');
+            section.removeAttribute('aria-busy');
+            isSwitching = false;
+          }
+        }
+
+        buttons.forEach(button => {
+          button.addEventListener('click', function () {
+            switchPublicationView(button.dataset.publicationView);
+          });
+        });
+
+        setPublicationView('all');
+      });
+    })();
+
+    // Calculate each marker position from the visible accepted/submitted values.
+    (function () {
+      document.querySelectorAll('.publication-scoreboard .score-row').forEach(row => {
+        const total = row.querySelector('.score-total');
+        const track = row.querySelector('.score-track');
+        if (!total || !track) return;
+
+        const values = total.textContent.match(/(\d+)\s*\/\s*(\d+)/);
+        if (!values) return;
+
+        const accepted = Number(values[1]);
+        const submitted = Number(values[2]);
+        let marker = track.querySelector('.score-marker');
+        const isChinese = Boolean(row.closest('#zh'));
+
+        if (submitted === 0) {
+          if (marker) marker.remove();
+          track.setAttribute('aria-label', isChinese ? '暂无投稿' : 'No submissions yet');
+          return;
+        }
+
+        if (!marker) {
+          marker = document.createElement('span');
+          marker.className = 'score-marker';
+          track.appendChild(marker);
+        }
+
+        const rate = Math.max(0, Math.min(100, accepted / submitted * 100));
+        marker.style.setProperty('--rate', `${rate}%`);
+        const roundedRate = Math.round(rate);
+        track.setAttribute(
+          'aria-label',
+          isChinese ? `中稿率 ${roundedRate}%` : `${roundedRate} percent acceptance rate`
+        );
+      });
+    })();
+
+    // Keep each paper title primary while grouping authors, venue, and related notes.
+    (function () {
+      document.querySelectorAll('.publications-section .publication-year-list > li').forEach(item => {
+        const container = item.querySelector(':scope > .publication-details') || item;
+        if (container.querySelector(':scope > .publication-meta-block')) return;
+
+        const firstBreak = Array.from(container.childNodes).find(node =>
+          node.nodeType === Node.ELEMENT_NODE && node.tagName === 'BR'
+        );
+        if (!firstBreak) return;
+
+        const metadata = document.createElement('div');
+        metadata.className = 'publication-meta-block';
+
+        let node = firstBreak.nextSibling;
+        while (node) {
+          const next = node.nextSibling;
+          metadata.appendChild(node);
+          node = next;
+        }
+        firstBreak.replaceWith(metadata);
+      });
+    })();
+
+    // Mark the section currently passing beneath the translucent navigation.
+    (function () {
+      let ticking = false;
+      let navigationLock = null;
+
+      function setCurrentLink(links, sectionId) {
+        links.forEach(link => {
+          const isCurrent = link.getAttribute('href') === `#${sectionId}`;
+          link.classList.toggle('is-current', isCurrent);
+          if (isCurrent) {
+            link.setAttribute('aria-current', 'location');
+          } else {
+            link.removeAttribute('aria-current');
+          }
+        });
+      }
+
+      function centerNavigationLink(nav, link) {
+        if (
+          !window.matchMedia('(max-width: 700px)').matches ||
+          nav.scrollWidth <= nav.clientWidth
+        ) {
+          return;
+        }
+
+        const targetLeft = link.offsetLeft - (nav.clientWidth - link.offsetWidth) / 2;
+        const maximumLeft = nav.scrollWidth - nav.clientWidth;
+        nav.scrollTo({
+          left: Math.max(0, Math.min(maximumLeft, targetLeft)),
+          behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'
+        });
+      }
+
+      function syncCurrentSection() {
+        ticking = false;
+        const languageSection = document.querySelector('.lang-section.active');
+        if (!languageSection) return;
+
+        const nav = languageSection.querySelector('.section-nav');
+        const sections = Array.from(languageSection.querySelectorAll('main > section'));
+        const links = nav ? Array.from(nav.querySelectorAll('a[href^="#"]')) : [];
+        if (!nav || !sections.length || !links.length) return;
+
+        let currentSection = null;
+        if (navigationLock && navigationLock.languageId === languageSection.id) {
+          currentSection = sections.find(section => section.id === navigationLock.sectionId) || null;
+        }
+
+        if (!currentSection) {
+          const markerY = nav.getBoundingClientRect().bottom + 1;
+          currentSection = sections[0];
+
+          for (const section of sections) {
+            if (section.getBoundingClientRect().top <= markerY) {
+              currentSection = section;
+            } else {
+              break;
+            }
+          }
+        }
+
+        setCurrentLink(links, currentSection.id);
+
+        const currentLink = links.find(link => link.classList.contains('is-current'));
+        if (
+          currentLink &&
+          nav.dataset.currentSection !== currentSection.id &&
+          nav.scrollWidth > nav.clientWidth
+        ) {
+          centerNavigationLink(nav, currentLink);
+        }
+        nav.dataset.currentSection = currentSection.id;
+      }
+
+      function requestSync() {
+        if (ticking) return;
+        ticking = true;
+        window.requestAnimationFrame(syncCurrentSection);
+      }
+
+      function releaseNavigationLock() {
+        if (!navigationLock) return;
+        navigationLock = null;
+        requestSync();
+      }
+
+      window.addEventListener('scroll', requestSync, { passive: true });
+      window.addEventListener('resize', requestSync);
+      window.addEventListener('load', requestSync);
+      window.addEventListener('wheel', releaseNavigationLock, { passive: true });
+      window.addEventListener('touchstart', releaseNavigationLock, { passive: true });
+      window.addEventListener('pointerdown', event => {
+        if (event.clientX >= document.documentElement.clientWidth - 18) {
+          releaseNavigationLock();
+        }
+      }, { passive: true });
+      window.addEventListener('keydown', event => {
+        const scrollKeys = ['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Home', 'End', ' '];
+        const target = event.target;
+        const isEditable = target && (
+          target.matches('input, textarea, select, button') || target.isContentEditable
+        );
+        if (!isEditable && scrollKeys.includes(event.key)) releaseNavigationLock();
+      });
+      window.addEventListener('hashchange', () => {
+        const lockedHash = navigationLock ? `#${navigationLock.sectionId}` : '';
+        if (navigationLock && window.location.hash === lockedHash) return;
+        releaseNavigationLock();
+      });
+
+      const languageToggle = document.getElementById('lang-toggle');
+      if (languageToggle) {
+        languageToggle.addEventListener('click', () => {
+          navigationLock = null;
+          window.requestAnimationFrame(syncCurrentSection);
+        });
+      }
+
+      document.querySelectorAll('.section-nav a').forEach(link => {
+        link.addEventListener('click', event => {
+          const nav = link.closest('.section-nav');
+          const links = nav ? Array.from(nav.querySelectorAll('a[href^="#"]')) : [];
+          const sectionId = link.getAttribute('href').slice(1);
+          const languageSection = link.closest('.lang-section');
+          const targetSection = document.getElementById(sectionId);
+
+          if (targetSection) {
+            event.preventDefault();
+          }
+
+          if (nav) {
+            centerNavigationLink(nav, link);
+          }
+
+          navigationLock = {
+            languageId: languageSection ? languageSection.id : '',
+            sectionId
+          };
+          setCurrentLink(links, sectionId);
+          if (nav) nav.dataset.currentSection = sectionId;
+
+          if (targetSection) {
+            targetSection.scrollIntoView({
+              behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+              block: 'start'
+            });
+
+            const targetHash = `#${sectionId}`;
+            if (window.location.hash !== targetHash) {
+              window.history.pushState(null, '', targetHash);
+            }
+          }
+        });
+      });
+
+      syncCurrentSection();
     })();
 
   </script>
