@@ -646,6 +646,8 @@
 
 
     .score-row {
+      position: relative;
+      isolation: isolate;
       display: grid;
       grid-template-columns: 61px minmax(44px, 1fr) 36px;
       align-items: center;
@@ -658,14 +660,26 @@
     }
 
     .score-row:hover {
-      background: linear-gradient(90deg, rgba(76, 0, 153, 0.055), rgba(23, 121, 138, 0.025), transparent 88%);
       transform: translateX(2px);
+    }
+
+    .score-row:hover::before {
+      position: absolute;
+      inset: 0 0 0 -4px;
+      z-index: -1;
+      background: linear-gradient(90deg, rgba(76, 0, 153, 0.055), rgba(23, 121, 138, 0.025), transparent 88%);
+      content: "";
+      pointer-events: none;
     }
 
     .score-row--medical {
       margin-top: 4px;
       padding-top: 5px;
       border-top: 1px solid #ddd;
+    }
+
+    .score-row--medical:hover::before {
+      top: 5px;
     }
 
     .score-venue {
